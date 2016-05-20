@@ -3,8 +3,7 @@ Basic stocks/indexs to include!
 */
 var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
 
-
-
+var loadedData = [];    // big array containing raw data
 
 function makeJSObject(csv){
   var lines=csv.split("\n");
@@ -18,8 +17,8 @@ function makeJSObject(csv){
 	  }
 	  result.push(obj);
   }
-  console.log(result);
-  //return result; //object
+  //console.log(result);
+   return result; //object
   //console.log( JSON.stringify(result)); //JSON
 }
 
@@ -28,14 +27,14 @@ function makeJSObject(csv){
     is called to handle the processing of the page data 
     returned
 */
-function handleData( responseData ) {
+function handleData(responseData ) {
     // Do what you want with the data
     //console.log(responseData);
-    makeJSObject(responseData);
+    var object = makeJSObject(responseData);
+    object.forEach(function (d){
+                   console.log(d.Open);
+                   });
 }
-
-
-
 
 /*
     Wrapper function that encapsulates an asynchronus HTTP request specified
@@ -51,6 +50,14 @@ function fetchData(httpRequest){
 }
 
 fetchData(request);
+
+
+
+
+
+
+
+
 
 //var margin = {top: 30, right: 20, bottom: 30, left: 50}, 
 //    width = 600 - margin.left - margin.right,
