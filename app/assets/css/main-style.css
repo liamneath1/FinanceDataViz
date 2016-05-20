@@ -1,0 +1,36 @@
+.mainTitle h1 {
+    font-family: Copperplate, 'Copperplate Gothic Light';
+    text-align: center;
+    font-size: 60px;
+    font-weight: 300;
+    padding: 20;
+    margin: 0;
+}
+.mainTitle #subtitle{
+    font-family: Copperplate, 'Copperplate Gothic Light';
+    text-align:  center;
+}
+.intro{
+    width: 60%;
+    margin: 40px;
+}
+.intro h1{
+    font-family: Copperplate, 'Copperplate Gothic Light';
+    text-align:  left;
+    font-weight: 400;
+    
+}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
