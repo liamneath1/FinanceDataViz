@@ -21,3 +21,47 @@
     
 }
 
+.button {
+    
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #59e0ff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px #999;
+    padding-top: 10px;
+    text-align: center;
+}
+.button:hover {background-color: #00d0ff}
+
+.button:active {
+  background-color: #00d0ff;
+  box-shadow: 0 1px #666;
+  transform: translateY(2px);
+}
+
+input[type=text] {
+    border-style: solid;
+    border: 1px solid ;
+    border-radius:  5px;
+    width: 120px;
+    height: 25px;
+    font-size: 20px;
+
+  -webkit-appearance: none;
+}
+
+#menuBar{
+    overflow: auto;
+}
+#load{
+    float: left;
+    margin: 0 0 10px 20px;
+}
+#remove{
+    float: left;
+    margin: 0 0 10px 20px;
+    
+}
