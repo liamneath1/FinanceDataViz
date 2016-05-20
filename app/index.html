@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 		<meta charset="utf-8">
         <link rel = "stylesheet" type = "text/css" href ="assets/css/main-style.css">
@@ -27,7 +27,11 @@
                 <input type = "text" name = "removeCode">
                 <button class ="button" onClick = "removeTicket()"> Remove Ticket</button>
             </div>
+            <div id = "reset">
+                <button id = "resetButton" class= "button" onClick = "resetViz()"> RESET</button>
+            </div>
         </div>
+        <div id= "composite_chart"></div>
     </div>
 	
 
@@ -37,10 +41,14 @@
 	  </div>
 	</div>
 	<!-- end footer -->
+    
+    
     <!-- libraries loaded for the visualization --->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.js"></script>
     <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.js"></script>
     <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.5/dc.js"></script>
+    
     
 
     

@@ -21,8 +21,7 @@
     
 }
 
-.button {
-    
+.button {  
     font-size: 12px;
     cursor: pointer;
     outline: none;
@@ -35,12 +34,20 @@
     text-align: center;
 }
 .button:hover {background-color: #00d0ff}
-
 .button:active {
   background-color: #00d0ff;
   box-shadow: 0 1px #666;
   transform: translateY(2px);
 }
+
+#resetButton{
+    background-color: #ff4f4c;
+}
+#resetButton:hover{
+    background-color: #cc0300; 
+}
+
+
 
 input[type=text] {
     border-style: solid;
@@ -64,4 +71,8 @@ input[type=text] {
     float: left;
     margin: 0 0 10px 20px;
     
+}
+#reset{
+    float: left;
+    margin: 0 0 0px 20px;
 }

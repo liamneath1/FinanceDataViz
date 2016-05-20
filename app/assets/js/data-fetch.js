@@ -4,6 +4,7 @@ Basic stocks/indexs to include!
 var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
 
 var loadedData = [];    // big array containing raw data
+var info; 
 
 function makeJSObject(csv){
   var lines=csv.split("\n");
@@ -31,9 +32,13 @@ function handleData(responseData ) {
     // Do what you want with the data
     //console.log(responseData);
     var object = makeJSObject(responseData);
-    object.forEach(function (d){
+   // console.log(object);
+    loadedData[0] = object;
+    processData();
+    
+    /*object.forEach(function (d){
                    console.log(d.Open);
-                   });
+                   });*/
 }
 
 /*
@@ -51,27 +56,27 @@ function fetchData(httpRequest){
 
 fetchData(request);
 
+function processData(){
+    while(true){
+        console.log("Entered loop");
+        if (loadedData[0] != null ){
+            console.log("Loop false, breaking");
+            var filteredData = crossfilter(loadedData[0]);
+            var timeDimension = filteredData.dimension(function (d){
+                return d.Date;
+                
+            });
+            console.log(timeDimension.top(Infinity));
+            break;
+        } else {
+            break;
+        }
+    
+    }   
+}
 
 
-
-//var margin = {top: 30, right: 20, bottom: 30, left: 50}, 
-//    width = 600 - margin.left - margin.right,
-//    height = 270 - margin.top - margin.bottom;
-//
-//// set the true ranges of x and y
-//var x = d3.time.scale().range([0,width]);
-//var y = d3.scale.linear().range([height, 0]);
-//
-//// define the axes
-//var xAxis = d3.svg.axis().scale(x)
-//            .orient("botom").ticks(5);
-//var yAxis = d3.svg.axis().scale(y)
-//            .orient("left").ticks(5);
-//var valueline = d3.svg.line()
-//    .
-
-
-
+// Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
 //    return fetch("https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH").then(function(response){
