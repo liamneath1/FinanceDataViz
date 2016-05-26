@@ -60,13 +60,38 @@ function processData(){
     while(true){
         console.log("Entered loop");
         if (loadedData[0] != null ){
-            console.log("Loop false, breaking");
-            var filteredData = crossfilter(loadedData[0]);
-            var timeDimension = filteredData.dimension(function (d){
-                return d.Date;
+            var dateFormat = d3.time.format('%Y-%m-%d');
+            
+            loadedData[0].forEach(function (d,i){
+                d.close = +d.Close;    //nudging these variables into 
+                d.open = +d.Open;      //numbers 
+                d.high = +d.High;
+                d.low = +d.Low;
+                d.dd = dateFormat.parse(d.Date);    // attempt to parse the data
+                if (d.dd == null){
+                    console.log("DATE IS NULL")
+                    loadedData[0].splice(i,1);      // remove the object from the 
+                } 
+            });
+            var cf = crossfilter(loadedData[0]);
+            var all = cf.groupAll();
+            
+            // fetching the yearly dimension 
+            var yearlyDimension = cf.dimension(function (d){
+                //console.log(d.dd);
+                if (d.dd != null){
+                    return d3.time.year(d.dd).getFullYear();
+                } else {
+                    console.log ("Returning NULL");
+                    return 0;
+                }
                 
             });
-            console.log(timeDimension.top(Infinity));
+            
+            
+            
+            console.log(loadedData[0]);
+
             break;
         } else {
             break;
@@ -74,8 +99,6 @@ function processData(){
     
     }   
 }
-
-
 // Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
