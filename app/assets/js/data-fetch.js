@@ -62,6 +62,12 @@ function processData(){
         if (loadedData[0] != null ){
            var dateFormat = d3.time.format('%Y-%m-%d');
             //var dateFormat = d3.time.format('%m/%d/%Y');
+            
+            
+            var gainOrLossChart = dc.pieChart('#gain-loss-chart');
+            var quarterChart = dc.pieChart('#quarter-chart');
+            var fluctuationChart = dc.barChart('#fluctuation-chart');
+            var closingPriceChart = dc.lineChart('#closing-price-chart');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
                 d.open = +d.Open;      //numbers 
@@ -172,14 +178,7 @@ function processData(){
             });
             var dayOfWeekGroup = dayOfWeek.group();
             
-            var gainOrLossChart = dc.pieChart('#gain-loss-chart');
-            var quarterChart = dc.pieChart('#quarter-chart');
-            var fluctuationChart = dc.barChart('#fluctuation-chart');
             
-            //var moveChart = dc.lineChart('#monthly-move-chart');
-            
-            
-            var closingPriceChart = dc.lineChart('#closing-price-chart');
             gainOrLossChart
                 .width(180)
                 .height(180)
@@ -216,17 +215,15 @@ function processData(){
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([-25,25]))
                 .renderHorizontalGridLines(true);
-//                .filterPrinter(function (filters){
-//                    var filter = filters[0], s='';
-//                    s += numberFormat(filter[0]) + '% ->' + numberFormat(filter[1]) + '%';
-//                    return s;
-//                });
+            
             fluctuationChart.xAxis().tickFormat(
                 function (v) { return v + '%'; });
             fluctuationChart.yAxis().ticks(10);  
             var volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
+            
+            
             var volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
@@ -238,6 +235,7 @@ function processData(){
                     return 0;
                 }
             );
+            
             closingPriceChart
                 .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
                 .height(150)
@@ -252,7 +250,6 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
                 .xAxis();
-            
             dc.renderAll();
             break;
         } else {
