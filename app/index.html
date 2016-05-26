@@ -33,9 +33,69 @@
                 <button id = "resetButton" class= "button" onClick = "resetViz()"> RESET</button>
             </div>
         </div>
-        <div id= "composite_chart"></div>
+        
     </div>
-	
+	<div id= "gain-loss-chart">
+        <p> SPACE FOR GAIN/LOSS CHART</p>
+    </div>
+    <div id = "quarter-chart">
+        <p> SPACE FOR QUARTER CHART</p>
+    </div>
+    <div class = "dropdown">
+        <button class = "dropbtn">Dropdown</button>
+<!--
+        <div class = "dropdown-content">
+            <div class = "button-wrapper">
+                <button class = "button" onClick= "fetchAndAdd()"> <div class= "select">GRAPH A </div></button>
+            </div>
+            <div class = "button-wrapper">
+                <button class = "button" onClick= "fetchAndAdd()"> <div class= "select">GRAPH B </div></button>
+            </div>
+            <div class = "button-wrapper">
+                <button class = "button" onClick= "fetchAndAdd()"> <div class= "select">GRAPH C </div></button>
+            </div>
+            <div class = "button-wrapper">
+                <button class = "button" onClick= "fetchAndAdd()"> <div class= "select">GRAPH D </div></button>
+            </div> 
+        </div>  
+-->
+        <div class= "dropdown-content"> 
+            <div class = "button-wrapper">
+                <button class = "button" onClick = "fetchAndAdd"()> 
+                    <div class = "select">
+                        GRAPH A
+                    </div>
+                </button>
+                <button class = "button" onClick = "fetchAndAdd"()> 
+                    <div class = "select">
+                        GRAPH A
+                    </div>
+                </button>
+                <button class = "button" onClick = "fetchAndAdd"()> 
+                    <div class = "select">
+                        GRAPH A
+                    </div>
+                </button>
+                <button class = "button" onClick = "fetchAndAdd"()> 
+                    <div class = "select">
+                        GRAPH A
+                    </div>
+                </button>
+            
+            </div>
+            
+        </div>
+    </div>
+    <div id = "fluctuation-chart">
+        <p> SPACE FOR FLUCTUATION CHART</p>
+    </div>
+    
+    <div id = "monthly-move-chart">
+        <p> SPACE FOR THE MONTHLY MOVE CHART</p>
+    </div>
+    <div id = "closing-price-chart">
+        <p> SPACE FOR DAILY CLOSING PRICE </p>
+    </div>
 
 	<!-- begin footer -->
 	<div id="footer">
@@ -45,10 +105,7 @@
 	<!-- end footer -->
     
     
-    <!-- libraries loaded for the visualization --->
-    <!-- queue.js -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.js"></script>
-    
+    <!-- libraries loaded for the visualization --->    
     <!--- d3.js --->
     <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     
@@ -57,6 +114,8 @@
     
     <!--- dc.js --->
     <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.5/dc.js"></script>
+    <!-- queue.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.js"></script>
     
     <!--- async.js --->
     <script type = "text/javascript" src= "assets/js/libraries/async.js"></script>

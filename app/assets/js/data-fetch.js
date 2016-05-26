@@ -60,18 +60,22 @@ function processData(){
     while(true){
         console.log("Entered loop");
         if (loadedData[0] != null ){
-            var dateFormat = d3.time.format('%Y-%m-%d');
-            
+           var dateFormat = d3.time.format('%Y-%m-%d');
+            //var dateFormat = d3.time.format('%m/%d/%Y');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
                 d.open = +d.Open;      //numbers 
                 d.high = +d.High;
                 d.low = +d.Low;
+                d.volume = +d.Volume;
                 d.dd = dateFormat.parse(d.Date);    // attempt to parse the data
                 if (d.dd == null){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
-                } 
+                } else {
+                   // d.month = d3.time.month(d.dd);
+                    d.month = d.dd.getMonth();
+                }
             });
             var cf = crossfilter(loadedData[0]);
             var all = cf.groupAll();
@@ -85,13 +89,171 @@ function processData(){
                     console.log ("Returning NULL");
                     return 0;
                 }
-                
+            });
+            console.log('Printing the yearly dimension!');
+            console.log(yearlyDimension.top(Infinity));
+         
+            // dimension by full date
+            var dateDimension = cf.dimension(function (d){
+                return d.dd; 
+            });
+            // dimension by month 
+            var moveMonths = cf.dimension(function (d){
+                //console.log(d.month);
+                //return d.month;
+               return  d.dd.getMonth();
+            }); 
+            var monthlyMoveGroup = moveMonths.group().reduceSum(function (d){
+                console.log("MOVEMENT ->" + Math.abs(d.close - d.open))
+                return Math.abs(d.close - d.open);
             });
             
+            var volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
+                //console.log(d.volume/500);
+                return d.volume/ 500; 
+            });
+            console.log(volumeByMonthGroup.top(Infinity));
             
             
-            console.log(loadedData[0]);
-
+            var indexAvgByMonthGroup = moveMonths.group().reduce(
+                function (p, v) {
+                    ++p.days;
+                    p.total += (v.open + v.close) / 2;
+                    p.avg = Math.round(p.total / p.days);
+                    return p;
+                },
+                function (p, v) {
+                    --p.days;
+                    p.total -= (v.open + v.close) / 2;
+                    p.avg = p.days ? Math.round(p.total / p.days) : 0;
+                    return p;
+                },
+                function () {
+                    return {days: 0, total: 0, avg: 0};
+                }
+            );
+            
+            var gainOrLoss = cf.dimension(function (d){
+                if (d.open > d.close){
+                    return 'Loss';
+                } else {
+                    return 'Gain';
+                }
+                //return d.open > d.close ? 'Loss' : 'Gain';
+            });
+            var gainOrLossGroup = gainOrLoss.group();
+            
+            var fluctuation = cf.dimension(function (d){
+               return Math.round((d.close - d.open)/d.open * 100);
+            });
+            
+            var fluctuationGroup = fluctuation.group(); 
+            
+            var quarter = cf.dimension(function (d){
+                var month = d.dd.getMonth();
+                if (month <= 2){
+                    return 'Q1';
+                } else if (month > 3 && month <= 5){
+                    return 'Q2';
+                } else if (month > 5 && month <= 8){
+                    return 'Q3';
+                } else{
+                    return 'Q4';
+                }
+            });
+            var quarterGroup = quarter.group().reduceSum(function (d){
+               return d.volume;  
+            });
+            
+            var dayOfWeek = cf.dimension(function (d){
+                var day = d.dd.getDay();
+                var name = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                return day + '.' + name[day];
+            });
+            var dayOfWeekGroup = dayOfWeek.group();
+            
+            var gainOrLossChart = dc.pieChart('#gain-loss-chart');
+            var quarterChart = dc.pieChart('#quarter-chart');
+            var fluctuationChart = dc.barChart('#fluctuation-chart');
+            
+            //var moveChart = dc.lineChart('#monthly-move-chart');
+            
+            
+            var closingPriceChart = dc.lineChart('#closing-price-chart');
+            gainOrLossChart
+                .width(180)
+                .height(180)
+                .radius(80)
+                .dimension(gainOrLoss)
+                .group(gainOrLossGroup)
+                .label(function (d){
+                    if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
+                        return d.data.key + '(0%)';
+                    }
+                    var label = d.data.key;
+                    if (all.value()){
+                        label += '(' + Math.floor(d.value / all.value() * 100) + '%)';
+                    }
+                    return label;  
+                });
+            quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+                .width(180)
+                .height(180)
+                .radius(80)
+                .innerRadius(30)
+                .dimension(quarter)
+                .group(quarterGroup);
+            
+            fluctuationChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(fluctuation)
+                .group(fluctuationGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
+//                .filterPrinter(function (filters){
+//                    var filter = filters[0], s='';
+//                    s += numberFormat(filter[0]) + '% ->' + numberFormat(filter[1]) + '%';
+//                    return s;
+//                });
+            fluctuationChart.xAxis().tickFormat(
+                function (v) { return v + '%'; });
+            fluctuationChart.yAxis().ticks(10);  
+            var volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+            var volumeByDateGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.close;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.close;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+            closingPriceChart
+                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .height(150)
+                .renderArea(true)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(true)
+                .brushOn(false)
+                .transitionDuration(0)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
+                .xAxis();
+            
+            dc.renderAll();
             break;
         } else {
             break;
