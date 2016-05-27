@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.heroku import Heroku
 
 app = Flask(__name__, static_url_path='')
+db = SQLAlchemy(app)
 
 
 
