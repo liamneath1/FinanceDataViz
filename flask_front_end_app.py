@@ -34,7 +34,7 @@ def index():
 	#db.session.execute("SELECT * FROM stockInfo;");
 	from sqlalchemy.orm import scoped_session, sessionmaker, Query
     db_session = scoped_session(sessionmaker(bind=engine))
-    return (app.make_response(db_session.execute("SELECT * FROM stockinfo;")))
+    return (app.make_response(json.dumps(db_session.execute("SELECT * FROM stockinfo;"))))
 
     #return app.make_response(open('app/index.html').read())
 
