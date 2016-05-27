@@ -6,6 +6,7 @@ app = Flask(__name__, static_url_path='')
 tickerDictionary = {};
 
 # ------------- GLOBAL VARIABLES -------------- #
+
 # get root
 @app.route("/")
 def index():
@@ -18,7 +19,7 @@ def send_assets(path):
 
 if __name__ == "__main__":
 	global tickerDictionary
-	filename = "companyList.csv"
+	filename = "app/companylist.csv"
 	src = open(filename, 'r')
 	numTickers = len(data)
 	for i in range (0, numTickers):
