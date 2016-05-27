@@ -2,6 +2,9 @@ import os, copy
 from flask import Flask, jsonify, request, send_from_directory, make_response
 
 app = Flask(__name__, static_url_path='')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
+
 
 # ------------- GLOBAL VARIABLES -------------- #
 tickerDictionary = {};
