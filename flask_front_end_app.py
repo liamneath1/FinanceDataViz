@@ -2,13 +2,11 @@ import os, copy
 from flask import Flask, jsonify, request, send_from_directory, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.heroku import Heroku
-from sqlalchemy import create_engine
+
 
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
-
-
 
 
 # ------------- GLOBAL VARIABLES -------------- #
