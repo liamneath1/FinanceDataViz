@@ -11,14 +11,12 @@ from sqlalchemy.ext.declarative import declarative_base
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 engine = create_engine('postgres://jwnrvwczsmwahh:Eay8klzAFN5V0xljHial-krhxv@ec2-174-129-242-241.compute-1.amazonaws.com:5432/d4v4mh5fc6v6hu')
+
 Base = declarative_base()
 Base.metadata.reflect(engine)
-
-
 from sqlalchemy.orm import relationship, backref
-
-class Users(Base):
-    __table__ = Base.metadata.tables['stockInfo']
+# class Users(Base):
+#     __table__ = Base.metadata.tables['stockInfo']
 
 
 
