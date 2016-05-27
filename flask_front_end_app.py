@@ -1,9 +1,7 @@
 import os, copy
 from flask import Flask, jsonify, request, send_from_directory, make_response
-from flask.ext.mysqldb import MySQL
 
 app = Flask(__name__, static_url_path='')
-mysql = MySQL(app)
 
 # ------------- GLOBAL VARIABLES -------------- #
 tickerDictionary = {};
