@@ -301,10 +301,14 @@ function processData(){
 
 
 
-
-
-
-
-
+////////////////////
+$("#ticketCode").keypress(function(e) {
+    var curr = document.getElementById("ticketCode").value
+    console.log(curr + String.fromCharCode(e.which) )
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', "https://arcane-springs-65260.herokuapp.com/testQuery", true);
+    xhr.send();
+    console.log(xhr.responseText);
+});
 
 
