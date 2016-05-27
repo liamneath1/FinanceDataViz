@@ -1,16 +1,16 @@
 import os, copy
 from flask import Flask, jsonify, request, send_from_directory, make_response
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy, create_engine
 from flask.ext.heroku import Heroku
 
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy import create_engine
+# from sqlalchemy.ext.declarative import declarative_base
 
 
 
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-engine = create_engine('postgres://jwnrvwczsmwahh:Eay8klzAFN5V0xljHial-krhxv@ec2-174-129-242-241.compute-1.amazonaws.com:5432/d4v4mh5fc6v6hu', convert_unicode=True, echo=False)
+#engine = create_engine('postgres://jwnrvwczsmwahh:Eay8klzAFN5V0xljHial-krhxv@ec2-174-129-242-241.compute-1.amazonaws.com:5432/d4v4mh5fc6v6hu', convert_unicode=True, echo=False)
 
 db = SQLAlchemy(app)
 
