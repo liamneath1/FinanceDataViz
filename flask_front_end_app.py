@@ -40,9 +40,7 @@ def index():
 @app.route("/testQuery/")
 def testQuery():
 	dat = db_session.execute("SELECT * FROM stockinfo;");
-	resp = Response(response=dat,
-    status=200, \
-    mimetype="application/json")
+	resp = Response(response=dat,status=200, mimetype="application/json")
     return (resp);
 
 	
