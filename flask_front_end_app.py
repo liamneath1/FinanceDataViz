@@ -18,8 +18,8 @@ def send_assets(path):
     return send_from_directory('app/assets/', path)
 
 if __name__ == "__main__":
-	# global tickerDictionary
-	# filename = "app/companylist.csv"
+	 global tickerDictionary
+	filename = "app/companylist.csv"
 	# src = open(filename, 'r')
 	# numTickers = len(data)
 	# for i in range (0, numTickers):
