@@ -309,6 +309,9 @@ $("#ticketCode").keypress(function(e) {
     xhr.open('GET', "/testQuery/", true);
     xhr.send();
     console.log('HELLO?');
+    console.log(xhr.getAllResponseHeaders);
+    console.log(xhr.HEADERS_RECEIVED);
+    console.log(xhr.responseXML)
     console.log(xhr.responseText);
 //    $.ajax({
 //          dataType: "jsonp",
