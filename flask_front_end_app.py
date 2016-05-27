@@ -36,11 +36,12 @@ def index():
     #res = db_session.execute("SELECT * FROM stockinfo;");
     #return (app.make_response(json.dumps([dict(r) for r in res])))
     return app.make_response(open('app/index.html').read())
-@app.route("/testQuery/")
 
+@app.route("/testQuery/")
 def testQuery():
 	res = db_session.execute("SELECT * FROM stockinfo;");
-	return (app.make_response(json.dumps([dict(r) for r in res])))
+
+	return (json.dumps([dict(r) for r in res]))
 
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
 # blocks other requests, so your directories won't get listed (ex. assets/js will return "not found")
