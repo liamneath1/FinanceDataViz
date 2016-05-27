@@ -311,7 +311,7 @@ $("#ticketCode").keypress(function(e) {
 //    console.log(xhr.responseText);
     $.ajax({
           dataType: "jsonp",
-          url: "//arcane-springs-65260.herokuapp.com/testQuery",
+          url: "arcane-springs-65260.herokuapp.com/testQuery",
           }).done(function ( data ) {
           console.log(data);
     });
