@@ -15,6 +15,13 @@ Base = declarative_base()
 Base.metadata.reflect(engine)
 
 
+from sqlalchemy.orm import relationship, backref
+
+class Users(Base):
+    __table__ = Base.metadata.tables['stockInfo']
+
+
+
 db = SQLAlchemy(app)
 
 
