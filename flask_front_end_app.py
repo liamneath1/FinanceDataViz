@@ -24,7 +24,9 @@ if __name__ == "__main__":
 	numTickers = len(data)
 	for i in range (0, numTickers):
 		line = data[i].split(",")
-		tickerDictionary[line[0]] = (line[1]);
+		tickerDictionary[line[0]] = (line[1])
+
+
 	port = int(os.environ.get("PORT", 5050))
 	app.run(host='0.0.0.0', port=port, debug=True)
 
