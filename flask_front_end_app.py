@@ -23,15 +23,15 @@ class Users(Base):
 
 
 #db = SQLAlchemy(app)
-
-
 # ------------- GLOBAL VARIABLES -------------- #
 tickerDictionary = {};
+db_session = None 
 
 # ------------- GLOBAL VARIABLES -------------- #
 # get root
 @app.route("/")
 def index():
+    global db_session
     db_session = scoped_session(sessionmaker(bind=engine))
     #res = db_session.execute("SELECT * FROM stockinfo;");
     #return (app.make_response(json.dumps([dict(r) for r in res])))
@@ -45,6 +45,7 @@ def send_assets(path):
     return send_from_directory('app/assets/', path)
 
 if __name__ == "__main__":
+
 	port = int(os.environ.get("PORT", 5050))
 	app.run(host='0.0.0.0', port=port, debug=True)
 
