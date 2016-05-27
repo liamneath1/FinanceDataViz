@@ -56,18 +56,24 @@ function fetchData(httpRequest){
 
 fetchData(request);
 
+/**
+    Various Charts That Make The Dashboard! 
+**/
+
+var gainOrLossChart = dc.pieChart('#gain-loss-chart');
+var quarterChart = dc.pieChart('#quarter-chart');
+var fluctuationChart = dc.barChart('#fluctuation-chart');
+var closingPriceChart = dc.lineChart('#closing-price-chart');
+//var timeSelectChart = dc.barChart('#date-select-chart');
+
+
+
+
 function processData(){
     while(true){
         console.log("Entered loop");
         if (loadedData[0] != null ){
            var dateFormat = d3.time.format('%Y-%m-%d');
-            //var dateFormat = d3.time.format('%m/%d/%Y');
-            
-            
-            var gainOrLossChart = dc.pieChart('#gain-loss-chart');
-            var quarterChart = dc.pieChart('#quarter-chart');
-            var fluctuationChart = dc.barChart('#fluctuation-chart');
-            var closingPriceChart = dc.lineChart('#closing-price-chart');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
                 d.open = +d.Open;      //numbers 
@@ -79,7 +85,6 @@ function processData(){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
                 } else {
-                   // d.month = d3.time.month(d.dd);
                     d.month = d.dd.getMonth();
                 }
             });
@@ -241,15 +246,34 @@ function processData(){
                 .height(150)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                .brushOn(false)
-                .transitionDuration(0)
+                .mouseZoomable(false)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .dimension(volumeByDate)
                 .group(volumeByDateGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
                 .xAxis();
+            
+//            timeSelectChart
+//                .width(990)
+//                .height(40)
+//                .margins({top: 0, right: 50, bottom: 20, left: 40})
+//                .dimension(volumeByDate)
+//                .group(volumeByDateGroup)
+//                .centerBar(true)
+//                .gap(1)
+//                .x(d3.time.scale().domain([new Date(2000,6,18),new Date(2017,11,31)]))
+//                .round(d3.time.month.round)
+//                .xUnits(d3.time.months);
+            
+//            timeSelectChart.yAxis().ticks(0);
+            
+            
+            
+            
             dc.renderAll();
             break;
         } else {
@@ -258,6 +282,8 @@ function processData(){
     
     }   
 }
+
+
 // Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
