@@ -1,6 +1,9 @@
 import os, copy
 from flask import Flask, jsonify, request, send_from_directory, make_response
+from flask.ext.mysqldb import MySQL
+
 app = Flask(__name__, static_url_path='')
+mysql = MySQL(app)
 
 # ------------- GLOBAL VARIABLES -------------- #
 tickerDictionary = {};
@@ -18,15 +21,6 @@ def send_assets(path):
     return send_from_directory('app/assets/', path)
 
 if __name__ == "__main__":
-	 global tickerDictionary
-	filename = "app/companylist.csv"
-	# src = open(filename, 'r')
-	# numTickers = len(data)
-	# for i in range (0, numTickers):
-	# 	line = data[i].split(",")
-	# 	tickerDictionary[line[0]] = (line[1])
-
-
 	port = int(os.environ.get("PORT", 5050))
 	app.run(host='0.0.0.0', port=port, debug=True)
 
