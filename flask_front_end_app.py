@@ -18,13 +18,13 @@ def send_assets(path):
     return send_from_directory('app/assets/', path)
 
 if __name__ == "__main__":
-	global tickerDictionary
-	filename = "app/companylist.csv"
-	src = open(filename, 'r')
-	numTickers = len(data)
-	for i in range (0, numTickers):
-		line = data[i].split(",")
-		tickerDictionary[line[0]] = (line[1])
+	# global tickerDictionary
+	# filename = "app/companylist.csv"
+	# src = open(filename, 'r')
+	# numTickers = len(data)
+	# for i in range (0, numTickers):
+	# 	line = data[i].split(",")
+	# 	tickerDictionary[line[0]] = (line[1])
 
 
 	port = int(os.environ.get("PORT", 5050))
