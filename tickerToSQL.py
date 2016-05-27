@@ -8,6 +8,7 @@ def main():
 		print("DROP TABLE IF EXISTS stockInfo;",file = outfile)
 
 		print("CREATE TABLE stockInfo(",file = outfile)
+		print("id BIGINT primary KEY,",file = outfile)
 		print("tickerName CHAR(64),",file = outfile)
 		print("companyName CHAR(64),",file = outfile)
 		print("grossValue BIGINT);",file = outfile)
@@ -24,7 +25,7 @@ def main():
 		numEntries = len(listEntries)
 		counter = 0; 
 		for key in listEntries:
-			print("('" + key.strip()+ "','" + listEntries[key] + "'," + str(1234567) + ")",file = outfile, end = "")
+			print( "(" + str(counter) + ",'" + key.strip()+ "','" + listEntries[key] + "'," + str(1234567) + ")",file = outfile, end = "")
 			if (counter != numEntries - 1):
 				print(",",file = outfile)
 			else:
