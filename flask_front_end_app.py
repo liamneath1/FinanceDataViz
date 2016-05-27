@@ -32,7 +32,12 @@ tickerDictionary = {};
 @app.route("/")
 def index():
 	#db.session.execute("SELECT * FROM stockInfo;");
-    return app.make_response(open('app/index.html').read())
+	from sqlalchemy.orm import scoped_session, sessionmaker, Query
+    db_session = scoped_session(sessionmaker(bind=engine))
+    return (db_session.execute("SELECT * FROM stockinfo;"))
+
+    #return app.make_response(open('app/index.html').read())
+    
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
 # blocks other requests, so your directories won't get listed (ex. assets/js will return "not found")
 @app.route('/assets/<path:path>')
