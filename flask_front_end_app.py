@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
 
+from sqlalchemy.orm import scoped_session, sessionmaker, Query
 
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']	#primary key is ID??
@@ -31,8 +32,6 @@ tickerDictionary = {};
 # get root
 @app.route("/")
 def index():
-	#db.session.execute("SELECT * FROM stockInfo;");
-	from sqlalchemy.orm import scoped_session, sessionmaker, Query
     db_session = scoped_session(sessionmaker(bind=engine))
     return (app.make_response(json.dumps(db_session.execute("SELECT * FROM stockinfo;"))))
 
