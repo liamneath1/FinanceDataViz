@@ -40,10 +40,11 @@ def index():
 @app.route("/testQuery/")
 def testQuery():
 	res = db_session.execute("SELECT * FROM stockinfo;");
-	testString = '''<html><p>'''
-	testString += json.dumps([dict(r) for r in res])
-	testString += '''</p></html>'''
-	return testString;
+	# testString = '''<html><p>'''
+	# testString += json.dumps([dict(r) for r in res])
+	# testString += '''</p></html>'''
+
+	return render_template(json.dumps([dict(r) for r in res])), 200, {'Content-Type': 'application/json'}
 	#return (json.dumps([dict(r) for r in res]))
 
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
