@@ -1,6 +1,6 @@
 import os, copy
 from flask import Flask, jsonify, request, send_from_directory, make_response
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy, create_engine
 from flask.ext.heroku import Heroku
 
 app = Flask(__name__, static_url_path='')
