@@ -15,12 +15,12 @@ engine = create_engine('postgres://jwnrvwczsmwahh:Eay8klzAFN5V0xljHial-krhxv@ec2
 Base = declarative_base()
 Base.metadata.reflect(engine)
 from sqlalchemy.orm import relationship, backref
-# class Users(Base):
-#      __table__ = Base.metadata.tables['stockinfo']
+class Users(Base):
+     __table__ = Base.metadata.tables['stockinfo']
 
 
 
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
 
 # ------------- GLOBAL VARIABLES -------------- #
