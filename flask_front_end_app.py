@@ -1,6 +1,6 @@
 import os, copy
 import json, collections
-from flask import Flask, jsonify, request, send_from_directory, make_response
+from flask import Flask, jsonify, request, send_from_directory, make_response,Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.heroku import Heroku
 
