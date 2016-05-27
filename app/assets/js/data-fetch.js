@@ -311,6 +311,8 @@ $("#ticketCode").keypress(function(e) {
     console.log('HELLO?');
     console.log(xhr.getAllResponseHeaders);
     console.log(xhr.HEADERS_RECEIVED);
+    console.log("PRINTING THE RESPONSE: ");
+    console.log(xhr.response);
     console.log(xhr.responseXML);
     console.log(xhr.responseText);
 //    $.ajax({
