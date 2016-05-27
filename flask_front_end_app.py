@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request, send_from_directory, make_response
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.heroku import Heroku
 
-# from sqlalchemy import create_engine
+from flask.ext.sqlalchemy import create_engine
 # from sqlalchemy.ext.declarative import declarative_base
 
 
