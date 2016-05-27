@@ -17,6 +17,7 @@ tickerDictionary = {};
 # get root
 @app.route("/")
 def index():
+	db.session.execute("SELECT * FROM stockInfo;");
     return app.make_response(open('app/index.html').read())
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
 # blocks other requests, so your directories won't get listed (ex. assets/js will return "not found")
