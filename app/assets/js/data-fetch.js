@@ -42,30 +42,30 @@ var settings = {
          "accept": "application/json",
          "x-mashape-key": "APIKEY"
        }
-     };
-     console.log("RESPONSE");
-     $.ajax(settings).done(function (response) {
-         var text ="";
-         var result ="\"";
-         var text2 = "";
-         var listofResponse = [];
-         var listOfCompanyNames = [];
-         for(var i = 0; i < response.length; i++){
-             listofResponse[i] = (response[i].tickername).trim();
-             listOfCompanyNames[i] = (response[i].companyname).trim();
-             nameToTicker[response[i].companyname] = response[i].tickername;
-         }
-         var ticCode = document.getElementById("ticketCode");
-         var cmpName = document.getElementById("companyName");
-         var awesomeplete = new Awesomplete(ticCode, {
-	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-         });
-         var awesomepleteC = new Awesomplete(cmpName, {
-	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-         });
-         awesomepleteC.list = listOfCompanyNames;
-         awesomeplete.list = listofResponse;
-     });
+    };
+console.log("RESPONSE");
+$.ajax(settings).done(function (response) {
+    var text ="";
+    var result ="\"";
+    var text2 = "";
+    var listofResponse = [];
+    var listOfCompanyNames = [];
+    for(var i = 0; i < response.length; i++){
+        listofResponse[i] = (response[i].tickername).trim();
+        listOfCompanyNames[i] = (response[i].companyname).trim();
+        nameToTicker[response[i].companyname] = response[i].tickername;
+    }
+    var ticCode = document.getElementById("ticketCode");
+    var cmpName = document.getElementById("companyName");
+    var awesomeplete = new Awesomplete(ticCode, {
+	   list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+    });
+    var awesomepleteC = new Awesomplete(cmpName, {
+	   list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+    });
+    awesomepleteC.list = listOfCompanyNames;
+    awesomeplete.list = listofResponse;
+});
 
 
 
@@ -111,6 +111,7 @@ var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.lineChart('#closing-price-chart');
+
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
 
