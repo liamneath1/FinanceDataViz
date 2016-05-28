@@ -327,8 +327,7 @@ $("#ticketCode").keypress(function(e) {
          }
          console.log(text);
          dataList.innerHTML = text;
-         _this.focus();
-//         
+         document.getElementById("ticketCode").focus();
      });
     
     
