@@ -44,10 +44,7 @@ def testQuery():
 	# resp = Response(response = data, status = 200, mimetype = "application/json")
 	# return (resp)
 	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
-	resp = app.make_response("HELLO")
-	jsonData = json.dumps([dict(r) for r in res])
-	resp.headers['DATA'] = jsonData
-	return resp
+	return app.make_response(jsonData = json.dumps([dict(r) for r in res]))
 
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
 # blocks other requests, so your directories won't get listed (ex. assets/js will return "not found")
