@@ -22,7 +22,7 @@
 
     
     
-    <div style = "overflow-x:hidden; overflow:scroll;height:500px">
+    <div style = "overflow-x:hidden; overflow:scroll;height:500px" id = "pam">
         <datalist id = "datalist1" >
         </datalist>
     </div>
@@ -30,7 +30,7 @@
     <div class = "visual">
         <div id = "menuBar">
             <div id = "load">
-                <input type = "text" id = "ticketCode" list="datalist1" >
+                <input type = "text" id = "ticketCode" list="pam" >
                 
                 <button class = "button" onClick= "fetchAndAdd()"> Load Ticket </button>
             </div>
