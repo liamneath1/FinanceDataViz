@@ -23,6 +23,31 @@ function makeJSObject(csv){
   //console.log( JSON.stringify(result)); //JSON
 }
 
+
+var settings = {
+       "async": true,
+       "crossDomain": true,
+       "dataType": "json",
+       "url": "/testQuery/",
+       "method": "GET",
+       "headers": {
+         "accept": "application/json",
+         "x-mashape-key": "APIKEY"
+       }
+     }
+     console.log("RESPONSE")
+     $.ajax(settings).done(function (response) {
+       console.log(response);
+         var dataList = document.getElementById("datalist1");
+         console.log(datalist1);
+         var text ="";
+         for(var i = 0; i < response.length; i++){
+             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
+         }
+         console.log(text);
+         dataList.innerHTML = text;
+     });
+
 /*
     On succesful execution of fetchData(), this function 
     is called to handle the processing of the page data 
