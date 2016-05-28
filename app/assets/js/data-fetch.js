@@ -45,7 +45,7 @@ var settings = {
          var result ="";
          for(var i = 0; i < response.length; i++){
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-             if (i != respone.length -1){
+             if (i != response.length -1){
                  result += (response[i].tickername).trim() + ",";
              } else {
                  result += (response[i].tickername).trim();
