@@ -60,7 +60,7 @@ var settings = {
          var awesomeplete = new Awesomplete(ticCode, {
 	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
          });
-         var awesomepleteC = new Awesomplete(ticCode, {
+         var awesomepleteC = new Awesomplete(cmpName, {
 	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
          });
          awesomepleteC.list = listOfCompanyNames;
