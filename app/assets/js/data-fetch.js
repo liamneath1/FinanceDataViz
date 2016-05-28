@@ -70,6 +70,7 @@ var settings = {
 
 
 
+
 /*
     On succesful execution of fetchData(), this function 
     is called to handle the processing of the page data 
@@ -115,6 +116,9 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 
 
+function fetchAndAdd(chartLetter){
+    console.log(chartLetter);
+}
 
 function processData(){
     while(true){
