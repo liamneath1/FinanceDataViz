@@ -39,13 +39,21 @@ var settings = {
      $.ajax(settings).done(function (response) {
        console.log(response);
          var dataList = document.getElementById("datalist1");
+         var alternateList = document.getElementById("alternateDataList");
          console.log(datalist1);
          var text ="";
+         var result ="";
          for(var i = 0; i < response.length; i++){
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
+             if (i != respone.length -1){
+                 result += (response[i].tickername).trim() + ",";
+             } else {
+                 result += (response[i].tickername).trim();
+             }
          }
          console.log(text);
          dataList.innerHTML = text;
+         alternateList.setAttribute("data-list",result);
      });
 
 /*
