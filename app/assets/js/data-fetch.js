@@ -41,8 +41,11 @@ var settings = {
          var result ="\"";
          var text2 = "";
          var listofResponse = [];
+         var listOfCompanyNames = [];
          for(var i = 0; i < response.length; i++){
              listofResponse[i] = (response[i].tickername).trim();
+             listOfCompanyNames[i] = (response[i].companyname).trim();
+             
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
              text2 += "<option>" + (response[i].tickername).trim() + "</option>";
              if (i != response.length -1){
@@ -52,12 +55,15 @@ var settings = {
              }
          }
          result += "\"";
-         var input = document.getElementById("ticketCode");
-         console.log(input);
-         console.log("HELLO Liam");
-         var awesomeplete = new Awesomplete(input, {
+         var ticCode = document.getElementById("ticketCode");
+         var cmpName = document.getElementById("companyName");
+         var awesomeplete = new Awesomplete(ticCode, {
 	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
          });
+         var awesomepleteC = new Awesomplete(ticCode, {
+	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+         });
+         awesomepleteC.list = listOfCompanyNames;
          awesomeplete.list = listofResponse;
      });
 
