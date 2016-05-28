@@ -320,6 +320,7 @@ $("#ticketCode").keypress(function(e) {
      $.ajax(settings).done(function (response) {
        console.log(response);
          var dataList = document.getElementById("datalist1");
+         console.log(datalist1);
          var text ="";
          for(var i = 0; i < 4; i++){
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
