@@ -59,11 +59,15 @@ input[type=text] {
 }
 
 #menuBar{
-    overflow: auto;
+    overflow: visible;
+}
+#visual{
+    overflow: visible;
 }
 #load{
     float: left;
     margin: 0 0 10px 20px;
+    overflow: visible;
 }
 #remove{
     float: left;
