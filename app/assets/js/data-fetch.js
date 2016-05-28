@@ -319,15 +319,15 @@ $("#ticketCode").keypress(function(e) {
      console.log("RESPONSE")
      $.ajax(settings).done(function (response) {
        console.log(response);
-         var dataList = document.getElementById("datalist1");
-         console.log(datalist1);
-         var text ="";
-         for(var i = 0; i < 4; i++){
-             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-         }
-         console.log(text);
-         dataList.innerHTML = text;
-         document.getElementById("ticketCode").focus();
+//         var dataList = document.getElementById("datalist1");
+//         console.log(datalist1);
+//         var text ="";
+//         for(var i = 0; i < 4; i++){
+//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
+//         }
+//         console.log(text);
+//         dataList.innerHTML = text;
+//         document.getElementById("ticketCode").focus();
      });
     
     
