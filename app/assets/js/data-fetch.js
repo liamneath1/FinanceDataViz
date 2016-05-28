@@ -44,7 +44,7 @@ var settings = {
          console.log(alternateList);
          console.log(datalist1);
          var text ="";
-         var result ="";
+         var result ="\"";
          for(var i = 0; i < response.length; i++){
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
              if (i != response.length -1){
@@ -53,6 +53,7 @@ var settings = {
                  result += (response[i].tickername).trim();
              }
          }
+         result += "\"";
          console.log(text);
          dataList.innerHTML = text;
          alternateList.setAttribute("data-list",result);
