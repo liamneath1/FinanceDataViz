@@ -37,12 +37,7 @@ var settings = {
      };
      console.log("RESPONSE");
      $.ajax(settings).done(function (response) {
-      // console.log(response);
          var dataList = document.getElementById("datalist1");
-         var alternateList = document.getElementById("myList");
-         console.log("HELLO");
-         console.log(alternateList);
-        // console.log(datalist1);
          var text ="";
          var result ="\"";
          var text2 = "";
@@ -56,11 +51,20 @@ var settings = {
              }
          }
          result += "\"";
-         //console.log(text);
+
          dataList.innerHTML = text;
-         alternateList.innerHTML = text2;
-         console.log(alternateList);
+         
+         
+         var input = document.getElementById("myinput");
+         console.log(input);
+         console.log("HELLO Liam");
+         new Awesomplete(input, {
+	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+         });
      });
+
+
+
 
 /*
     On succesful execution of fetchData(), this function 
