@@ -34,8 +34,8 @@ var settings = {
          "accept": "application/json",
          "x-mashape-key": "APIKEY"
        }
-     }
-     console.log("RESPONSE")
+     };
+     console.log("RESPONSE");
      $.ajax(settings).done(function (response) {
        console.log(response);
          var dataList = document.getElementById("datalist1");
