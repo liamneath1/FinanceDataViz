@@ -5,6 +5,14 @@ var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key
 
 var loadedData = [];    // big array containing raw data
 var info; 
+/*
+
+GLOBAL VARIABLES
+
+*/
+
+var nameToTicker ={};
+///////////////////
 
 function makeJSObject(csv){
   var lines=csv.split("\n");
@@ -45,16 +53,8 @@ var settings = {
          for(var i = 0; i < response.length; i++){
              listofResponse[i] = (response[i].tickername).trim();
              listOfCompanyNames[i] = (response[i].companyname).trim();
-             
-             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-             text2 += "<option>" + (response[i].tickername).trim() + "</option>";
-             if (i != response.length -1){
-                 result += (response[i].tickername).trim() + ",";
-             } else {
-                 result += (response[i].tickername).trim();
-             }
+             nameToTicker[response[i].companyname] = response[i].tickername;
          }
-         result += "\"";
          var ticCode = document.getElementById("ticketCode");
          var cmpName = document.getElementById("companyName");
          var awesomeplete = new Awesomplete(ticCode, {
