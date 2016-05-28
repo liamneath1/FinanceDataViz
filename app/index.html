@@ -20,10 +20,11 @@
         <p> We are making HTTP requests to Quandl's financial 
         data (~.~)/</p>
     </div>
-    <script src = "assets/js/awesomplete.js"></script>
-    <input class="awesomplete" id = "alternateDataList"
-       data-list="Ada, Java, JavaScript, Brainfuck, LOLCODE, Node.js, Ruby on Rails,
-                  LIAM,CAROL,PAM,JAM,DAN,STAN" />
+    
+    <input class="awesomplete" list = "myList">
+    <datalist id = "mylist">
+    </datalist>
+       
 
         <datalist id = "datalist1" >
         </datalist>
@@ -120,6 +121,7 @@
     <!--- async.js --->
     <script type = "text/javascript" src= "assets/js/libraries/async.js"></script>
     <!--- end of loaded --->
+    <script src = "assets/js/awesomplete.js" async></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js"></script>

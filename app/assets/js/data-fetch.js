@@ -39,7 +39,7 @@ var settings = {
      $.ajax(settings).done(function (response) {
        console.log(response);
          var dataList = document.getElementById("datalist1");
-         var alternateList = document.getElementById("alternateDataList");
+         var alternateList = document.getElementById("myList");
          console.log("HELLO");
          console.log(alternateList);
          console.log(datalist1);
