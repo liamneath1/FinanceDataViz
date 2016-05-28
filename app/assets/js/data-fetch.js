@@ -322,7 +322,7 @@ $("#ticketCode").keypress(function(e) {
          var dataList = document.getElementById("datalist");
          var text ="";
          for(var i = 0; i < 4; i++){
-             text += "<option value=\"" + response[i].tickername +"\">";
+             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
          }
          console.log(text);
          dataList.innerHTML = text;
