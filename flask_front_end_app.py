@@ -44,8 +44,10 @@ def testQuery():
 	# resp = Response(response = data, status = 200, mimetype = "application/json")
 	# return (resp)
 	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
+	resp = flask.Response("HELLO",200)
 	jsonData = json.dumps([dict(r) for r in res])
-	return jsonify(jsonData)
+	resp.headers['DATA'] = jsonData
+	return resp
 
 # send assets (ex. assets/js/random_triangle_meshes/random_triangle_meshes.js)
 # blocks other requests, so your directories won't get listed (ex. assets/js will return "not found")
