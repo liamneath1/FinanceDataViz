@@ -24,13 +24,13 @@
     <script src = "assets/js/awesomplete.js" ></script>
     <div class = "visual">
         <div id = "menuBar">
-            <div id = "load">
+            <div id = "loadByTick">
                 <input type = "text" id = "ticketCode">
                 <button class = "button" onClick= "fetchAndAdd()"> Load Ticket </button>
             </div>
-            <div id ="remove"> 
+            <div id ="loadByRemove"> 
                 <input type = "text" id = "companyName">
-                <button class ="button" onClick = "removeTicket()"> Remove Ticket</button>
+                <button class ="button" onClick = "fetchAndAdd()"> Load Company</button>
             </div>
             <div id = "reset">
                 <button id = "resetButton" class= "button" onClick = "resetViz()"> RESET</button>
