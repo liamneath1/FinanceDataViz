@@ -305,16 +305,6 @@ function processData(){
 $("#ticketCode").keypress(function(e) {
     var curr = document.getElementById("ticketCode").value
     console.log(curr + String.fromCharCode(e.which) )
-//    var xhr = new XMLHttpRequest();
-//    xhr.open('GET', "/testQuery/", true);
-//    xhr.send();
-//    console.log('HELLO?');
-//    console.log(xhr.getAllResponseHeaders);
-//    console.log(xhr.HEADERS_RECEIVED);
-//    console.log("PRINTING THE RESPONSE: ");
-//    console.log(xhr.response.body);
-//    console.log(xhr.responseXML);
-//    console.log(xhr.responseText);
      var settings = {
        "async": true,
        "crossDomain": true,
@@ -329,6 +319,13 @@ $("#ticketCode").keypress(function(e) {
      console.log("RESPONSE")
      $.ajax(settings).done(function (response) {
        console.log(response);
+         var dataList = document.getElementById("datalist");
+         var text ="";
+         for(var i = 0; i < 4; i++){
+             text += "<option value=\"" + response[i].tickername +"\">";
+         }
+         dataList.innerHTML = text;
+         
      });
     
     
