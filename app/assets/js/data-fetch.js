@@ -40,6 +40,8 @@ var settings = {
        console.log(response);
          var dataList = document.getElementById("datalist1");
          var alternateList = document.getElementById("alternateDataList");
+         console.log("HELLO");
+         console.log(alternateList);
          console.log(datalist1);
          var text ="";
          var result ="";
