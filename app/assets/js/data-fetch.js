@@ -37,7 +37,6 @@ var settings = {
      };
      console.log("RESPONSE");
      $.ajax(settings).done(function (response) {
-         var dataList = document.getElementById("datalist1");
          var text ="";
          var result ="\"";
          var text2 = "";
@@ -53,7 +52,6 @@ var settings = {
              }
          }
          result += "\"";
-         dataList.innerHTML = text;
          var input = document.getElementById("ticketCode");
          console.log(input);
          console.log("HELLO Liam");
