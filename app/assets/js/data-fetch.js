@@ -271,7 +271,7 @@ function processData(){
                 .height(150)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(false)
+                .mouseZoomable(true)
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
