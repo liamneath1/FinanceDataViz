@@ -305,16 +305,16 @@ function processData(){
 $("#ticketCode").keypress(function(e) {
     var curr = document.getElementById("ticketCode").value
     console.log(curr + String.fromCharCode(e.which) )
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', "/testQuery/", true);
-    xhr.send();
-    console.log('HELLO?');
-    console.log(xhr.getAllResponseHeaders);
-    console.log(xhr.HEADERS_RECEIVED);
-    console.log("PRINTING THE RESPONSE: ");
-    console.log(xhr.response);
-    console.log(xhr.responseXML);
-    console.log(xhr.responseText);
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('GET', "/testQuery/", true);
+//    xhr.send();
+//    console.log('HELLO?');
+//    console.log(xhr.getAllResponseHeaders);
+//    console.log(xhr.HEADERS_RECEIVED);
+//    console.log("PRINTING THE RESPONSE: ");
+//    console.log(xhr.response.body);
+//    console.log(xhr.responseXML);
+//    console.log(xhr.responseText);
      var settings = {
        "async": true,
        "crossDomain": true,
