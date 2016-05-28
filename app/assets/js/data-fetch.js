@@ -43,7 +43,7 @@ var settings = {
          var text2 = "";
          var listOfTickers = [];
          for(var i = 0; i < response.length; i++){
-             list[i] = (response[i].tickername).trim();
+             listOfTickers[i] = (response[i].tickername).trim();
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
              text2 += "<option>" + (response[i].tickername).trim() + "</option>";
              if (i != response.length -1){
