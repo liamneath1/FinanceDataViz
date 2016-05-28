@@ -324,6 +324,7 @@ $("#ticketCode").keypress(function(e) {
          for(var i = 0; i < 4; i++){
              text += "<option value=\"" + response[i].tickername +"\">";
          }
+         console.log(text);
          dataList.innerHTML = text;
          
      });
