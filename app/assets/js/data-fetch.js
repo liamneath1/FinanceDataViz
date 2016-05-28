@@ -116,8 +116,21 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 
 
-function fetchAndAdd(chartLetter){
-    console.log(chartLetter);
+function fetchAndAdd(chartReference){
+    if(chartReference === 'ticket'){
+        var ticketCode = document.getElementById('ticketCode').value;
+        console.log(ticketCode);
+    }else if (chartReference === 'company'){
+        var companyName = document.getElementById('companyName').value;
+    }else if (chartReference === 'A'){
+
+    }else if (chartReference === 'B'){
+
+    }else if (chartReference === 'C'){
+
+    }else if (chartReference === 'D'){
+
+    }
 }
 
 function processData(){
