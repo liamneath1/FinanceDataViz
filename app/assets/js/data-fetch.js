@@ -54,7 +54,7 @@ var settings = {
          }
          result += "\"";
          dataList.innerHTML = text;
-         var input = document.getElementById("myinput");
+         var input = document.getElementById("ticketCode");
          console.log(input);
          console.log("HELLO Liam");
          var awesomeplete = new Awesomplete(input, {
