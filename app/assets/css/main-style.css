@@ -50,12 +50,14 @@
 
 
 input[type=text] {
+/*
     border-style: solid;
     border: 1px solid ;
     border-radius:  5px;
     width: 120px;
     font-size: 20px;
   -webkit-appearance: none;
+*/
 }
 
 #menuBar{
