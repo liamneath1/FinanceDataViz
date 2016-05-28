@@ -353,7 +353,7 @@ function processData(){
 //         console.log(text);
 //         dataList.innerHTML = text;
 //         document.getElementById("ticketCode").focus();
-     });
+//     });
     
     
     
