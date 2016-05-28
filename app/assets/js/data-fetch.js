@@ -41,7 +41,9 @@ var settings = {
          var text ="";
          var result ="\"";
          var text2 = "";
+         var listOfTickers = [];
          for(var i = 0; i < response.length; i++){
+             list[i] = (response[i].tickername).trim();
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
              text2 += "<option>" + (response[i].tickername).trim() + "</option>";
              if (i != response.length -1){
@@ -51,16 +53,11 @@ var settings = {
              }
          }
          result += "\"";
-
          dataList.innerHTML = text;
-         
-         
          var input = document.getElementById("myinput");
          console.log(input);
          console.log("HELLO Liam");
-         new Awesomplete(input, {
-	       list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-         });
+         new Awesomplete(input,listOfTickers);
      });
 
 
