@@ -37,16 +37,18 @@ var settings = {
      };
      console.log("RESPONSE");
      $.ajax(settings).done(function (response) {
-       console.log(response);
+      // console.log(response);
          var dataList = document.getElementById("datalist1");
          var alternateList = document.getElementById("myList");
          console.log("HELLO");
          console.log(alternateList);
-         console.log(datalist1);
+        // console.log(datalist1);
          var text ="";
          var result ="\"";
+         var text2 = "";
          for(var i = 0; i < response.length; i++){
              text += "<option value=\"" + (response[i].tickername).trim() +"\">";
+             text2 += "<option>" + (response[i].tickername).trim() + "</option>";
              if (i != response.length -1){
                  result += (response[i].tickername).trim() + ",";
              } else {
@@ -54,9 +56,9 @@ var settings = {
              }
          }
          result += "\"";
-         console.log(text);
+         //console.log(text);
          dataList.innerHTML = text;
-         alternateList.innerHTML = text;
+         alternateList.innerHTML = text2;
          console.log(alternateList);
      });
 
