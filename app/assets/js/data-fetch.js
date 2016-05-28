@@ -56,7 +56,7 @@ var settings = {
          result += "\"";
          console.log(text);
          dataList.innerHTML = text;
-         alternateList.setAttribute("data-list",result);
+         alternateList.innerHTML = text;
          console.log(alternateList);
      });
 
