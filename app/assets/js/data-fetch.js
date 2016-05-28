@@ -315,6 +315,24 @@ $("#ticketCode").keypress(function(e) {
     console.log(xhr.response);
     console.log(xhr.responseXML);
     console.log(xhr.responseText);
+     var settings = {
+       "async": true,
+       "crossDomain": true,
+       "dataType": "json",
+       "url": "/testQuery/",
+       "method": "GET",
+       "headers": {
+         "accept": "application/json",
+         "x-mashape-key": "APIKEY"
+       }
+     }
+     console.log("RESPONSE")
+     $.ajax(settings).done(function (response) {
+       console.log(response);
+     });
+    
+    
+    
 //    $.ajax({
 //          dataType: "jsonp",
 //          url: "arcane-springs-65260.herokuapp.com/testQuery",
