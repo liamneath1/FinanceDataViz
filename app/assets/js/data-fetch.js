@@ -436,7 +436,7 @@ function processData(){
 function updateInfo(){
     var box = document.getElementById("stockInformation");
     var ticketurl = '/tickerNameQuery/' + ticketLoaded;
-    var innnerHTML = "";
+    var innerHTML = "";
     settings = {
        "async": true,
        "crossDomain": true,
