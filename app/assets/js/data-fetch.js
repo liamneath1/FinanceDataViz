@@ -453,7 +453,7 @@ function updateInfo(){
         console.log(response[0].companyname);
         innerHTML += "<h1> Stock Information </h1>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
-        innerHTML += "<p><b>Comapny Name</b>: " + response[0].companyname + "</p>";
+        innerHTML += "<p><b>Company Name</b>: " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
