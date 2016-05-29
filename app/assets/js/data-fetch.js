@@ -163,7 +163,7 @@ function loadCompany(method){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
-        var fluctuationChart = dc.barChart('#fluctuation-chart');
+        fluctuationChart = dc.barChart('#fluctuation-chart');
 
         fluctuationChart
                 .width(420)
@@ -186,24 +186,18 @@ function fetchAndAdd(chartReference){
             });
             
     }else if (chartReference === 'B'){
-        var gainOrLossChart = dc.pieChart('#fluctuation-chart');
-
-        gainOrLossChart
-                .width(180)
+        fluctuationChart
+                .width(420)
                 .height(180)
-                .radius(80)
-                .dimension(gainOrLoss)
-                .group(gainOrLossGroup)
-                .label(function (d){
-                    if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
-                        return d.data.key + '(0%)';
-                    }
-                    var label = d.data.key;
-                    if (all.value()){
-                        label += '(' + Math.floor(d.value / all.value() * 100) + '%)';
-                    }
-                    return label;  
-                });
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
@@ -224,7 +218,8 @@ var gainOrLoss;
 var gainOrLossGroup;
 var fluctuation;
 var fluctuationGroup;
-
+var volumeByDate;
+var volumeByDateGroup;
 
 function processData(){
     while(true){
@@ -381,12 +376,12 @@ function processData(){
             fluctuationChart.xAxis().tickFormat(
                 function (v) { return v + '%'; });
             fluctuationChart.yAxis().ticks(10);  
-            var volumeByDate = cf.dimension(function(d){
+            volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
             
             
-            var volumeByDateGroup = volumeByDate.group().reduce(
+            volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
                 }, 
