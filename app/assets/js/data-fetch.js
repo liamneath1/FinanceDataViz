@@ -465,7 +465,7 @@ function updateInfo(){
     });
 }
          
-
+updateInfo();
 // Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
