@@ -251,7 +251,10 @@ var fluctuation;
 var fluctuationGroup;
 var volumeByDate;
 var volumeByDateGroup;
-
+var quarter;
+var quarterGroup;
+var dayOfWeek;
+var dayOfWeekGroup;
 
 
 function processData(){
@@ -345,7 +348,7 @@ function processData(){
             
             fluctuationGroup = fluctuation.group(); 
             
-            var quarter = cf.dimension(function (d){
+            quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
                 if (month <= 2){
                     return 'Q1';
@@ -357,16 +360,16 @@ function processData(){
                     return 'Q4';
                 }
             });
-            var quarterGroup = quarter.group().reduceSum(function (d){
+            quarterGroup = quarter.group().reduceSum(function (d){
                return d.volume;  
             });
             
-            var dayOfWeek = cf.dimension(function (d){
+            dayOfWeek = cf.dimension(function (d){
                 var day = d.dd.getDay();
                 var name = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
                 return day + '.' + name[day];
             });
-            var dayOfWeekGroup = dayOfWeek.group();
+            dayOfWeekGroup = dayOfWeek.group();
             
             
             gainOrLossChart
