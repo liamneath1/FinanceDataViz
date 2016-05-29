@@ -38,6 +38,7 @@ function resetViz(){
     fetchData("https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
     document.getElementById('ticketCode').value = '';
     document.getElementById('companyName').value = '';
+    updateInfo();
 }
 
 var settings = {
@@ -163,6 +164,7 @@ function loadCompany(method){
         ticketCode = ticketCode.replace(/\s/g, '');
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
+        updateInfo();
     });
 
     
