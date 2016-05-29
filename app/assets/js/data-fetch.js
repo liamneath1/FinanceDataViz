@@ -169,6 +169,14 @@ function loadCompany(method){
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
+        volumeByDate.filter(null);
+        yearlyDimension.filter(null);
+        dateDimension.filter(null);
+        moveMonths.filter(null);
+        gainOrLoss.filter(null);
+        fluctuation.filter(null);
+        quarter.filter(null);
+        dayOfWeek.filter(null);
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
@@ -462,7 +470,7 @@ function updateInfo(){
     $.ajax(settings).done(function (response) {
         innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
-        innerHTML += "<p><b>Company Name</b>: " + response[0].companyname + "</p>";
+        innerHTML += "<p><b>Company Name</b> : " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
