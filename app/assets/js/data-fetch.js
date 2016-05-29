@@ -187,6 +187,8 @@ function fetchAndAdd(chartReference){
             
     }else if (chartReference === 'B'){
         console.log("b");
+        fluctuationChart.resetSvg();
+
         fluctuationChart
                 .width(420)
                 .height(180)
