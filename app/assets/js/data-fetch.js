@@ -38,6 +38,7 @@ function resetViz(){
     fetchData("https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
     document.getElementById('ticketCode').value = '';
     document.getElementById('companyName').value = '';
+    updateInfo();
 }
 
 var settings = {
@@ -164,6 +165,7 @@ function loadCompany(method){
         ticketCode = ticketCode.replace(/\s/g, '');
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
+        updateInfo();
     });
 
     
@@ -453,7 +455,7 @@ function updateInfo(){
     $.ajax(settings).done(function (response) {
         innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
-        innerHTML += "<p><b>Comapny Name</b>: " + response[0].companyname + "</p>";
+        innerHTML += "<p><b>Company Name</b>: " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";

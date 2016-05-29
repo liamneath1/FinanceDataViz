@@ -143,8 +143,8 @@ input[type=text] {
     margin: 0px 10px 0px 10px;
 }
 #stockInformation{
-    border-style: solid;
-    border-color: dodgerblue;
-    width:20%;
     float: left;
+}
+#gain-loss-chart{
+    float:left;
 }
