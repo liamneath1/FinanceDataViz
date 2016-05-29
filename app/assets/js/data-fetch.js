@@ -150,11 +150,9 @@ function loadCompany(method){
     }
 
     $.ajax(settings).done(function (response) {
-            console.log("got it");
-            console.log(response[0].tickername);
-            ticketCode = response[0].tickername;
-            ticketCode = ticketCode.replace(/\s/g, '');
-            request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+        ticketCode = response[0].tickername;
+        ticketCode = ticketCode.replace(/\s/g, '');
+        request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
     });
 
@@ -165,9 +163,47 @@ function loadCompany(method){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
+        var fluctuationChart = dc.barChart('#fluctuation-chart');
 
+        fluctuationChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(fluctuation)
+                .group(fluctuationGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
+            
+            fluctuationChart.xAxis().tickFormat(
+                function (v) { return v + '%'; });
+            fluctuationChart.yAxis().ticks(10);  
+            var volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+            
     }else if (chartReference === 'B'){
+        var gainOrLossChart = dc.pieChart('#fluctuation-chart');
 
+        gainOrLossChart
+                .width(180)
+                .height(180)
+                .radius(80)
+                .dimension(gainOrLoss)
+                .group(gainOrLossGroup)
+                .label(function (d){
+                    if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
+                        return d.data.key + '(0%)';
+                    }
+                    var label = d.data.key;
+                    if (all.value()){
+                        label += '(' + Math.floor(d.value / all.value() * 100) + '%)';
+                    }
+                    return label;  
+                });
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
