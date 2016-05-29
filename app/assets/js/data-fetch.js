@@ -186,6 +186,7 @@ function fetchAndAdd(chartReference){
             });
             
     }else if (chartReference === 'B'){
+        console.log("b");
         fluctuationChart
                 .width(420)
                 .height(180)
