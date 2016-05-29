@@ -136,13 +136,14 @@ function loadCompany(method){
            }
          };
          console.log("RESPONSE");
-        $.ajax(settings).done(function (response) {
+       
+    }
+    
+    $.ajax(settings).done(function (response) {
             console.log("got it");
             console.log(response[0].tickername);
             ticketCode = response[0].tickername;
-        });
-    }
-    
+    });
 
     request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
     fetchData(request);
