@@ -48,7 +48,7 @@ def testQuery():
 
 @app.route("/tickerNameQuery/<path:path>")
 def tickerNameQuery():
-	res = db_session.execute("SELECT * FROM stockinfo WHERE tickerName='"+path+"';")
+	res = db_session.execute("SELECT * FROM stockInfo WHERE tickerName='"+path+"';")
 	# data = json.dumps([dict(r) for r in res])
 	# resp = Response(response = data, status = 200, mimetype = "application/json")
 	# return (resp)
