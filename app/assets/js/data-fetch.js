@@ -116,13 +116,49 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 
 
-function fetchAndAdd(chartReference){
-    if(chartReference === 'ticket'){
+function loadCompany(method){
+    var settings;
+    if(method==='ticket'){
         var ticketCode = document.getElementById('ticketCode').value;
-        console.log(ticketCode);
-    }else if (chartReference === 'company'){
+        var ticketurl = "/tickerNameQuery/" + ticketCode;
+        settings = {
+           "async": true,
+           "crossDomain": true,
+           "dataType": "json",
+           "url": ticketurl,
+           "method": "GET",
+           "headers": {
+             "accept": "application/json",
+             "x-mashape-key": "APIKEY"
+           }
+         };
+    }else if(method==='company'){
         var companyName = document.getElementById('companyName').value;
-    }else if (chartReference === 'A'){
+        var companyurl = "/companyNameQuery/" + companyName;
+        settings = {
+           "async": true,
+           "crossDomain": true,
+           "dataType": "json",
+           "url": companyurl,
+           "method": "GET",
+           "headers": {
+             "accept": "application/json",
+             "x-mashape-key": "APIKEY"
+           }
+         };
+    }
+
+    console.log("RESPONSE");
+    $.ajax(settings).done(function (response) {
+        console.log("got it");
+        console.log(response);
+    });
+
+}
+
+
+function fetchAndAdd(chartReference){
+    if (chartReference === 'A'){
 
     }else if (chartReference === 'B'){
 
