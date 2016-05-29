@@ -450,7 +450,8 @@ function updateInfo(){
      };
     
     $.ajax(settings).done(function (response) {
-        console.log(response.companyname);
+        console.log(response[0].companyname);
+        console.log(response[0]);
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
         innerHTML += "<p><b>Comapny Name</b>: " + response.companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response.industry + "</p>";
