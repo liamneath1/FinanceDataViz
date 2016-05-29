@@ -456,10 +456,10 @@ function updateInfo(){
         innerHTML += "<p><b>Sector</b> : " + response.sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response.marketcap + "</p>";
         box.innerHTML = innnerHTML;
-    }
-    
-    
+    });
 }
+         
+updateInfo();
 // Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
