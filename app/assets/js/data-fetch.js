@@ -209,6 +209,20 @@ function fetchAndAdd(chartReference){
 }
 
 
+var randomChart = dc.barChart();
+randomChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
+
 var yearlyDimension;
 var cf;
 var all;
