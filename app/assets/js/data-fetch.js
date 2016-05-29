@@ -1,7 +1,9 @@
 /*
 Basic stocks/indexs to include!
 */
-var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; // MAKE THIS DYNAMIC
+var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
+var ticketLoaded = "NDAQ";
+// MAKE THIS DYNAMIC
 
 var loadedData = [];    // big array containing raw data
 var info; 
@@ -431,7 +433,33 @@ function processData(){
     }   
 }
 
-
+function updateInfo(){
+    var box = document.getElementById("stockInformation");
+    var ticketurl = '/tickerNameQuery/' + ticketLoaded;
+    var innnerHTML = "";
+    settings = {
+       "async": true,
+       "crossDomain": true,
+       "dataType": "json",
+       "url": ticketurl,
+       "method": "GET",
+       "headers": {
+         "accept": "application/json",
+         "x-mashape-key": "APIKEY"
+       }
+     };
+    
+    $.ajax(settings).done(function (response) {
+        innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
+        innerHTML += "<p><b>Comapny Name</b>: " + response.companyname + "</p>";
+        innerHTML += "<p><b>Industry</b> : " + response.industry + "</p>";
+        innerHTML += "<p><b>Sector</b> : " + response.sector + "</p>";
+        innerHTML += "<p><b>Market Cap</b> : " + response.marketcap + "</p>";
+        box.innerHTML = innnerHTML;
+    }
+    
+    
+}
 // Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
