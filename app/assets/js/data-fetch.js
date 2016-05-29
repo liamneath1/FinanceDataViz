@@ -126,6 +126,7 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 
 function loadCompany(method){
+    d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
     if(method==='ticket'){
@@ -450,8 +451,7 @@ function updateInfo(){
      };
     
     $.ajax(settings).done(function (response) {
-        console.log(response[0].companyname);
-        innerHTML += "<h1> Stock Information </h1>";
+        innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
         innerHTML += "<p><b>Comapny Name</b>: " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
@@ -461,7 +461,7 @@ function updateInfo(){
     });
 }
          
-updateInfo();
+
 // Additional way to make HTTP request
 //function foo() {
 //    // RETURN the promise
