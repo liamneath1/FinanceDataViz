@@ -145,6 +145,7 @@ input[type=text] {
 #stockInformation{
     float: left;
 }
+
 #gain-loss-chart{
     float:left;
 }
