@@ -139,7 +139,7 @@ function loadCompany(method){
         $.ajax(settings).done(function (response) {
             console.log("got it");
             console.log(response[0].tickername);
-            tickerCode = response[0].tickername;
+            ticketCode = response[0].tickername;
         });
     }
     
