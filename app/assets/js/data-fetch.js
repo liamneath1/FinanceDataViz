@@ -111,7 +111,7 @@ fetchData(request);
 var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
-var closingPriceChart = dc.lineChart('#closing-price-chart');
+var closingPriceChart = dc.barChart('#closing-price-chart');
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
 
