@@ -451,12 +451,11 @@ function updateInfo(){
     
     $.ajax(settings).done(function (response) {
         console.log(response[0].companyname);
-        console.log(response[0]);
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
-        innerHTML += "<p><b>Comapny Name</b>: " + response.companyname + "</p>";
-        innerHTML += "<p><b>Industry</b> : " + response.industry + "</p>";
-        innerHTML += "<p><b>Sector</b> : " + response.sector + "</p>";
-        innerHTML += "<p><b>Market Cap</b> : " + response.marketcap + "</p>";
+        innerHTML += "<p><b>Comapny Name</b>: " + response[0].companyname + "</p>";
+        innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
+        innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
+        innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         box.innerHTML = innerHTML;
     });
 }
