@@ -29,6 +29,11 @@ db_session = None 	# each client maintains a connection
 
 # ------------- GLOBAL VARIABLES -------------- #
 # get root
+
+@app.route("/fetchLogo/<path:path>")
+def send_logo(path):
+	 return send_from_directory('additional_info',path)
+
 @app.route("/")
 def index():
     global db_session
