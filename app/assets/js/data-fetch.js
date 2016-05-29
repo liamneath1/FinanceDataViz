@@ -111,7 +111,7 @@ fetchData(request);
 var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
-var closingPriceChart = dc.barChart('#closing-price-chart');
+var closingPriceChart = dc.lineChart('#closing-price-chart');
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
 
@@ -414,35 +414,6 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
                 .xAxis();
-            
-//            timeSelectChart
-//                .width(990)
-//                .height(40)
-//                .margins({top: 0, right: 50, bottom: 20, left: 40})
-//                .dimension(volumeByDate)
-//                .group(volumeByDateGroup)
-//                .centerBar(true)
-//                .gap(1)
-//                .x(d3.time.scale().domain([new Date(2000,6,18),new Date(2017,11,31)]))
-//                .round(d3.time.month.round)
-//                .xUnits(d3.time.months);
-            
-//            timeSelectChart.yAxis().ticks(0);
-            var randomChart = dc.barChart('#randomchart');
-             randomChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeByDateGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
-            
-            
             
             dc.renderAll();
             break;
