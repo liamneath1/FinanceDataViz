@@ -39,7 +39,7 @@ def index():
 
 @app.route("/testQuery/")
 def testQuery():
-	res = db_session.execute("SELECT * FROM stockinfo;")
+	res = db_session.execute("SELECT * FROM stockInfo;")
 	# data = json.dumps([dict(r) for r in res])
 	# resp = Response(response = data, status = 200, mimetype = "application/json")
 	# return (resp)
