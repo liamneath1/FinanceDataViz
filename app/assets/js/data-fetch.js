@@ -451,6 +451,7 @@ function updateInfo(){
     
     $.ajax(settings).done(function (response) {
         console.log(response[0].companyname);
+        innerHTML += "<h1> Stock Information </h1>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
         innerHTML += "<p><b>Comapny Name</b>: " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
