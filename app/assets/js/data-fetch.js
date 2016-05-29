@@ -121,10 +121,22 @@ function loadCompany(method){
     var ticketCode;
     if(method==='ticket'){
         ticketCode = document.getElementById('ticketCode').value;
+        var ticketurl = '/tickerNameQuery/' + ticketCode;
+        settings = {
+           "async": true,
+           "crossDomain": true,
+           "dataType": "json",
+           "url": ticketurl,
+           "method": "GET",
+           "headers": {
+             "accept": "application/json",
+             "x-mashape-key": "APIKEY"
+           }
+         };
     }else if(method==='company'){
         var companyName = document.getElementById('companyName').value;
         var companyurl = "/companyNameQuery/" + companyName;
-        var settings = {
+        settings = {
            "async": true,
            "crossDomain": true,
            "dataType": "json",
@@ -135,10 +147,8 @@ function loadCompany(method){
              "x-mashape-key": "APIKEY"
            }
          };
-         console.log("RESPONSE");
-       
     }
-    
+
     $.ajax(settings).done(function (response) {
             console.log("got it");
             console.log(response[0].tickername);
