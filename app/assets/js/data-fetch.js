@@ -211,6 +211,21 @@ function fetchAndAdd(chartReference){
     }
 }
 
+
+var yearlyDimension;
+var cf;
+var all;
+var dateDimension;
+var moveMonths;
+var monthlyMoveGroup;
+var volumeByMonthGroup;
+var indexAvgByMonthGroup;
+var gainOrLoss;
+var gainOrLossGroup;
+var fluctuation;
+var fluctuationGroup;
+
+
 function processData(){
     while(true){
         console.log("Entered loop");
@@ -230,11 +245,11 @@ function processData(){
                     d.month = d.dd.getMonth();
                 }
             });
-            var cf = crossfilter(loadedData[0]);
-            var all = cf.groupAll();
+            cf = crossfilter(loadedData[0]);
+            all = cf.groupAll();
             
             // fetching the yearly dimension 
-            var yearlyDimension = cf.dimension(function (d){
+            yearlyDimension = cf.dimension(function (d){
                 //console.log(d.dd);
                 if (d.dd != null){
                     return d3.time.year(d.dd).getFullYear();
@@ -247,28 +262,28 @@ function processData(){
             console.log(yearlyDimension.top(Infinity));
          
             // dimension by full date
-            var dateDimension = cf.dimension(function (d){
+            dateDimension = cf.dimension(function (d){
                 return d.dd; 
             });
             // dimension by month 
-            var moveMonths = cf.dimension(function (d){
+            moveMonths = cf.dimension(function (d){
                 //console.log(d.month);
                 //return d.month;
                return  d.dd.getMonth();
             }); 
-            var monthlyMoveGroup = moveMonths.group().reduceSum(function (d){
+            monthlyMoveGroup = moveMonths.group().reduceSum(function (d){
                 console.log("MOVEMENT ->" + Math.abs(d.close - d.open))
                 return Math.abs(d.close - d.open);
             });
             
-            var volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
+            volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
                 //console.log(d.volume/500);
                 return d.volume/ 500; 
             });
             console.log(volumeByMonthGroup.top(Infinity));
             
             
-            var indexAvgByMonthGroup = moveMonths.group().reduce(
+            indexAvgByMonthGroup = moveMonths.group().reduce(
                 function (p, v) {
                     ++p.days;
                     p.total += (v.open + v.close) / 2;
@@ -286,7 +301,7 @@ function processData(){
                 }
             );
             
-            var gainOrLoss = cf.dimension(function (d){
+            gainOrLoss = cf.dimension(function (d){
                 if (d.open > d.close){
                     return 'Loss';
                 } else {
@@ -294,13 +309,13 @@ function processData(){
                 }
                 //return d.open > d.close ? 'Loss' : 'Gain';
             });
-            var gainOrLossGroup = gainOrLoss.group();
+            gainOrLossGroup = gainOrLoss.group();
             
-            var fluctuation = cf.dimension(function (d){
+            fluctuation = cf.dimension(function (d){
                return Math.round((d.close - d.open)/d.open * 100);
             });
             
-            var fluctuationGroup = fluctuation.group(); 
+            fluctuationGroup = fluctuation.group(); 
             
             var quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
