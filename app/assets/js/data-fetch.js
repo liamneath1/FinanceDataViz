@@ -455,7 +455,7 @@ function updateInfo(){
         innerHTML += "<p><b>Industry</b> : " + response.industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response.sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response.marketcap + "</p>";
-        box.innerHTML = innnerHTML;
+        box.innerHTML = innerHTML;
     });
 }
          
