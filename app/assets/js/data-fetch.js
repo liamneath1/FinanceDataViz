@@ -118,24 +118,13 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 function loadCompany(method){
     var settings;
+    var ticketCode;
     if(method==='ticket'){
-        var ticketCode = document.getElementById('ticketCode').value;
-        var ticketurl = "/tickerNameQuery/" + ticketCode;
-        settings = {
-           "async": true,
-           "crossDomain": true,
-           "dataType": "json",
-           "url": ticketurl,
-           "method": "GET",
-           "headers": {
-             "accept": "application/json",
-             "x-mashape-key": "APIKEY"
-           }
-         };
+        ticketCode = document.getElementById('ticketCode').value;
     }else if(method==='company'){
         var companyName = document.getElementById('companyName').value;
         var companyurl = "/companyNameQuery/" + companyName;
-        settings = {
+        var settings = {
            "async": true,
            "crossDomain": true,
            "dataType": "json",
@@ -146,14 +135,18 @@ function loadCompany(method){
              "x-mashape-key": "APIKEY"
            }
          };
+         console.log("RESPONSE");
+        $.ajax(settings).done(function (response) {
+            console.log("got it");
+            console.log(response[0].tickername);
+            tickerCode = response[0].tickername;
+        });
     }
+    
 
-    console.log("RESPONSE");
-    $.ajax(settings).done(function (response) {
-        console.log("got it");
-        console.log(response);
-    });
-
+    request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+    fetchData(request);
+    //call the fetch_data
 }
 
 

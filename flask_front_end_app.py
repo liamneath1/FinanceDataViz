@@ -46,15 +46,6 @@ def testQuery():
 	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
 	return app.make_response(json.dumps([dict(r) for r in res]))
 
-@app.route("/tickerNameQuery/<path:path>")
-def tickerNameQuery(path):
-	res = db_session.execute("SELECT * FROM stockinfo WHERE tickerName='"+path+"';")
-	# data = json.dumps([dict(r) for r in res])
-	# resp = Response(response = data, status = 200, mimetype = "application/json")
-	# return (resp)
-	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
-	return app.make_response(json.dumps([dict(r) for r in res]))
-
 
 @app.route("/companyNameQuery/<path:path>")
 def companyNameQuery(path):
