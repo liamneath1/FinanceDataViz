@@ -144,6 +144,5 @@ input[type=text] {
 }
 #stockInformation{
     border-style: solid;
-    border-color: dodgerblue;
     float: left;
 }
