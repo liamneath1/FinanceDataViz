@@ -426,7 +426,7 @@ function processData(){
                 .dimension(volumeByDate)
                 .group(volumeByDateGroup)
                 .elasticY(true)
-                .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
+                .x(d3.time.scale().domain([startDate, endDate]))
                 .xAxis();
             
             dc.renderAll();
