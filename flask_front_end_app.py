@@ -48,7 +48,7 @@ def upload_logo():
 	if file and allowed_file(file.filename):
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'],"temp"))
-		return redirect(url_for('uploaded_file',filename=filename))
+		return redirect(url_for('additional_info',filename=filename))
 
 
 @app.route("/fetchLogo/<path:path>")
