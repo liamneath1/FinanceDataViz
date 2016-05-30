@@ -146,8 +146,8 @@ var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.lineChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-var dividendsChart = dc.lineChart('#dividends-chart');
-var highLowChart = dc.lineChart('#high-low-chart');
+//var dividendsChart = dc.lineChart('#dividends-chart');
+//var highLowChart = dc.lineChart('#high-low-chart');
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
@@ -408,7 +408,7 @@ function processData(){
             });
 
 
-            volumeGroup = volumeDimension.group().reduceSum( function(d){
+            volumeGroup = volumeByDate.group().reduceSum( function(d){
                     return d.volume;
                 }
             );
