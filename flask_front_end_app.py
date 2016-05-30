@@ -1,24 +1,34 @@
 import os, copy
 import json, collections
-from flask import Flask, jsonify, request, send_from_directory, make_response,Response
+from flask import Flask, jsonify, request, send_from_directory, make_response,Response, redirect,url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.heroku import Heroku
+from werkzeug.utils import secure_filename
+
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-
-
 from sqlalchemy.orm import scoped_session, sessionmaker, Query
 
+
+UPLOAD_FOLDER = /additional_info
+ADDITIONAL_EXTENSTIONS = set(['png','jpg','jpeg'])
+
 app = Flask(__name__, static_url_path='')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']	#primary key is ID??
 engine = create_engine('postgres://jwnrvwczsmwahh:Eay8klzAFN5V0xljHial-krhxv@ec2-174-129-242-241.compute-1.amazonaws.com:5432/d4v4mh5fc6v6hu')
+
+
+
 
 Base = declarative_base()
 Base.metadata.reflect(engine)
 from sqlalchemy.orm import relationship, backref
 class Users(Base):
     __table__ = Base.metadata.tables['stockinfo']
+
+
 
 
 
@@ -29,6 +39,9 @@ db_session = None 	# each client maintains a connection
 
 # ------------- GLOBAL VARIABLES -------------- #
 # get root
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSTIONS
 
 @app.route("/fetchLogo/<path:path>")
 def send_logo(path):
