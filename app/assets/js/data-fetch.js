@@ -150,7 +150,7 @@ var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.lineChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
 //var dividendsChart = dc.lineChart('#dividends-chart');
-var highLowChart = dc.lineChart('#high-low-chart');
+var highLowChart = dc.compositeChart('#high-low-chart');
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
