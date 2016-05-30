@@ -166,28 +166,17 @@ function loadCompany(method){
     $.ajax(settings).done(function (response) {
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
-        dc.filterAll();
-        cf.remove();
+
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
-        gainOrLossChart.resetSvg();
-        quarterChart.resetSvg();
-        fluctuationChart.resetSvg();
-        closingPriceChart.resetSvg();
-        d3.selectAll("svg").remove();
-        monthlyMoveGroup.dispose();
-        volumeByMonthGroup.dispose();
-        indexAvgByMonthGroup.dispose();
-        gainOrLossGroup.dispose();
-        fluctuationGroup.dispose();
-        volumeByDateGroup.dispose();
-        quarterGroup.dispose();
+        
+        fluctuation.filterRange([-50000,50000]);
+
+        cf.remove();
         dc.redrawAll();
 
-        fluctuation = null;
-        fluctuationGroup = null;
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
