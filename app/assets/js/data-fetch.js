@@ -150,7 +150,7 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 
 function loadCompany(method){
-    //d3.selectAll("svg").remove();
+    d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
     if(method==='ticket'){
@@ -188,22 +188,21 @@ function loadCompany(method){
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
 
-        //$('#gain-loss-chart').empty();
+        $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
-
-        //d3.selectAll("svg").remove()
+        
         fluctuation.filterRange([-50000,50000]);
 
         cf.remove();
         dc.renderAll();
         dc.redrawAll();
 
-        //request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-        //fetchData(request);
-        //ticketLoaded = ticketCode;
-        //updateInfo();
+        request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+        fetchData(request);
+        ticketLoaded = ticketCode;
+        updateInfo();
     });
 
     
@@ -213,9 +212,48 @@ function loadCompany(method){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
+        fluctuationChart = dc.barChart('#fluctuation-chart');
 
+        fluctuationChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(fluctuation)
+                .group(fluctuationGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
+            
+            fluctuationChart.xAxis().tickFormat(
+                function (v) { return v + '%'; });
+            fluctuationChart.yAxis().ticks(10);  
+            var volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+            
     }else if (chartReference === 'B'){
-        
+        console.log("b");
+        fluctuationChart.resetSvg();
+        volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+        fluctuationChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
+        dc.renderAll();
+        dc.redrawAll();
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
