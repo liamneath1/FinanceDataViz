@@ -134,6 +134,7 @@ function loadCompany(method){
     if(method==='ticket'){
         ticketCode = document.getElementById('ticketCode').value;
         var ticketurl = '/tickerNameQuery/' + ticketCode;
+        console.log(ticketurl);
         settings = {
            "async": true,
            "crossDomain": true,
