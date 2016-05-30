@@ -237,17 +237,17 @@ function processData(){
                 d.low = +d.Low;
                 d.volume = +d.Volume;
                 d.dd = dateFormat.parse(d.Date);// attempt to parse the data
-                if(startDate === undefined && d.dd!=null){
+                if(startDate === undefined && d.Date!=null){
                     console.log("lmao");
                     startDate = d.Date;
                     endDate = d.Date;
                     console.log("start Date" + startDate + "enddate" + endDate);
                 }
 
-                if(d.dd.getYear() < startDate.getYear() && d.dd.getMonth() < startDate.getMonth() && d.dd.getDay() < startDate.getDay() &&d.dd!=null){
-                    startDate = d.dd;
-                }else if(d.dd > endDate){
-                    endDate = d.dd;
+                if(d.Date < startDate && d.Date!=null){
+                    startDate = d.Date;
+                }else if(d.Date > endDate){
+                    endDate = d.Date;
                 }
                
                 if (d.dd == null){
