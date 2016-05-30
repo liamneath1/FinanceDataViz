@@ -32,7 +32,8 @@ var quarter;
 var quarterGroup;
 var dayOfWeek;
 var dayOfWeekGroup;
-var startDate, endDate;
+var startDate;
+var endDate;
 
 var nameToTicker ={};
 ///////////////////
@@ -251,7 +252,7 @@ function processData(){
                     d.month = d.dd.getMonth();
                 }
             });
-            console.log(startDate + "  " + endDate);
+            console.log("startDate" + startDate + "  " + "enddate" + endDate);
             cf = crossfilter(loadedData[0]);
             all = cf.groupAll();
             
