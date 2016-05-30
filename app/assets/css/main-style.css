@@ -147,5 +147,5 @@ input[type=text] {
 }
 
 .chartbox{
-    float:left;
+    display:inline-block;
 }
