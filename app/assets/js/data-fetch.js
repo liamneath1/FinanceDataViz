@@ -32,6 +32,7 @@ var quarter;
 var quarterGroup;
 var dayOfWeek;
 var dayOfWeekGroup;
+var volumeDimension;
 
 var nameToTicker ={};
 ///////////////////
@@ -143,6 +144,9 @@ var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.lineChart('#closing-price-chart');
+var volumeChart = dc.lineChart('#volume-chart');
+var dividendsChart = dc.lineChart('#dividends-chart');
+var highLowChart = dc.lineChart('#high-low-chart');
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
@@ -240,10 +244,8 @@ function processData(){
                 d.dd = dateFormat.parse(d.Date);// attempt to parse the data
 
                 if(startDate === undefined && d.Date!=null){
-                    console.log("lmao");
                     startDate = d.Date;
                     endDate = d.Date;
-                    console.log("start Date" + startDate + "enddate" + endDate);
                 }
                
                 if (d.dd == null){
@@ -253,7 +255,6 @@ function processData(){
                     d.month = d.dd.getMonth();
                     if(d.Date < startDate && d.Date!=null){
                         startDate = d.Date;
-                        console.log(startDate);
                     }else if(d.Date > endDate){
                         endDate = d.Date;
                     }
@@ -273,6 +274,10 @@ function processData(){
                     return 0;
                 }
             });
+
+            volumeDimension = cf.dimension(function(d)){
+                return d.volume;
+            }
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
          
@@ -396,6 +401,7 @@ function processData(){
             fluctuationChart.xAxis().tickFormat(
                 function (v) { return v + '%'; });
             fluctuationChart.yAxis().ticks(10);  
+
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
@@ -424,6 +430,23 @@ function processData(){
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .xAxis();
+
+
+            closingPriceChart
+                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .height(150)
+                .renderArea(true)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(true)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .dimension(volumeDimension)
                 .group(volumeByDateGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
@@ -467,63 +490,5 @@ function updateInfo(){
 }
          
 updateInfo();
-// Additional way to make HTTP request
-//function foo() {
-//    // RETURN the promise
-//    return fetch("https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH").then(function(response){
-//        console.log("WORKED");
-//        return response; // process it inside the `then`
-//    
-//    });
-//}
-//
-//foo().then(function(response){
-//    console.log(response);
-//    
-//});
-
-
-
-////////////////////
-//$("#ticketCode").keypress(function(e) {
-//    var curr = document.getElementById("ticketCode").value
-//    console.log(curr + String.fromCharCode(e.which) )
-//     var settings = {
-//       "async": true,
-//       "crossDomain": true,
-//       "dataType": "json",
-//       "url": "/testQuery/",
-//       "method": "GET",
-//       "headers": {
-//         "accept": "application/json",
-//         "x-mashape-key": "APIKEY"
-//       }
-//     }
-//     console.log("RESPONSE")
-//     $.ajax(settings).done(function (response) {
-//       console.log(response);
-//         var dataList = document.getElementById("datalist1");
-//         console.log(datalist1);
-//         var text ="";
-//         for(var i = 0; i < 4; i++){
-//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-//         }
-//         console.log(text);
-//         dataList.innerHTML = text;
-//         document.getElementById("ticketCode").focus();
-//     });
-    
-    
-    
-//    $.ajax({
-//          dataType: "jsonp",
-//          url: "arcane-springs-65260.herokuapp.com/testQuery",
-//          }).done(function ( data ) {
-//          console.log(data);
-//    });
-    
-    
-    
-//});
 
 
