@@ -1,8 +1,8 @@
 /*
 Basic stocks/indexs to include!
 */
-var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
-var ticketLoaded = "NDAQ";
+var request = "https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
+var ticketLoaded = "FB";
 // MAKE THIS DYNAMIC
 
 var loadedData = [];    // big array containing raw data
@@ -169,6 +169,14 @@ function loadCompany(method){
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
+        volumeByDate.filter(null);
+        yearlyDimension.filter(null);
+        dateDimension.filter(null);
+        moveMonths.filter(null);
+        gainOrLoss.filter(null);
+        fluctuation.filter(null);
+        quarter.filter(null);
+        dayOfWeek.filter(null);
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
@@ -243,7 +251,10 @@ var fluctuation;
 var fluctuationGroup;
 var volumeByDate;
 var volumeByDateGroup;
-
+var quarter;
+var quarterGroup;
+var dayOfWeek;
+var dayOfWeekGroup;
 
 
 function processData(){
@@ -337,7 +348,7 @@ function processData(){
             
             fluctuationGroup = fluctuation.group(); 
             
-            var quarter = cf.dimension(function (d){
+            quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
                 if (month <= 2){
                     return 'Q1';
@@ -349,16 +360,16 @@ function processData(){
                     return 'Q4';
                 }
             });
-            var quarterGroup = quarter.group().reduceSum(function (d){
+            quarterGroup = quarter.group().reduceSum(function (d){
                return d.volume;  
             });
             
-            var dayOfWeek = cf.dimension(function (d){
+            dayOfWeek = cf.dimension(function (d){
                 var day = d.dd.getDay();
                 var name = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
                 return day + '.' + name[day];
             });
-            var dayOfWeekGroup = dayOfWeek.group();
+            dayOfWeekGroup = dayOfWeek.group();
             
             
             gainOrLossChart
@@ -462,7 +473,7 @@ function updateInfo(){
     $.ajax(settings).done(function (response) {
         innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
-        innerHTML += "<p><b>Company Name</b>: " + response[0].companyname + "</p>";
+        innerHTML += "<p><b>Company Name</b> : " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
