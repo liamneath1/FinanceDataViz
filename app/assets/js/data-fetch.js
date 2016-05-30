@@ -378,42 +378,7 @@ function processData(){
             dayOfWeekGroup = dayOfWeek.group();
             
             console.log(fluctuation);
-            gainOrLossChart
-                .width(180)
-                .height(180)
-                .radius(80)
-                .dimension(gainOrLoss)
-                .group(gainOrLossGroup)
-                .label(function (d){
-                    if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
-                        return d.data.key + '(0%)';
-                    }
-                    var label = d.data.key;
-                    if (all.value()){
-                        label += '(' + Math.floor(d.value / all.value() * 100) + '%)';
-                    }
-                    return label;  
-                });
-            quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
-                .width(180)
-                .height(180)
-                .radius(80)
-                .innerRadius(30)
-                .dimension(quarter)
-                .group(quarterGroup);
             
-            fluctuationChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(fluctuation)
-                .group(fluctuationGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
             
             fluctuationChart.xAxis().tickFormat(
                 function (v) { return v + '%'; });
@@ -435,21 +400,7 @@ function processData(){
                 }
             );
             
-            closingPriceChart
-                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
-                .height(150)
-                .renderArea(true)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 20, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeByDateGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
-                .xAxis();
+            
             
             dc.renderAll();
             dc.redrawAll();
@@ -487,7 +438,62 @@ function updateInfo(){
         box.innerHTML = innerHTML;
     });
 }
+
+gainOrLossChart
+                .width(180)
+                .height(180)
+                .radius(80)
+                .dimension(gainOrLoss)
+                .group(gainOrLossGroup)
+                .label(function (d){
+                    if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
+                        return d.data.key + '(0%)';
+                    }
+                    var label = d.data.key;
+                    if (all.value()){
+                        label += '(' + Math.floor(d.value / all.value() * 100) + '%)';
+                    }
+                    return label;  
+                });
+            quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+                .width(180)
+                .height(180)
+                .radius(80)
+                .innerRadius(30)
+                .dimension(quarter)
+                .group(quarterGroup);
+            
+            fluctuationChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(fluctuation)
+                .group(fluctuationGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
          
+         closingPriceChart
+                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .height(150)
+                .renderArea(true)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(true)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
+                .xAxis();
+
+            dc.renderAll();
+            dc.redrawAll();
 updateInfo();
 
 
