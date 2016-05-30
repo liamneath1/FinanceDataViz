@@ -3,6 +3,7 @@ Basic stocks/indexs to include!
 */
 var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
 var ticketLoaded = "NDAQ";
+var ticketCompare;
 // MAKE THIS DYNAMIC
 
 var loadedData = [];    // big array containing raw data
@@ -10,7 +11,7 @@ var info;
 /*
 GLOBAL VARIABLES
 */
-
+var numOverlap = 0;
 
 var yearlyDimension;
 var cf = crossfilter();
@@ -30,7 +31,10 @@ var quarter;
 var quarterGroup;
 var dayOfWeek;
 var dayOfWeekGroup;
-var startDate, endDate;
+var volumeDimension;
+var volumeGroup;
+var highGroup;
+var lowGroup;
 
 var nameToTicker ={};
 ///////////////////
@@ -54,11 +58,11 @@ function makeJSObject(csv){
 
 
 function resetViz(){
-    fetchData("https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
+    fetchData("https://www.quandl.com/api/v3/datasets/WIKI/" + ticketLoaded + "/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
     document.getElementById('ticketCode').value = '';
     document.getElementById('companyName').value = '';
-    ticketLoaded = "NDAQ";
-    updateInfo();
+    ticketCompare = undefined;
+    document.getElementById('compareStockInformation').innerHTML="";
 }
 
 var settings = {
@@ -72,6 +76,7 @@ var settings = {
          "x-mashape-key": "APIKEY"
        }
     };
+
 console.log("RESPONSE");
 $.ajax(settings).done(function (response) {
     var text ="";
@@ -142,6 +147,9 @@ var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.lineChart('#closing-price-chart');
+var volumeChart = dc.lineChart('#volume-chart');
+//var dividendsChart = dc.lineChart('#dividends-chart');
+var highLowChart = dc.compositeChart('#high-low-chart');
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
@@ -199,58 +207,66 @@ function loadCompany(method){
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
-        updateInfo();
+        updateInfo('stockInformation');
+        document.getElementById('ticketCode').value = '';
+       document.getElementById('companyName').value = '';
     });
+}
 
+function compareCompany(){
+        var settings;
+        var ticketCode;
+        if(document.getElementById('ticketCode').value ===''){
+            var companyName = document.getElementById('companyName').value;
+            var companyurl = "/companyNameQuery/" + companyName;
+            settings = {
+               "async": true,
+               "crossDomain": true,
+               "dataType": "json",
+               "url": companyurl,
+               "method": "GET",
+               "headers": {
+                 "accept": "application/json",
+                 "x-mashape-key": "APIKEY"
+               }
+             };
+        }else{
+            ticketCode = document.getElementById('ticketCode').value.toUpperCase();
+            var ticketurl = '/tickerNameQuery/' + ticketCode;
+            settings = {
+               "async": true,
+               "crossDomain": true,
+               "dataType": "json",
+               "url": ticketurl,
+               "method": "GET",
+               "headers": {
+                 "accept": "application/json",
+                 "x-mashape-key": "APIKEY"
+               }
+             };
+        }
+        $.ajax(settings).done(function (response) {
+            ticketCode = response[0].tickername;
+            ticketCode = ticketCode.replace(/\s/g, '');
+
+            request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+            //fetchData(request);
+            ticketCompare = ticketCode;
+            updateInfo('compareStockInformation');
+            document.getElementById('ticketCode').value = '';
+            document.getElementById('companyName').value = '';
+        });
+}
     
     //call the fetch_data
-}
+
 
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
-        fluctuationChart = dc.barChart('#fluctuation-chart');
-
-        fluctuationChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(fluctuation)
-                .group(fluctuationGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
-            
-            fluctuationChart.xAxis().tickFormat(
-                function (v) { return v + '%'; });
-            fluctuationChart.yAxis().ticks(10);  
-            var volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
-            });
-            
+       
     }else if (chartReference === 'B'){
-        console.log("b");
-        fluctuationChart.resetSvg();
-        volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
-            });
-        fluctuationChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeByDateGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
-        dc.renderAll();
-        dc.redrawAll();
+      
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
@@ -261,6 +277,9 @@ function fetchAndAdd(chartReference){
 
 
 function processData(){
+
+    var startDate = undefined;
+    var endDate = undefined;
     while(true){
         console.log("Entered loop");
         if (loadedData[0] != null ){
@@ -271,15 +290,26 @@ function processData(){
                 d.high = +d.High;
                 d.low = +d.Low;
                 d.volume = +d.Volume;
-                d.dd = dateFormat.parse(d.Date);
-                console.log(d.dd);    // attempt to parse the data
+                d.dd = dateFormat.parse(d.Date);// attempt to parse the data
+
+                if(startDate === undefined && d.Date!=null){
+                    startDate = d.Date;
+                    endDate = d.Date;
+                }
+               
                 if (d.dd == null){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
                 } else {
                     d.month = d.dd.getMonth();
+                    if(d.Date < startDate && d.Date!=null){
+                        startDate = d.Date;
+                    }else if(d.Date > endDate){
+                        endDate = d.Date;
+                    }
                 }
             });
+            console.log("startDate" + startDate + "  " + "enddate" + endDate);
             cf = crossfilter(loadedData[0]);
             all = cf.groupAll();
             
@@ -292,6 +322,11 @@ function processData(){
                     console.log ("Returning NULL");
                     return 0;
                 }
+            });
+
+            volumeDimension = cf.dimension(function (d){
+                //console.log(d.volume);
+                return d.volume; 
             });
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
@@ -316,7 +351,6 @@ function processData(){
                 return d.volume/ 500; 
             });
             console.log(volumeByMonthGroup.top(Infinity));
-            
             
             indexAvgByMonthGroup = moveMonths.group().reduce(
                 function (p, v) {
@@ -416,10 +450,16 @@ function processData(){
             fluctuationChart.xAxis().tickFormat(
                 function (v) { return v + '%'; });
             fluctuationChart.yAxis().ticks(10);  
+
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
-            
+
+
+            volumeGroup = volumeByDate.group().reduceSum(function(d){
+                    return d.volume;
+                }
+            );
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
@@ -432,6 +472,15 @@ function processData(){
                     return 0;
                 }
             );
+
+            highGroup = volumeByDate.group().reduceSum(function(d){
+                return d.high;
+            });
+
+            lowGroup = volumeByDate.group().reduceSum(function(d){
+                return d.low;
+            });
+
             
             closingPriceChart
                 .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
@@ -446,8 +495,44 @@ function processData(){
                 .dimension(volumeByDate)
                 .group(volumeByDateGroup)
                 .elasticY(true)
-                .x(d3.time.scale().domain([new Date(2000,6,18), new Date(2017,11,31)]))
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+
+
+            volumeChart
+                .width(420) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .height(180)
+                .renderArea(true)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(true)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .xAxis();
+
+
+            highLowChart
+                .width(1160)
+                .height(250)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(volumeByDate)
+                .transitionDuration(500)
+                .elasticY(true)
+                .brushOn(false)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(highLowChart).group(lowGroup),
+                    dc.lineChart(highLowChart).group(highGroup)
+                ]);
+
             
             dc.renderAll();
             dc.redrawAll();
@@ -459,9 +544,15 @@ function processData(){
     }   
 }
 
-function updateInfo(){
-    var box = document.getElementById("stockInformation");
-    var ticketurl = '/tickerNameQuery/' + ticketLoaded;
+function updateInfo(stockInfoBox){
+    var box = document.getElementById(stockInfoBox);
+    var ticket;
+    if(stockInfoBox === 'stockInformation'){
+        ticket = ticketLoaded;
+    }else{
+        ticket = ticketCompare;
+    }
+    var ticketurl = '/tickerNameQuery/' + ticket;
     var innerHTML = "";
     settings = {
        "async": true,
@@ -477,13 +568,14 @@ function updateInfo(){
     
     $.ajax(settings).done(function (response) {
         innerHTML += "<h2> Stock Information </h2>";
-        innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
+        innerHTML += "<p><b>Ticker Code</b> : " + ticket + "</p>";
         innerHTML += "<p><b>Company Name</b> : " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         box.innerHTML = innerHTML;
     });
+<<<<<<< HEAD
 }        
 updateInfo();
 // Additional way to make HTTP request
@@ -544,5 +636,10 @@ updateInfo();
     
     
 //});
+=======
+}
+         
+updateInfo("stockInformation");
+>>>>>>> e141359cd455cde7e241eb76f0981525e23327d2
 
 
