@@ -8,9 +8,7 @@ var ticketLoaded = "FB";
 var loadedData = [];    // big array containing raw data
 var info; 
 /*
-
 GLOBAL VARIABLES
-
 */
 
 
@@ -486,8 +484,7 @@ function updateInfo(){
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         box.innerHTML = innerHTML;
     });
-}
-         
+}        
 updateInfo();
 
 
