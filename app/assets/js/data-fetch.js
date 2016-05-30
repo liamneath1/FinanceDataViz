@@ -244,7 +244,7 @@ function processData(){
                     console.log("start Date" + startDate + "enddate" + endDate);
                 }
 
-                if(d.Date < startDate){
+                if(d.Date < startDate && d.Date!=null){
                     startDate = d.Date;
                 }else if(d.Date > endDate){
                     endDate = d.Date;
