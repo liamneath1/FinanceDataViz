@@ -34,6 +34,8 @@ var dayOfWeek;
 var dayOfWeekGroup;
 var volumeDimension;
 var volumeGroup;
+var highGroup;
+var lowGroup;
 
 var nameToTicker ={};
 ///////////////////
@@ -75,6 +77,7 @@ var settings = {
          "x-mashape-key": "APIKEY"
        }
     };
+
 console.log("RESPONSE");
 $.ajax(settings).done(function (response) {
     var text ="";
@@ -147,7 +150,7 @@ var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.lineChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
 //var dividendsChart = dc.lineChart('#dividends-chart');
-//var highLowChart = dc.lineChart('#high-low-chart');
+var highLowChart = dc.lineChart('#high-low-chart');
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
@@ -408,7 +411,7 @@ function processData(){
             });
 
 
-            volumeGroup = volumeByDate.group().reduceSum( function(d){
+            volumeGroup = volumeByDate.group().reduceSum(function(d){
                     return d.volume;
                 }
             );
@@ -424,6 +427,14 @@ function processData(){
                     return 0;
                 }
             );
+
+            highGroup = volumeByDate.group().reduceSum(function(d){
+                return d.high;
+            });
+
+            lowGroup = volumeByDate.group().reduceSum(function(d){
+                return d.low;
+            });
 
             
             closingPriceChart
@@ -444,8 +455,8 @@ function processData(){
 
 
             volumeChart
-                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
-                .height(150)
+                .width(420) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .height(180)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
@@ -458,6 +469,25 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+
+
+            highLowChart
+                .width(1160)
+                .height(250)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(runDimension)
+                .transitionDuration(500)
+                .elasticY(true)
+                .brushOn(false)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .x(d3.scale.linear().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(lineChart1).group(lowGroup),
+                    dc.lineChart(lineChart1).group(highGroup)
+                ]);
+
             
             dc.renderAll();
             dc.redrawAll();
