@@ -475,7 +475,7 @@ function processData(){
                 .width(1160)
                 .height(250)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-                .dimension(runDimension)
+                .dimension(volumeByDate)
                 .transitionDuration(500)
                 .elasticY(true)
                 .brushOn(false)
