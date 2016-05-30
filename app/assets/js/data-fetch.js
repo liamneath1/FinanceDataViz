@@ -246,6 +246,7 @@ function processData(){
 
                 if(d.Date < startDate && d.Date!=null){
                     startDate = d.Date;
+                    console.log(startDate);
                 }else if(d.Date > endDate){
                     endDate = d.Date;
                 }
