@@ -53,7 +53,7 @@ def upload_logo():
 
 @app.route("/fetchLogo/<path:path>")
 def send_logo(path):
-	 return send_from_directory('additional_info',path)
+	 return send_from_directory('additional_resources',path)
 
 
 @app.route("/")
