@@ -243,8 +243,7 @@ function processData(){
                 }else if(d.Date > endDate){
                     endDate = d.Date;
                 }
-                d.dd = dateFormat.parse(d.Date);
-                console.log(d.dd);    // attempt to parse the data
+                d.dd = dateFormat.parse(d.Date);// attempt to parse the data
                 if (d.dd == null){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
