@@ -166,6 +166,7 @@ function loadCompany(method){
     $.ajax(settings).done(function (response) {
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
+        dc.filterAll();
         cf.remove();
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
