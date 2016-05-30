@@ -275,9 +275,9 @@ function processData(){
                 }
             });
 
-            volumeDimension = cf.dimension(function(d)){
-                return d.volume;
-            }
+            volumeDimension = cf.dimension(function (d){
+                return d.volume; 
+            });
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
          
