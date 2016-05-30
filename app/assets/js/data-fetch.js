@@ -575,7 +575,6 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         box.innerHTML = innerHTML;
     });
-<<<<<<< HEAD
 }        
 updateInfo();
 // Additional way to make HTTP request
@@ -636,10 +635,9 @@ updateInfo();
     
     
 //});
-=======
-}
+
          
 updateInfo("stockInformation");
->>>>>>> e141359cd455cde7e241eb76f0981525e23327d2
+
 
 
