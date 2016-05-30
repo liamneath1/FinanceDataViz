@@ -193,7 +193,7 @@ function loadCompany(method){
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
 
-        d3.selectAll("svg").remove()
+        //d3.selectAll("svg").remove()
         fluctuation.filterRange([-50000,50000]);
 
         cf.remove();
