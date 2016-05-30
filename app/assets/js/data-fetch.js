@@ -488,63 +488,6 @@ function updateInfo(){
 }
          
 updateInfo();
-// Additional way to make HTTP request
-//function foo() {
-//    // RETURN the promise
-//    return fetch("https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH").then(function(response){
-//        console.log("WORKED");
-//        return response; // process it inside the `then`
-//    
-//    });
-//}
-//
-//foo().then(function(response){
-//    console.log(response);
-//    
-//});
 
-
-
-////////////////////
-//$("#ticketCode").keypress(function(e) {
-//    var curr = document.getElementById("ticketCode").value
-//    console.log(curr + String.fromCharCode(e.which) )
-//     var settings = {
-//       "async": true,
-//       "crossDomain": true,
-//       "dataType": "json",
-//       "url": "/testQuery/",
-//       "method": "GET",
-//       "headers": {
-//         "accept": "application/json",
-//         "x-mashape-key": "APIKEY"
-//       }
-//     }
-//     console.log("RESPONSE")
-//     $.ajax(settings).done(function (response) {
-//       console.log(response);
-//         var dataList = document.getElementById("datalist1");
-//         console.log(datalist1);
-//         var text ="";
-//         for(var i = 0; i < 4; i++){
-//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-//         }
-//         console.log(text);
-//         dataList.innerHTML = text;
-//         document.getElementById("ticketCode").focus();
-//     });
-    
-    
-    
-//    $.ajax({
-//          dataType: "jsonp",
-//          url: "arcane-springs-65260.herokuapp.com/testQuery",
-//          }).done(function ( data ) {
-//          console.log(data);
-//    });
-    
-    
-    
-//});
 
 
