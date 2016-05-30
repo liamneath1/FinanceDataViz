@@ -11,7 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, Query
 
 
-UPLOAD_FOLDER = "/additional_info"
+UPLOAD_FOLDER = "additional_info"
 ALLOWED_EXTENSTIONS = set(['png','jpg','jpeg'])
 
 app = Flask(__name__, static_url_path='')
