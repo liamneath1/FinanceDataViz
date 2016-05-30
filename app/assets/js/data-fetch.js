@@ -237,14 +237,13 @@ function processData(){
                 d.low = +d.Low;
                 d.volume = +d.Volume;
                 d.dd = dateFormat.parse(d.Date);// attempt to parse the data
+
                 if(startDate === undefined && d.Date!=null){
                     console.log("lmao");
                     startDate = d.Date;
                     endDate = d.Date;
                     console.log("start Date" + startDate + "enddate" + endDate);
                 }
-
-
                
                 if (d.dd == null){
                     console.log("DATE IS NULL")
@@ -426,7 +425,7 @@ function processData(){
                 .dimension(volumeByDate)
                 .group(volumeByDateGroup)
                 .elasticY(true)
-                .x(d3.time.scale().domain([startDate, endDate]))
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
             
             dc.renderAll();
