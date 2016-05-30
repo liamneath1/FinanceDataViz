@@ -13,6 +13,27 @@ GLOBAL VARIABLES
 
 */
 
+
+var yearlyDimension;
+var cf = crossfilter();
+var all;
+var dateDimension;
+var moveMonths;
+var monthlyMoveGroup;
+var volumeByMonthGroup;
+var indexAvgByMonthGroup;
+var gainOrLoss;
+var gainOrLossGroup;
+var fluctuation;
+var fluctuationGroup;
+var volumeByDate;
+var volumeByDateGroup;
+var quarter;
+var quarterGroup;
+var dayOfWeek;
+var dayOfWeekGroup;
+var startDate, endDate;
+
 var nameToTicker ={};
 ///////////////////
 
@@ -240,26 +261,6 @@ function fetchAndAdd(chartReference){
 }
 
 
-
-var yearlyDimension;
-var cf = crossfilter();
-var all;
-var dateDimension;
-var moveMonths;
-var monthlyMoveGroup;
-var volumeByMonthGroup;
-var indexAvgByMonthGroup;
-var gainOrLoss;
-var gainOrLossGroup;
-var fluctuation;
-var fluctuationGroup;
-var volumeByDate;
-var volumeByDateGroup;
-var quarter;
-var quarterGroup;
-var dayOfWeek;
-var dayOfWeekGroup;
-var startDate, endDate;
 
 function processData(){
     while(true){
