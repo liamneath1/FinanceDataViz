@@ -217,7 +217,9 @@ function fetchAndAdd(chartReference){
     }else if (chartReference === 'B'){
         console.log("b");
         fluctuationChart.resetSvg();
-
+        volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
         fluctuationChart
                 .width(420)
                 .height(180)
