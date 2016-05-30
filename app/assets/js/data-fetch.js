@@ -150,7 +150,7 @@ var closingPriceChart = dc.lineChart('#closing-price-chart');
 
 
 function loadCompany(method){
-    d3.selectAll("svg").remove();
+    //d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
     if(method==='ticket'){
