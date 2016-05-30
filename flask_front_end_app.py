@@ -11,11 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, Query
 
 
-UPLOAD_FOLDER = "additional_info"
-ALLOWED_EXTENSTIONS = set(['png','jpg','jpeg'])
-
 app = Flask(__name__, static_url_path='')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']	#primary key is ID??
 engine = create_engine('postgres://jwnrvwczsmwahh:Eay8klzAFN5V0xljHial-krhxv@ec2-174-129-242-241.compute-1.amazonaws.com:5432/d4v4mh5fc6v6hu')
 
@@ -39,18 +35,6 @@ db_session = None 	# each client maintains a connection
 
 # ------------- GLOBAL VARIABLES -------------- #
 # get root
-
-def allowed_file(filename):
-	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSTIONS
-@app.route("/upload", methods=['GET', 'POST'])
-def upload_logo():
-	file = request.files['file']
-	if file and allowed_file(file.filename):
-		filename = secure_filename(file.filename)
-		file.save(os.path.join(app.config['UPLOAD_FOLDER'],"temp"))
-		return redirect(url_for('additional_info',filename=filename))
-
-
 @app.route("/fetchLogo/<path:path>")
 def send_logo(path):
 	 return send_from_directory('additional_resources',path)
