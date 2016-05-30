@@ -549,12 +549,13 @@ function processData(){
 
 function updateInfo(stockInfoBox){
     var box = document.getElementById(stockInfoBox);
-    var ticketurl;
+    var ticket;
     if(stockInfoBox === 'stockInformation'){
-        ticketurl = '/tickerNameQuery/' + ticketLoaded;
+        ticket = ticketLoaded;
     }else{
-        ticketurl = '/tickerNameQuery/' + ticketCompare;
+        ticket = ticketCompare;
     }
+    var ticketurl = '/tickerNameQuery/' + ticket;
     var innerHTML = "";
     settings = {
        "async": true,
