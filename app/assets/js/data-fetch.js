@@ -188,7 +188,7 @@ function loadCompany(method){
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
 
-        $('#gain-loss-chart').empty();
+        //$('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
