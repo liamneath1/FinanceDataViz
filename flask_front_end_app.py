@@ -11,7 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, Query
 
 
-UPLOAD_FOLDER = /additional_info
+UPLOAD_FOLDER = "/additional_info"
 ADDITIONAL_EXTENSTIONS = set(['png','jpg','jpeg'])
 
 app = Flask(__name__, static_url_path='')
@@ -42,10 +42,14 @@ db_session = None 	# each client maintains a connection
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSTIONS
+@ap.route("/uploadLogo/<path:path>")
+def upload_logo(path):
+	file = request.files['file']
 
 @app.route("/fetchLogo/<path:path>")
 def send_logo(path):
 	 return send_from_directory('additional_info',path)
+
 
 @app.route("/")
 def index():
