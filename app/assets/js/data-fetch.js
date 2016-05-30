@@ -280,7 +280,7 @@ function processData(){
             });
 
             volumeDimension = cf.dimension(function (d){
-                console.log(d.volume);
+                //console.log(d.volume);
                 return d.volume; 
             });
             console.log('Printing the yearly dimension!');
@@ -484,8 +484,8 @@ function processData(){
                 })
                 .x(d3.scale.linear().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(lineChart1).group(lowGroup),
-                    dc.lineChart(lineChart1).group(highGroup)
+                    dc.lineChart(highLowChart).group(lowGroup),
+                    dc.lineChart(highLowChart).group(highGroup)
                 ]);
 
             
