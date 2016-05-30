@@ -236,20 +236,20 @@ function processData(){
                 d.high = +d.High;
                 d.low = +d.Low;
                 d.volume = +d.Volume;
-
-                if(startDate === undefined && d.Date!=null){
+                d.dd = dateFormat.parse(d.Date);// attempt to parse the data
+                if(startDate === undefined && d.dd!=null){
                     console.log("lmao");
                     startDate = d.Date;
                     endDate = d.Date;
                     console.log("start Date" + startDate + "enddate" + endDate);
                 }
 
-                if(d.Date < startDate && d.Date!=null){
-                    startDate = d.Date;
-                }else if(d.Date > endDate){
-                    endDate = d.Date;
+                if(d.dd < startDate && d.dd!=null){
+                    startDate = d.dd;
+                }else if(d.dd > endDate){
+                    endDate = d.dd;
                 }
-                d.dd = dateFormat.parse(d.Date);// attempt to parse the data
+               
                 if (d.dd == null){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
