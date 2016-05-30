@@ -176,7 +176,14 @@ function loadCompany(method){
         fluctuationChart.resetSvg();
         closingPriceChart.resetSvg();
         d3.selectAll("svg").remove();
-
+        monthlyMoveGroup.dispose();
+        volumeByMonthGroup.dispose();
+        indexAvgByMonthGroup.dispose();
+        gainOrLossGroup.dispose();
+        fluctuationGroup.dispose();
+        volumeByDateGroup.dispose();
+        quarterGroup.dispose();
+        dc.redrawAll();
 
         fluctuation = null;
         fluctuationGroup = null;
