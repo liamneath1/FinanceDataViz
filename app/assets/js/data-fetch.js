@@ -176,8 +176,11 @@ function loadCompany(method){
         closingPriceChart.resetSvg();
 
 
-       fluctuation = null;
-       fluctuationGroup = null;
+        d3.selectAll("svg").remove();
+
+
+        fluctuation = null;
+        fluctuationGroup = null;
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
