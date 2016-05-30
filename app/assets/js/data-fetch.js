@@ -236,11 +236,15 @@ function processData(){
                 d.high = +d.High;
                 d.low = +d.Low;
                 d.volume = +d.Volume;
+
                 if(startDate === undefined && d.Date!=null){
                     console.log("lmao");
                     startDate = d.Date;
                     endDate = d.Date;
-                }else if(d.Date < startDate){
+                    console.log("start Date" + startDate + "enddate" + endDate);
+                }
+
+                if(d.Date < startDate){
                     startDate = d.Date;
                 }else if(d.Date > endDate){
                     endDate = d.Date;
