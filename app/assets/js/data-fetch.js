@@ -1,8 +1,8 @@
 /*
 Basic stocks/indexs to include!
 */
-var request = "https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
-var ticketLoaded = "FB";
+var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
+var ticketLoaded = "NDAQ";
 // MAKE THIS DYNAMIC
 
 var loadedData = [];    // big array containing raw data
@@ -190,16 +190,18 @@ function loadCompany(method){
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
-        
+
+        d3.selectAll("svg").remove()
         fluctuation.filterRange([-50000,50000]);
 
         cf.remove();
+        dc.renderAll();
         dc.redrawAll();
 
-        request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-        fetchData(request);
-        ticketLoaded = ticketCode;
-        updateInfo();
+        //request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+        //fetchData(request);
+        //ticketLoaded = ticketCode;
+        //updateInfo();
     });
 
     
@@ -209,48 +211,9 @@ function loadCompany(method){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
-        fluctuationChart = dc.barChart('#fluctuation-chart');
 
-        fluctuationChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(fluctuation)
-                .group(fluctuationGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
-            
-            fluctuationChart.xAxis().tickFormat(
-                function (v) { return v + '%'; });
-            fluctuationChart.yAxis().ticks(10);  
-            var volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
-            });
-            
     }else if (chartReference === 'B'){
-        console.log("b");
-        fluctuationChart.resetSvg();
-        volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
-            });
-        fluctuationChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeByDateGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
-        dc.renderAll();
-        dc.redrawAll();
+        
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
@@ -486,6 +449,63 @@ function updateInfo(){
     });
 }        
 updateInfo();
+// Additional way to make HTTP request
+//function foo() {
+//    // RETURN the promise
+//    return fetch("https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH").then(function(response){
+//        console.log("WORKED");
+//        return response; // process it inside the `then`
+//    
+//    });
+//}
+//
+//foo().then(function(response){
+//    console.log(response);
+//    
+//});
 
+
+
+////////////////////
+//$("#ticketCode").keypress(function(e) {
+//    var curr = document.getElementById("ticketCode").value
+//    console.log(curr + String.fromCharCode(e.which) )
+//     var settings = {
+//       "async": true,
+//       "crossDomain": true,
+//       "dataType": "json",
+//       "url": "/testQuery/",
+//       "method": "GET",
+//       "headers": {
+//         "accept": "application/json",
+//         "x-mashape-key": "APIKEY"
+//       }
+//     }
+//     console.log("RESPONSE")
+//     $.ajax(settings).done(function (response) {
+//       console.log(response);
+//         var dataList = document.getElementById("datalist1");
+//         console.log(datalist1);
+//         var text ="";
+//         for(var i = 0; i < 4; i++){
+//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
+//         }
+//         console.log(text);
+//         dataList.innerHTML = text;
+//         document.getElementById("ticketCode").focus();
+//     });
+    
+    
+    
+//    $.ajax({
+//          dataType: "jsonp",
+//          url: "arcane-springs-65260.herokuapp.com/testQuery",
+//          }).done(function ( data ) {
+//          console.log(data);
+//    });
+    
+    
+    
+//});
 
 
