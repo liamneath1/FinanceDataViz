@@ -166,7 +166,6 @@ function loadCompany(method){
     $.ajax(settings).done(function (response) {
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
-        cf.filterAll();
         cf.remove();
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
@@ -253,7 +252,7 @@ function fetchAndAdd(chartReference){
 
 
 var yearlyDimension;
-var cf;
+var cf = crossfilter();
 var all;
 var dateDimension;
 var moveMonths;
