@@ -132,7 +132,7 @@ function loadCompany(method){
     var settings;
     var ticketCode;
     if(method==='ticket'){
-        ticketCode = document.getElementById('ticketCode').value;
+        ticketCode = document.getElementById('ticketCode').value.toUpperCase();
         var ticketurl = '/tickerNameQuery/' + ticketCode;
         console.log(ticketurl);
         settings = {
@@ -166,7 +166,6 @@ function loadCompany(method){
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
         cf.remove();
-        console.log(fluctuation);
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
@@ -175,8 +174,6 @@ function loadCompany(method){
         quarterChart.resetSvg();
         fluctuationChart.resetSvg();
         closingPriceChart.resetSvg();
-
-
         d3.selectAll("svg").remove();
 
 
@@ -233,6 +230,8 @@ function fetchAndAdd(chartReference){
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([-25,25]))
                 .renderHorizontalGridLines(true);
+        dc.renderAll();
+        dc.redrawAll();
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
