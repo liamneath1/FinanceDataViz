@@ -12,7 +12,7 @@ var info;
 GLOBAL VARIABLES
 
 */
-
+var numOverlap = 0;
 
 var yearlyDimension;
 var cf = crossfilter();
@@ -210,6 +210,8 @@ function loadCompany(method){
         fetchData(request);
         ticketLoaded = ticketCode;
         updateInfo();
+        document.getElementById('ticketCode').value = '';
+        document.getElementById('companyName').value = '';
     });
 
     
