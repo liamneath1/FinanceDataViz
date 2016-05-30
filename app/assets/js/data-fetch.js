@@ -219,7 +219,7 @@ function loadCompany(method){
 function compareCompany(){
         var settings;
         var ticketCode;
-        if(document.getElementById('ticketCode').value ===undefined){
+        if(document.getElementById('ticketCode').value ===''){
             var companyName = document.getElementById('companyName').value;
             var companyurl = "/companyNameQuery/" + companyName;
             settings = {
