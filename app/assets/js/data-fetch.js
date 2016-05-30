@@ -235,6 +235,14 @@ function processData(){
                 d.high = +d.High;
                 d.low = +d.Low;
                 d.volume = +d.Volume;
+                if(startDate === undefined){
+                    startDate = d.Date;
+                    endDate = d.Date;
+                }else if(d.Date < startDate){
+                    startDate = d.Date;
+                }else if(d.Date > endDate){
+                    endDate = d.Date;
+                }
                 d.dd = dateFormat.parse(d.Date);
                 console.log(d.dd);    // attempt to parse the data
                 if (d.dd == null){
@@ -244,6 +252,7 @@ function processData(){
                     d.month = d.dd.getMonth();
                 }
             });
+            console.log(startDate + "  " + endDate);
             cf = crossfilter(loadedData[0]);
             all = cf.groupAll();
             
