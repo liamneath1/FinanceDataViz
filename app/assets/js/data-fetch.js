@@ -482,7 +482,7 @@ function processData(){
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .x(d3.scale.linear().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
                     dc.lineChart(highLowChart).group(lowGroup),
                     dc.lineChart(highLowChart).group(highGroup)
