@@ -199,10 +199,10 @@ function loadCompany(method){
         dc.renderAll();
         dc.redrawAll();
 
-        request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-        fetchData(request);
-        ticketLoaded = ticketCode;
-        updateInfo();
+        //request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+        //fetchData(request);
+        //ticketLoaded = ticketCode;
+        //updateInfo();
     });
 
     
