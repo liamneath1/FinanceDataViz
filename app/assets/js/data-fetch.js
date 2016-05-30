@@ -235,7 +235,7 @@ function processData(){
                 d.high = +d.High;
                 d.low = +d.Low;
                 d.volume = +d.Volume;
-                if(startDate === undefined){
+                if(startDate === undefined && d.Date!=null){
                     startDate = d.Date;
                     endDate = d.Date;
                 }else if(d.Date < startDate){
