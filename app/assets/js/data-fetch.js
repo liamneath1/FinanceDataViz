@@ -91,6 +91,7 @@ function handleData(responseData ) {
     //console.log(responseData);
     var object = makeJSObject(responseData);
    // console.log(object);
+    loadedData=[];
     loadedData[0] = object;
     processData();
     
