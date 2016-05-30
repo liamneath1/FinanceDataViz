@@ -244,7 +244,7 @@ function processData(){
                     console.log("start Date" + startDate + "enddate" + endDate);
                 }
 
-                if(d.dd < startDate && d.dd!=null){
+                if(d.dd.getFullYear() < startDate.getFullYear() && d.dd.getMonth() < startDate.getMonth() && d.dd.getDay() < startDate.getDay() &&d.dd!=null){
                     startDate = d.dd;
                 }else if(d.dd > endDate){
                     endDate = d.dd;
