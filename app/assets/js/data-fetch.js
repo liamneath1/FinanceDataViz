@@ -33,6 +33,7 @@ var quarterGroup;
 var dayOfWeek;
 var dayOfWeekGroup;
 var volumeDimension;
+var volumeGroup;
 
 var nameToTicker ={};
 ///////////////////
@@ -302,7 +303,6 @@ function processData(){
             });
             console.log(volumeByMonthGroup.top(Infinity));
             
-            
             indexAvgByMonthGroup = moveMonths.group().reduce(
                 function (p, v) {
                     ++p.days;
@@ -406,6 +406,11 @@ function processData(){
                return (d.dd); 
             });
             
+            volumeGroup = volumeByDate.group().reduce( function(d){
+                return d.volume;
+            }
+
+            );
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
@@ -418,6 +423,7 @@ function processData(){
                     return 0;
                 }
             );
+
             
             closingPriceChart
                 .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
@@ -436,7 +442,7 @@ function processData(){
                 .xAxis();
 
 
-            closingPriceChart
+            volumeChart
                 .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
                 .height(150)
                 .renderArea(true)
@@ -446,7 +452,7 @@ function processData(){
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
-                .dimension(volumeDimension)
+                .dimension(volumeByDate)
                 .group(volumeByDateGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
