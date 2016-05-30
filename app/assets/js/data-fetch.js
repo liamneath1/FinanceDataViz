@@ -193,7 +193,6 @@ function loadCompany(method){
 
         d3.selectAll("svg").remove()
         fluctuation.filterRange([-50000,50000]);
-
         cf.remove();
         dc.renderAll();
         dc.redrawAll();
