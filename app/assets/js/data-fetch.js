@@ -571,7 +571,7 @@ function updateInfo(stockInfoBox){
     
     $.ajax(settings).done(function (response) {
         innerHTML += "<h2> Stock Information </h2>";
-        innerHTML += "<p><b>Ticker Code</b> : " + ticketLoaded + "</p>";
+        innerHTML += "<p><b>Ticker Code</b> : " + ticket + "</p>";
         innerHTML += "<p><b>Company Name</b> : " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
