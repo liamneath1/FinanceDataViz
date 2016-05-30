@@ -406,11 +406,7 @@ function processData(){
                return (d.dd); 
             });
             
-            volumeGroup = volumeByDate.group().reduce( function(d){
-                return d.volume;
-            }
-
-            );
+            volumeGroup = volumeDimension.group();
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
