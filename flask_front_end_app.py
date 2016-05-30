@@ -42,7 +42,7 @@ db_session = None 	# each client maintains a connection
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSTIONS
-@ap.route("/uploadLogo/<path:path>")
+@app.route("/uploadLogo/<path:path>")
 def upload_logo(path):
 	file = request.files['file']
 
