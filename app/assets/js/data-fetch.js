@@ -277,6 +277,7 @@ function processData(){
             });
 
             volumeDimension = cf.dimension(function (d){
+                console.log(d.volume);
                 return d.volume; 
             });
             console.log('Printing the yearly dimension!');
@@ -405,8 +406,13 @@ function processData(){
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
-            
-            volumeGroup = volumeDimension.group();
+
+
+            volumeGroup = volumeDimension.group.reduceSum(
+                function(d){
+                    return d.volume;
+                }
+            );
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
