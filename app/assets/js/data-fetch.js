@@ -408,7 +408,7 @@ function processData(){
             });
 
 
-            volumeGroup = volumeDimension.group.reduceSum( function(d){
+            volumeGroup = volumeDimension.group().reduceSum( function(d){
                     return d.volume;
                 }
             );
