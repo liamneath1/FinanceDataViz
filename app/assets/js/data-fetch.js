@@ -290,8 +290,7 @@ function processData(){
                     d.month = d.dd.getMonth();
                 }
             });
-            cf.add(loadedData[0]);
-            //cf = crossfilter(loadedData[0]);
+            cf = crossfilter(loadedData[0]);
             all = cf.groupAll();
             
             // fetching the yearly dimension 
