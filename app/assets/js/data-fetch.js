@@ -165,18 +165,11 @@ function loadCompany(method){
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
         cf.remove();
+        console.log(fluctuation);
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
-        volumeByDate.dispose();
-        yearlyDimension.dispose();
-        dateDimension.dispose();
-        moveMonths.dispose();
-        gainOrLoss.dispose();
-        fluctuation.dispose();
-        quarter.dispose();
-        dayOfWeek.dispose();
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
@@ -371,7 +364,7 @@ function processData(){
             });
             dayOfWeekGroup = dayOfWeek.group();
             
-            
+            console.log(fluctuation);
             gainOrLossChart
                 .width(180)
                 .height(180)
@@ -446,6 +439,7 @@ function processData(){
                 .xAxis();
             
             dc.renderAll();
+            dc.redrawAll();
             break;
         } else {
             break;
