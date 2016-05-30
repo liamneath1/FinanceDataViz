@@ -419,7 +419,6 @@ function processData(){
                 .radius(80)
                 .dimension(gainOrLoss)
                 .group(gainOrLossGroup)
-                .title('Gain/Loss Percentage to Date')
                 .label(function (d){
                     if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
                         return d.data.key + '(0%)';
@@ -436,7 +435,6 @@ function processData(){
                 .radius(80)
                 .innerRadius(30)
                 .dimension(quarter)
-                .title('Financial Quarter Filter')
                 .group(quarterGroup);
             
             fluctuationChart
@@ -449,7 +447,6 @@ function processData(){
                 .centerBar(true)
                 .gap(1)
                 .round(dc.round.floor)
-                .title('Fluctuation in Closing Prices')
                 .x(d3.scale.linear().domain([-25,25]))
                 .renderHorizontalGridLines(true);
             
@@ -500,7 +497,6 @@ function processData(){
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .dimension(volumeByDate)
                 .group(volumeByDateGroup)
-                .title('Closing Prices to Date')
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
@@ -518,7 +514,6 @@ function processData(){
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .dimension(volumeByDate)
                 .group(volumeGroup)
-                .title('Volume per Day to Date')
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
