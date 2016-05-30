@@ -244,18 +244,19 @@ function processData(){
                     console.log("start Date" + startDate + "enddate" + endDate);
                 }
 
-                if(d.Date < startDate && d.Date!=null){
-                    startDate = d.Date;
-                    console.log(startDate);
-                }else if(d.Date > endDate){
-                    endDate = d.Date;
-                }
+
                
                 if (d.dd == null){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
                 } else {
                     d.month = d.dd.getMonth();
+                    if(d.Date < startDate && d.Date!=null){
+                        startDate = d.Date;
+                        console.log(startDate);
+                    }else if(d.Date > endDate){
+                        endDate = d.Date;
+                    }
                 }
             });
             console.log("startDate" + startDate + "  " + "enddate" + endDate);
