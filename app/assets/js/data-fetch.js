@@ -165,7 +165,7 @@ function loadCompany(method){
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
         cf.remove();
-
+        console.log(fluctuation);
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
@@ -364,7 +364,7 @@ function processData(){
             });
             dayOfWeekGroup = dayOfWeek.group();
             
-            
+            console.log(fluctuation);
             gainOrLossChart
                 .width(180)
                 .height(180)
