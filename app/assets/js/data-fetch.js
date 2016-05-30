@@ -277,7 +277,6 @@ function fetchAndAdd(chartReference){
 
 
 function processData(){
-
     var startDate = undefined;
     var endDate = undefined;
     while(true){
