@@ -270,7 +270,7 @@ var quarter;
 var quarterGroup;
 var dayOfWeek;
 var dayOfWeekGroup;
-
+var startDate, endDate;
 
 function processData(){
     while(true){
@@ -283,7 +283,8 @@ function processData(){
                 d.high = +d.High;
                 d.low = +d.Low;
                 d.volume = +d.Volume;
-                d.dd = dateFormat.parse(d.Date);    // attempt to parse the data
+                d.dd = dateFormat.parse(d.Date);
+                console.log(d.dd);    // attempt to parse the data
                 if (d.dd == null){
                     console.log("DATE IS NULL")
                     loadedData[0].splice(i,1);      // remove the object from the 
