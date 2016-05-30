@@ -32,8 +32,6 @@ var quarter;
 var quarterGroup;
 var dayOfWeek;
 var dayOfWeekGroup;
-var startDate;
-var endDate;
 
 var nameToTicker ={};
 ///////////////////
@@ -226,6 +224,9 @@ function fetchAndAdd(chartReference){
 
 
 function processData(){
+
+    var startDate = undefined;
+    var endDate = undefined;
     while(true){
         console.log("Entered loop");
         if (loadedData[0] != null ){
