@@ -32,18 +32,19 @@
                 <input type = "text" id = "companyName">
                 <button class ="button" onClick = "loadCompany('company')"> Load Company</button>
             </div>
+            <div id ="loadByTick"> 
+                <input type = "text" id = "compareCompanyName">
+                <button class ="button" onClick = "compareCompany()"> Compare Company</button>
+            </div>
             <div id = "reset">
                 <button id = "resetButton" class= "button" onClick = "resetViz()"> RESET</button>
             </div>
         </div>
         
     </div>
-    <div class = "wrapper">
-    <div id= "stockInformation" style="width: 100%;" >
-        <p> HELLO</p>
-        <p> HELLO</p>
-        <p> HELLO</p>
-        <p> HELLO</p>
+    <div style="width:100%">
+        <div id= "stockInformation"></div>
+        <div id="compareStockInformation"></div>
     </div>
 
 
@@ -96,7 +97,6 @@
         <div id="volume-chart"></div>
         <div id="dividends-chart"></div>
         <div id="high-low-chart"></div>
-    </div>
     </div>
 
 	<!-- begin footer -->

@@ -3,6 +3,7 @@ Basic stocks/indexs to include!
 */
 var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
 var ticketLoaded = "NDAQ";
+var ticketCompare;
 // MAKE THIS DYNAMIC
 
 var loadedData = [];    // big array containing raw data
@@ -59,11 +60,11 @@ function makeJSObject(csv){
 
 
 function resetViz(){
-    fetchData("https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
+    fetchData("https://www.quandl.com/api/v3/datasets/WIKI/" + ticketLoaded + "/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
     document.getElementById('ticketCode').value = '';
     document.getElementById('companyName').value = '';
-    ticketLoaded = "NDAQ";
-    updateInfo();
+    ticketCompare = undefined;
+    document.getElementById('compareStockInformation').innerHTML="";
 }
 
 var settings = {
@@ -209,14 +210,59 @@ function loadCompany(method){
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         fetchData(request);
         ticketLoaded = ticketCode;
-        updateInfo();
+        updateInfo('stockInformation');
         document.getElementById('ticketCode').value = '';
-        document.getElementById('companyName').value = '';
+       document.getElementById('companyName').value = '';
     });
+}
 
+function compareCompany(){
+        var settings;
+        var ticketCode;
+        if(document.getElementById('ticketCode').value ===undefined){
+            var companyName = document.getElementById('companyName').value;
+            var companyurl = "/companyNameQuery/" + companyName;
+            settings = {
+               "async": true,
+               "crossDomain": true,
+               "dataType": "json",
+               "url": companyurl,
+               "method": "GET",
+               "headers": {
+                 "accept": "application/json",
+                 "x-mashape-key": "APIKEY"
+               }
+             };
+        }else{
+            ticketCode = document.getElementById('ticketCode').value.toUpperCase();
+            var ticketurl = '/tickerNameQuery/' + ticketCode;
+            settings = {
+               "async": true,
+               "crossDomain": true,
+               "dataType": "json",
+               "url": ticketurl,
+               "method": "GET",
+               "headers": {
+                 "accept": "application/json",
+                 "x-mashape-key": "APIKEY"
+               }
+             };
+        }
+        $.ajax(settings).done(function (response) {
+            ticketCode = response[0].tickername;
+            ticketCode = ticketCode.replace(/\s/g, '');
+
+            request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+            //fetchData(request);
+            ticketCompare = ticketCode;
+            updateInfo('compareStockInformation');
+            document.getElementById('ticketCode').value = '';
+            document.getElementById('companyName').value = '';
+        });
+}
     
     //call the fetch_data
-}
+
 
 
 function fetchAndAdd(chartReference){
@@ -501,9 +547,14 @@ function processData(){
     }   
 }
 
-function updateInfo(){
-    var box = document.getElementById("stockInformation");
-    var ticketurl = '/tickerNameQuery/' + ticketLoaded;
+function updateInfo(stockInfoBox){
+    var box = document.getElementById(stockInfoBox);
+    var ticketurl;
+    if(stockInfoBox === 'stockInformation'){
+        ticketurl = '/tickerNameQuery/' + ticketLoaded;
+    }else{
+        ticketurl = '/tickerNameQuery/' + ticketCompare;
+    }
     var innerHTML = "";
     settings = {
        "async": true,
@@ -528,6 +579,6 @@ function updateInfo(){
     });
 }
          
-updateInfo();
+updateInfo("stockInformation");
 
 
