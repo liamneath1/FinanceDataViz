@@ -139,17 +139,10 @@ function updateSpots(){
     spots[i].updateParamaters(calculatedRates.get(i), calcChanges[i]);
   }
 }
-function setPeriod(suggested){
-  numSpots = suggested;
-}
-
-
-function setTimePeriod(){
-    console.log("UPDATED");
-}
-
 /////////////////////// Processing Code ///////////////////////////
-void updateInt(int i, ArrayList<rates>){
+
+
+void updateInt(int i){
     numSpots = i;
     setup();
 }
