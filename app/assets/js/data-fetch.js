@@ -197,31 +197,32 @@ function loadCompany(method){
          };
     }
 
-    if(companyName==='' && ticketCode===''){
+    if((companyName==='' && ticketCode==='') || (companyName===undefined && ticketCode===undefined)){
         return;
+    }else{
+
+        $.ajax(settings).done(function (response) {
+            ticketCode = response[0].tickername;
+            ticketCode = ticketCode.replace(/\s/g, '');
+
+            $('#gain-loss-chart').empty();
+            $('#quarter-chart').empty();
+            $('#fluctuation-chart').empty();
+            $('#closing-price-chart').empty();
+            
+            fluctuation.filterRange([-50000,50000]);
+            cf.remove();
+            dc.renderAll();
+            dc.redrawAll();
+
+            request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+            fetchData(request);
+            ticketLoaded = ticketCode;
+            updateInfo('stockInformation');
+            document.getElementById('ticketCode').value = '';
+           document.getElementById('companyName').value = '';
+        });
     }
-
-    $.ajax(settings).done(function (response) {
-        ticketCode = response[0].tickername;
-        ticketCode = ticketCode.replace(/\s/g, '');
-
-        $('#gain-loss-chart').empty();
-        $('#quarter-chart').empty();
-        $('#fluctuation-chart').empty();
-        $('#closing-price-chart').empty();
-        
-        fluctuation.filterRange([-50000,50000]);
-        cf.remove();
-        dc.renderAll();
-        dc.redrawAll();
-
-        request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-        fetchData(request);
-        ticketLoaded = ticketCode;
-        updateInfo('stockInformation');
-        document.getElementById('ticketCode').value = '';
-       document.getElementById('companyName').value = '';
-    });
 }
 
 function compareCompany(){
