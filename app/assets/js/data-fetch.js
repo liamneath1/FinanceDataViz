@@ -64,6 +64,7 @@ function resetViz(){
     document.getElementById('companyName').value = '';
     ticketCompare = undefined;
     document.getElementById('compareStockInformation').innerHTML="";
+    numOverlap = 0;
 }
 
 var settings = {
@@ -116,10 +117,14 @@ function handleData(responseData ) {
     //console.log(responseData);
     var object = makeJSObject(responseData);
    // console.log(object);
-    loadedData=[];
-    loadedData[0] = object;
-    processData();
-    
+    if(numOverlap===1){
+        loadedData[1] = object;
+        overlapData();
+    }else{
+        loadedData[0] = object;
+        processData();
+    }
+
     /*object.forEach(function (d){
                    console.log(d.Open);
                    });*/
@@ -147,16 +152,17 @@ fetchData(request);
 var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
-var closingPriceChart = dc.lineChart('#closing-price-chart');
+var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-//var dividendsChart = dc.lineChart('#dividends-chart');
 var highLowChart = dc.compositeChart('#high-low-chart');
+
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
 
 
 function loadCompany(method){
+<<<<<<< HEAD
     
     var processingInstance = Processing.getInstanceById('sketch');
     console.log(processingInstance);
@@ -164,6 +170,9 @@ function loadCompany(method){
     
     
     
+=======
+    numOverlap = 0;
+>>>>>>> 3267b761e0f7a7df87de09b53bc34e3efc685b97
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
@@ -258,7 +267,8 @@ function compareCompany(){
             ticketCode = ticketCode.replace(/\s/g, '');
 
             request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-            //fetchData(request);
+            numOverlap = 1;
+            fetchData(request);
             ticketCompare = ticketCode;
             updateInfo('compareStockInformation');
             document.getElementById('ticketCode').value = '';
@@ -288,9 +298,9 @@ function processData(){
     var startDate = undefined;
     var endDate = undefined;
     while(true){
-        console.log("Entered loop");
         if (loadedData[0] != null ){
-           var dateFormat = d3.time.format('%Y-%m-%d');
+
+            var dateFormat = d3.time.format('%Y-%m-%d');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
                 d.open = +d.Open;      //numbers 
@@ -316,7 +326,9 @@ function processData(){
                     }
                 }
             });
-            console.log("startDate" + startDate + "  " + "enddate" + endDate);
+
+            // starting crossfilter stufff
+
             cf = crossfilter(loadedData[0]);
             all = cf.groupAll();
             
@@ -335,6 +347,7 @@ function processData(){
                 //console.log(d.volume);
                 return d.volume; 
             });
+
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
          
@@ -409,13 +422,6 @@ function processData(){
                return d.volume;  
             });
             
-            dayOfWeek = cf.dimension(function (d){
-                var day = d.dd.getDay();
-                var name = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-                return day + '.' + name[day];
-            });
-            dayOfWeekGroup = dayOfWeek.group();
-            
             console.log(fluctuation);
             gainOrLossChart
                 .width(180)
@@ -433,7 +439,7 @@ function processData(){
                     }
                     return label;  
                 });
-            quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+            quarterChart
                 .width(180)
                 .height(180)
                 .radius(80)
@@ -489,8 +495,26 @@ function processData(){
             });
 
             
+             closingPriceChart
+                .width(990)
+                .height(150)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(volumeByDate)
+                .transitionDuration(1000)
+                .elasticY(true)
+                .brushOn(true)
+                .mouseZoomable(true)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup)
+                ]);
+
+            /**
             closingPriceChart
-                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .width(990) 
                 .height(150)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
@@ -504,6 +528,7 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+            */
 
 
             volumeChart
@@ -551,6 +576,137 @@ function processData(){
     }   
 }
 
+/** 
+Takes two stock data's and presents them in the same graph. 
+*/
+function overlapData(){
+
+    console.log("calling overlap data");
+    var startDate = undefined;
+    var endDate = undefined;
+    while(true){
+        console.log("Entered loop");
+        if (loadedData[0] != null ){
+            var dateFormat = d3.time.format('%Y-%m-%d');
+            loadedData[0].forEach(function (d,i){
+                d.close = +d.Close;    //nudging these variables into 
+                d.open = +d.Open;      //numbers 
+                d.high = +d.High;
+                d.low = +d.Low;
+                d.volume = +d.Volume;
+                d.dd = dateFormat.parse(d.Date);// attempt to parse the data
+
+                if(startDate === undefined && d.Date!=null){
+                    startDate = d.Date;
+                    endDate = d.Date;
+                }
+               
+                if (d.dd == null){
+                    console.log("DATE IS NULL")
+                    loadedData[0].splice(i,1);      // remove the object from the 
+                } else {
+                    d.month = d.dd.getMonth();
+                    if(d.Date < startDate && d.Date!=null){
+                        startDate = d.Date;
+                    }else if(d.Date > endDate){
+                        endDate = d.Date;
+                    }
+                }
+            });
+    var startDate1;
+            loadedData[1].forEach(function (d,i){
+                d.close = +d.Close;    //nudging these variables into 
+                d.open = +d.Open;      //numbers 
+                d.high = +d.High;
+                d.low = +d.Low;
+                d.volume = +d.Volume;
+                d.dd = dateFormat.parse(d.Date);// attempt to parse the data
+
+                if(startDate1 === undefined && d.Date!=null){
+                    startDate1 = d.Date;
+                    endDate = d.Date;
+                }
+               
+                if (d.dd == null){
+                    console.log("DATE IS NULL")
+                    loadedData[0].splice(i,1);      // remove the object from the 
+                } else {
+                    d.month = d.dd.getMonth();
+                    if(d.Date < startDate1 && d.Date!=null){
+                        startDate1 = d.Date;
+                    }else if(d.Date > endDate){
+                        endDate = d.Date;
+                    }
+                }
+            });
+
+            console.log("startDate" + startDate + "  " + "enddate" + endDate);
+            cf = crossfilter(loadedData[0]);
+            var cf1 = crossfilter(loadedData[1]);
+            all = cf.groupAll();
+     
+            console.log('Printing the yearly dimension!');
+            console.log(yearlyDimension.top(Infinity));
+         
+            volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+
+            var volumeByDate1 = cf1.dimension(function(d){
+                return(d.dd);
+            });
+
+
+            volumeGroup = volumeByDate.group().reduceSum(function(d){
+                    return d.volume;
+                }
+            );
+            
+            volumeByDateGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.close;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.close;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+
+            var volumeByDateGroup1 = volumeByDate1.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.close;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.close;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+
+   
+            var start_date;
+            if(startDate < startDate1){
+                start_date = startDate;
+            }else{
+                start_date = startDate1;
+            }
+            
+            dc.renderAll();
+            dc.redrawAll();
+            break;
+        } else {
+            break;
+        }
+    
+    }   
+    
+
+
+}
+
 function updateInfo(stockInfoBox){
     var box = document.getElementById(stockInfoBox);
     var ticket;
@@ -583,23 +739,6 @@ function updateInfo(stockInfoBox){
         box.innerHTML = innerHTML;
     });
 }        
-updateInfo();
-// Additional way to make HTTP request
-//function foo() {
-//    // RETURN the promise
-//    return fetch("https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH").then(function(response){
-//        console.log("WORKED");
-//        return response; // process it inside the `then`
-//    
-//    });
-//}
-//
-//foo().then(function(response){
-//    console.log(response);
-//    
-//});
-
-
 
 ////////////////////
 //$("#ticketCode").keypress(function(e) {
