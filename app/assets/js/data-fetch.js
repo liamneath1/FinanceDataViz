@@ -153,7 +153,7 @@ var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.compositeChart('#high-low-chart');
+var highLowChart = dc.lineChart('#high-low-chart');
 
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
@@ -548,11 +548,11 @@ function processData(){
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .compose([
-                    dc.lineChart(highLowChart).group(lowGroup),
-                    dc.lineChart(highLowChart).group(highGroup)
-                ]);
+                .group(lowGroup, 'low')
+                .stack(highGroup, 'high', function (d) {
+                    return d.high;
+                })
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
             
             dc.renderAll();
