@@ -654,10 +654,6 @@ function overlapData(){
             });
 
 
-            volumeGroup = volumeByDate.group().reduceSum(function(d){
-                    return d.volume;
-                }
-            );
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
@@ -670,7 +666,6 @@ function overlapData(){
                     return 0;
                 }
             );
-
             var volumeByDateGroup1 = volumeByDate1.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
@@ -680,6 +675,17 @@ function overlapData(){
                 },
                 function reduceInitial(){
                     return 0;
+                }
+            );
+
+
+
+            console.log(volumeByDateGroup);
+
+
+            console.log(volumeByDateGroup1);
+            volumeGroup = volumeByDate.group().reduceSum(function(d){
+                    return d.volume;
                 }
             );
 
@@ -754,48 +760,6 @@ function updateInfo(stockInfoBox){
         box.innerHTML = innerHTML;
     });
 }        
-
-////////////////////
-//$("#ticketCode").keypress(function(e) {
-//    var curr = document.getElementById("ticketCode").value
-//    console.log(curr + String.fromCharCode(e.which) )
-//     var settings = {
-//       "async": true,
-//       "crossDomain": true,
-//       "dataType": "json",
-//       "url": "/testQuery/",
-//       "method": "GET",
-//       "headers": {
-//         "accept": "application/json",
-//         "x-mashape-key": "APIKEY"
-//       }
-//     }
-//     console.log("RESPONSE")
-//     $.ajax(settings).done(function (response) {
-//       console.log(response);
-//         var dataList = document.getElementById("datalist1");
-//         console.log(datalist1);
-//         var text ="";
-//         for(var i = 0; i < 4; i++){
-//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-//         }
-//         console.log(text);
-//         dataList.innerHTML = text;
-//         document.getElementById("ticketCode").focus();
-//     });
-    
-    
-    
-//    $.ajax({
-//          dataType: "jsonp",
-//          url: "arcane-springs-65260.herokuapp.com/testQuery",
-//          }).done(function ( data ) {
-//          console.log(data);
-//    });
-    
-    
-    
-//});
 
          
 updateInfo("stockInformation");
