@@ -818,9 +818,9 @@ function overlapData(){
                 return d.low;
             });
 
-            
+            /*
             closingPriceChart
-                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .width(990) 
                 .height(150)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
@@ -834,7 +834,7 @@ function overlapData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
-
+            */
 
             volumeChart
                 .width(420) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
