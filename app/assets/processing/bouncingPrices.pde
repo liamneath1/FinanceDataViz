@@ -20,13 +20,14 @@ StockCircle[] spots; // Declare array
 int numSpots = 90; 
 Vector<int> minColor = [100,206,255];
 Vector<int> maxColor = [0,200,360];
-
 Vector<int> halfWayColor = [40,220,250];
 Vector<int> maxColorGain = [0,180,200];
 Vecotr<int> maxColorLoss = [90,180,200];
 
 int vizWidth = 750;
 int vizHeight = 150; 
+
+
 /*                   */
 
 //////////////// JAVASCRIPT CODE //////////////////
@@ -73,6 +74,8 @@ function fetchData(httpRequest){
 fetchData(request);
 
 function processData(){
+  //numSpots = 60;
+  //setup();
   var dateFormat = d3.time.format('%Y-%m-%d');
   var startDate = undefined;
   var endDate = undefined;
@@ -129,13 +132,27 @@ function processData(){
   console.log(rates);
   console.log(calculatedRates);
   updateSpots();
-
+  
 }
 function updateSpots(){
   for (i = 0; i < numSpots ; i++){
     spots[i].updateParamaters(calculatedRates.get(i), calcChanges[i]);
   }
 }
+function setPeriod(suggested){
+  numSpots = suggested;
+}
+
+
+function setTimePeriod(){
+    console.log("UPDATED");
+}
+
+
+
+
+
+
 
 
 /////////////////////// Processing Code ///////////////////////////
@@ -210,11 +227,11 @@ class StockCircle {
     if (percentChange > 0){
       maxYLocation = vizHeight; 
       minYLocation = vizHeight/2; 
-      y = vizHeight/2 + diameter; 
+      y = vizHeight/2 + diameter/2; 
     } else {
       maxYLocation = vizHeight/2
       minYLocation = 0;
-      y = vizHeight/2 - diameter;
+      y = vizHeight/2 - diameter/2;
     }
   }
 
@@ -233,17 +250,5 @@ class StockCircle {
     }
     return vals; 
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

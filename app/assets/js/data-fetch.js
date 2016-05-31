@@ -12,7 +12,6 @@ var info;
 GLOBAL VARIABLES
 */
 var numOverlap = 0;
-
 var yearlyDimension;
 var cf = crossfilter();
 var all;
@@ -55,6 +54,8 @@ function makeJSObject(csv){
    return result; //object
   //console.log( JSON.stringify(result)); //JSON
 }
+
+
 
 
 function resetViz(){
@@ -161,7 +162,6 @@ var highLowChart = dc.lineChart('#high-low-chart');
 
 
 function loadCompany(method){
-    numOverlap = 0;
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
@@ -691,9 +691,6 @@ function overlapData(){
         }
     
     }   
-    
-
-
 }
 
 function updateInfo(stockInfoBox){
@@ -728,51 +725,5 @@ function updateInfo(stockInfoBox){
         box.innerHTML = innerHTML;
     });
 }        
-
-////////////////////
-//$("#ticketCode").keypress(function(e) {
-//    var curr = document.getElementById("ticketCode").value
-//    console.log(curr + String.fromCharCode(e.which) )
-//     var settings = {
-//       "async": true,
-//       "crossDomain": true,
-//       "dataType": "json",
-//       "url": "/testQuery/",
-//       "method": "GET",
-//       "headers": {
-//         "accept": "application/json",
-//         "x-mashape-key": "APIKEY"
-//       }
-//     }
-//     console.log("RESPONSE")
-//     $.ajax(settings).done(function (response) {
-//       console.log(response);
-//         var dataList = document.getElementById("datalist1");
-//         console.log(datalist1);
-//         var text ="";
-//         for(var i = 0; i < 4; i++){
-//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
-//         }
-//         console.log(text);
-//         dataList.innerHTML = text;
-//         document.getElementById("ticketCode").focus();
-//     });
-    
-    
-    
-//    $.ajax({
-//          dataType: "jsonp",
-//          url: "arcane-springs-65260.herokuapp.com/testQuery",
-//          }).done(function ( data ) {
-//          console.log(data);
-//    });
-    
-    
-    
-//});
-
-         
 updateInfo("stockInformation");
-
-
 

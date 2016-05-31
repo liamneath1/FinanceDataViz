@@ -149,3 +149,6 @@ input[type=text] {
 .chartbox{
     display:inline-block;
 }
+input[placeholder] {
+    font-size: 16px;
+}
