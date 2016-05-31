@@ -123,8 +123,7 @@ function handleData(responseData ) {
         loadedData[0] = object;
         processData();
     }
-    console.log(loadedData);
-    
+
     /*object.forEach(function (d){
                    console.log(d.Open);
                    });*/
@@ -162,6 +161,7 @@ var highLowChart = dc.compositeChart('#high-low-chart');
 
 
 function loadCompany(method){
+    numOverlap = 0;
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
