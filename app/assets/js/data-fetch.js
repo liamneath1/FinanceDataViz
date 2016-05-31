@@ -542,13 +542,13 @@ function processData(){
                 .height(250)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
-                .transitionDuration(500)
+                .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(false)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .group(lowGroup, 'low')
+                .group(lowGroup
                 .stack(highGroup)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
