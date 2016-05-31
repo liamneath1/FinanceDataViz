@@ -725,8 +725,8 @@ function overlapData(){
                 })
                 .x(d3.time.scale().domain([dateFormat.parse(start_date), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(closingPriceChart).group(volumeByDateGroup),
-                    dc.lineChart(closingPriceChart).group(volumeByDateGroup1)
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup)
+                   //dc.lineChart(closingPriceChart).group(volumeByDateGroup1)
                 ]);
             
             dc.renderAll();
