@@ -162,6 +162,7 @@ var highLowChart = dc.lineChart('#high-low-chart');
 
 
 function loadCompany(method){
+
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
@@ -196,27 +197,32 @@ function loadCompany(method){
          };
     }
 
-    $.ajax(settings).done(function (response) {
-        ticketCode = response[0].tickername;
-        ticketCode = ticketCode.replace(/\s/g, '');
+    if((companyName==='' && ticketCode==='') || (companyName===undefined && ticketCode===undefined)){
+        return;
+    }else{
 
-        $('#gain-loss-chart').empty();
-        $('#quarter-chart').empty();
-        $('#fluctuation-chart').empty();
-        $('#closing-price-chart').empty();
-        
-        fluctuation.filterRange([-50000,50000]);
-        cf.remove();
-        dc.renderAll();
-        dc.redrawAll();
+        $.ajax(settings).done(function (response) {
+            ticketCode = response[0].tickername;
+            ticketCode = ticketCode.replace(/\s/g, '');
 
-        request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-        fetchData(request);
-        ticketLoaded = ticketCode;
-        updateInfo('stockInformation');
-        document.getElementById('ticketCode').value = '';
-       document.getElementById('companyName').value = '';
-    });
+            $('#gain-loss-chart').empty();
+            $('#quarter-chart').empty();
+            $('#fluctuation-chart').empty();
+            $('#closing-price-chart').empty();
+            
+            fluctuation.filterRange([-50000,50000]);
+            cf.remove();
+            dc.renderAll();
+            dc.redrawAll();
+
+            request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+            fetchData(request);
+            ticketLoaded = ticketCode;
+            updateInfo('stockInformation');
+            document.getElementById('ticketCode').value = '';
+           document.getElementById('companyName').value = '';
+        });
+    }
 }
 
 function compareCompany(){
@@ -542,14 +548,14 @@ function processData(){
                 .height(250)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
-                .transitionDuration(500)
+                .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(false)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .group(lowGroup, 'low')
-                .stack(highGroup)
+                .group(highGroup)
+                .stack(lowGroup)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
             
