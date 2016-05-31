@@ -122,6 +122,8 @@ function handleData(responseData ) {
     }else{
         loadedData[0] = object;
         processData();
+        console.log(volumeByDateGroup);
+
     }
 
     /*object.forEach(function (d){
@@ -475,16 +477,19 @@ function processData(){
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
+                    console.log(volumeByDateGroup);
+
                     return p += v.close;
                 }, 
                 function reduceRemove(p,v){
+                    console.log(volumeByDateGroup);
+
                     return p -= v.close;  
                 },
                 function reduceInitial(){
                     return 0;
                 }
             );
-            console.log(volumeByDateGroup);
 
             highGroup = volumeByDate.group().reduceSum(function(d){
                 return d.high;
