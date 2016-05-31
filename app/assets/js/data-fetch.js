@@ -153,7 +153,6 @@ var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-var dividendsChart = dc.compositeChart('#dividends-chart');
 var highLowChart = dc.compositeChart('#high-low-chart');
 
 
@@ -681,23 +680,6 @@ function overlapData(){
             }else{
                 start_date = startDate1;
             }
-            dividendsChart
-                .width(990)
-                .height(150)
-                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-                .dimension(volumeByDate1)
-                .transitionDuration(500)
-                .elasticY(true)
-                .brushOn(false)
-                .valueAccessor(function (d) {
-                    return d.value;
-                })
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .compose([
-                    dc.lineChart(dividendsChart).group(volumeByDateGroup),
-                    dc.lineChart(dividendsChart).group(volumeByDateGroup1)
-                ]);
-
             
             dc.renderAll();
             dc.redrawAll();
