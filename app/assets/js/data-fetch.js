@@ -496,6 +496,7 @@ function processData(){
                 .valueAccessor(function (d) {
                     return d.value;
                 })
+                .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
                     dc.lineChart(closingPriceChart).group(volumeByDateGroup)

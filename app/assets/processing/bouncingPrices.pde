@@ -27,6 +27,11 @@ Pfont f;                // font for the labels on the graph!
 int vizWidth = 750;
 int vizHeight = 150; 
 int canvasWidth = 850; 
+int canvasHeight = 200; 
+int labelsPresent = 0; 
+
+String firstDate = "";
+String lastDate = "";
 
 /*                   */
 
@@ -132,7 +137,11 @@ function processData(){
   console.log(rates);
   console.log(calculatedRates);
   updateSpots();
-  
+  labelsPresent = 1; 
+  firstDate = loadedData[0][0].dd.toDateString();
+  console.log(firstDate);
+  lastDate = loadedData[0][numSpots].dd.toDateString();
+  console.log(lastDate);
 }
 function updateSpots(){
   for (i = 0; i < numSpots ; i++){
@@ -150,15 +159,57 @@ void drawLabels(){
     fill(255);
     textFont(f,16);                 
     fill(0);                        
-    text("Gain",vizWidth + 25 ,50);   
+    text("Gain",vizWidth + 25, 50);   
     text("Loss",vizWidth + 25, 125);
-
 }
 
+void drawColorScale(){
+    int boxOffSet = 70; 
+    int boxStart = boxOffSet + vizWidth;
+    fill(0);
+    for (int i = 0; i < 7; i++){
+        double vals[]  = new double[3];
+        if (i < 4){
+            vals = interpolateColorT((3 - i)/3,-10);
+        } else {
+            vals = interpolateColorT( (i-3)/3,10);
+        }
+        fill(vals[0],vals[1],vals[2]);
+        rect(boxStart,(i * 20) + 5,20,20);
+    }   
+}
+
+void drawLabelsD(){
+    if (labelsPresent > 0 ){
+        stroke(255);   
+        fill(0,0,300);
+        rect(0,canvasHeight - 50,canvasWidth,50);
+        f = createFont("Arial",16,true);
+        textFont(f,16);
+        fill(0);
+        text(firstDate,0,canvasHeight - 20);
+        text(lastDate,canvasWidth - 200,canvasHeight - 20);
+    }    
+}
+
+double[] interpolateColorT(double frac,int perChange){
+    double [] vals = new double[3];
+    if (perChange > 0){
+      for (int i = 0; i < 3; i ++){
+        vals[i] = halfWayColor[i] * (1- frac) + maxColorGain[i] *frac; 
+      }
+      return vals;
+    } else {
+      for (int i = 0; i < 3; i ++){
+        vals[i] = (halfWayColor[i]) * (1 - frac) + maxColorLoss[i] *  frac; 
+      }
+    }
+    return vals; 
+}
 void setup() {
   colorMode(HSB); 
   background(0,0,300);          // white background
-  size(canvasWidth, vizHeight);
+  size(canvasWidth, canvasHeight);
   int dia = vizWidth/numSpots;  // calculate diameter
   spots = new StockCircle[numSpots]; // Create array
   for (int i = 0; i < spots.length; i++) {
@@ -179,7 +230,7 @@ void draw() {
   strokeWeight(1);
   line(0, (vizHeight)/2,vizWidth + 20, vizHeight/2); 
   
-  stroke(255);                                                  // we need a rectangular 
+  stroke(255);                                                  // we need a rectangle
   rect(vizWidth+20,0,canvasWidth - (vizWidth + 20),vizHeight);
   stroke(153);
   fill(0,200,360);
@@ -187,7 +238,9 @@ void draw() {
     spots[i].move(); // Move each object
     spots[i].display(); // Display each object
   }
-  drawLabels()
+  drawLabels();
+  drawColorScale();
+  drawLabelsD();
 }
 class StockCircle {
   float x, y;         // X-coordinate, y-coordinate
@@ -212,7 +265,7 @@ class StockCircle {
   void move() {
     y += (speed * direction); 
     if (maxYLocation == -1){
-      if ((y > (height - diameter/2)) || (y < diameter/2)) { 
+      if ((y > (vizHeight - diameter/2)) || (y < diameter/2)) { 
         direction *= -1; 
       } 
     } else{
@@ -259,5 +312,4 @@ class StockCircle {
     }
     return vals; 
   }
-
 }
