@@ -123,6 +123,7 @@ function handleData(responseData ) {
         loadedData[0] = object;
         processData();
     }
+    console.log(loadedData);
     
     /*object.forEach(function (d){
                    console.log(d.Open);
