@@ -673,7 +673,7 @@ function overlapData(){
                     return 0;
                 }
             );
-            var volumeByDateGroup1 = volumeByDate1.group().reduce(
+            var volumeByDateGroup1 = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
                 }, 
