@@ -489,9 +489,10 @@ function processData(){
                 .height(150)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
-                .transitionDuration(500)
+                .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(false)
+                .mouseZoomable(true)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
