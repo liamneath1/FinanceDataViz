@@ -255,14 +255,12 @@ function compareCompany(){
         $.ajax(settings).done(function (response) {
             ticketCode = response[0].tickername;
             ticketCode = ticketCode.replace(/\s/g, '');
-            
+
             $('#gain-loss-chart').empty();
             $('#quarter-chart').empty();
             $('#fluctuation-chart').empty();
             $('#closing-price-chart').empty();
             
-            fluctuation.filterRange([-50000,50000]);
-            cf.remove();
             dc.renderAll();
             dc.redrawAll();
 
