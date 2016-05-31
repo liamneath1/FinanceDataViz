@@ -587,6 +587,7 @@ function overlapData(){
     console.log("calling overlap data");
     var startDate = undefined;
     var endDate = undefined;
+    var totalData = [];
     while(true){
         console.log("Entered loop");
         if (loadedData[0] != null ){
@@ -615,8 +616,11 @@ function overlapData(){
                         endDate = d.Date;
                     }
                 }
+                d.company = ticketLoaded;
+                totalData.push(d);
+
             });
-    var startDate1;
+            var startDate1;
             loadedData[1].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
                 d.open = +d.Open;      //numbers 
@@ -641,7 +645,10 @@ function overlapData(){
                         endDate = d.Date;
                     }
                 }
+                d.company = ticketCompare;
+                totalData.push(d);
             });
+            console.log("totalData" + totalData);
 
             console.log("startDate" + startDate + "  " + "enddate" + endDate);
             cf = crossfilter(loadedData[0]);
