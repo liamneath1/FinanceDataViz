@@ -484,6 +484,7 @@ function processData(){
                     return 0;
                 }
             );
+            console.log(volumeByDateGroup);
 
             highGroup = volumeByDate.group().reduceSum(function(d){
                 return d.high;
