@@ -648,7 +648,7 @@ function overlapData(){
                 d.company = ticketCompare;
                 totalData.push(d);
             });
-            console.log("totalData" + totalData);
+            console.log(totalData);
 
             console.log("startDate" + startDate + "  " + "enddate" + endDate);
             cf = crossfilter(loadedData[0]);
