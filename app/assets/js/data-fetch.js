@@ -664,40 +664,33 @@ function overlapData(){
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
-                    if(v.company === ticketLoaded){
-                        console.log(ticketLoaded);
-                        return p += v.close;
-                    }
-                    else return p;
+                    return p += v.close;
                 }, 
                 function reduceRemove(p,v){
-                    if(v.company === ticketLoaded){
-                        return p -= v.close;
-                    }
-                    else return p;  
+                    return p -= v.close;  
                 },
                 function reduceInitial(){
                     return 0;
                 }
             );
-            var volumeByDateGroup1 = volumeByDate.group().reduce(
+            var volumeByDateGroup1 = volumeByDate1.group().reduce(
                 function reduceAdd (p,v){ 
-                    if(v.company === ticketCompare){
-                        return p += v.close;
-                    }
-                    else return p;
+                    return p += v.close;
                 }, 
                 function reduceRemove(p,v){
-                    if(v.company === ticketCompare){
-                        return p -= v.close;
-                    }
-                    else return p;  
+                    return p -= v.close;  
                 },
                 function reduceInitial(){
                     return 0;
                 }
             );
 
+
+
+            console.log(volumeByDateGroup);
+
+
+            console.log(volumeByDateGroup1);
             volumeGroup = volumeByDate.group().reduceSum(function(d){
                     return d.volume;
                 }
@@ -725,8 +718,8 @@ function overlapData(){
                 })
                 .x(d3.time.scale().domain([dateFormat.parse(start_date), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(closingPriceChart).group(volumeByDateGroup)
-                   //dc.lineChart(closingPriceChart).group(volumeByDateGroup1)
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup),
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup1)
                 ]);
             
             dc.renderAll();
