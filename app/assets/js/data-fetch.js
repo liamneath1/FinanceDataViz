@@ -631,147 +631,10 @@ function overlapData(){
             cf = crossfilter(loadedData[0]);
             var cf1 = crossfilter(loadedData[1]);
             all = cf.groupAll();
-            
-            // fetching the yearly dimension 
-            yearlyDimension = cf.dimension(function (d){
-                //console.log(d.dd);
-                if (d.dd != null){
-                    return d3.time.year(d.dd).getFullYear();
-                } else {
-                    console.log ("Returning NULL");
-                    return 0;
-                }
-            });
-
-            volumeDimension = cf.dimension(function (d){
-                //console.log(d.volume);
-                return d.volume; 
-            });
+     
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
          
-            // dimension by full date
-            dateDimension = cf.dimension(function (d){
-                return d.dd; 
-            });
-        
-
-            // dimension by month 
-            moveMonths = cf.dimension(function (d){
-                //console.log(d.month);
-                //return d.month;
-               return  d.dd.getMonth();
-            }); 
-            monthlyMoveGroup = moveMonths.group().reduceSum(function (d){
-                console.log("MOVEMENT ->" + Math.abs(d.close - d.open))
-                return Math.abs(d.close - d.open);
-            });
-            
-            volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
-                //console.log(d.volume/500);
-                return d.volume/ 500; 
-            });
-            console.log(volumeByMonthGroup.top(Infinity));
-            
-            indexAvgByMonthGroup = moveMonths.group().reduce(
-                function (p, v) {
-                    ++p.days;
-                    p.total += (v.open + v.close) / 2;
-                    p.avg = Math.round(p.total / p.days);
-                    return p;
-                },
-                function (p, v) {
-                    --p.days;
-                    p.total -= (v.open + v.close) / 2;
-                    p.avg = p.days ? Math.round(p.total / p.days) : 0;
-                    return p;
-                },
-                function () {
-                    return {days: 0, total: 0, avg: 0};
-                }
-            );
-            
-            gainOrLoss = cf.dimension(function (d){
-                if (d.open > d.close){
-                    return 'Loss';
-                } else {
-                    return 'Gain';
-                }
-                //return d.open > d.close ? 'Loss' : 'Gain';
-            });
-            gainOrLossGroup = gainOrLoss.group();
-            
-            fluctuation = cf.dimension(function (d){
-               return Math.round((d.close - d.open)/d.open * 100);
-            });
-            
-            fluctuationGroup = fluctuation.group(); 
-            
-            quarter = cf.dimension(function (d){
-                var month = d.dd.getMonth();
-                if (month <= 2){
-                    return 'Q1';
-                } else if (month > 3 && month <= 5){
-                    return 'Q2';
-                } else if (month > 5 && month <= 8){
-                    return 'Q3';
-                } else{
-                    return 'Q4';
-                }
-            });
-            quarterGroup = quarter.group().reduceSum(function (d){
-               return d.volume;  
-            });
-            
-            dayOfWeek = cf.dimension(function (d){
-                var day = d.dd.getDay();
-                var name = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-                return day + '.' + name[day];
-            });
-            dayOfWeekGroup = dayOfWeek.group();
-            
-            console.log(fluctuation);
-            gainOrLossChart
-                .width(180)
-                .height(180)
-                .radius(80)
-                .dimension(gainOrLoss)
-                .group(gainOrLossGroup)
-                .label(function (d){
-                    if (gainOrLossChart.hasFilter() && !gainOrLossChart.hasFilter(d.data.key)){
-                        return d.data.key + '(0%)';
-                    }
-                    var label = d.data.key;
-                    if (all.value()){
-                        label += '(' + Math.floor(d.value / all.value() * 100) + '%)';
-                    }
-                    return label;  
-                });
-            quarterChart
-                .width(180)
-                .height(180)
-                .radius(80)
-                .innerRadius(30)
-                .dimension(quarter)
-                .group(quarterGroup);
-            
-            fluctuationChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(fluctuation)
-                .group(fluctuationGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
-                .renderHorizontalGridLines(true);
-            
-            fluctuationChart.xAxis().tickFormat(
-                function (v) { return v + '%'; });
-            fluctuationChart.yAxis().ticks(10);  
-
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
@@ -810,48 +673,7 @@ function overlapData(){
                 }
             );
 
-            highGroup = volumeByDate.group().reduceSum(function(d){
-                return d.high;
-            });
-
-            lowGroup = volumeByDate.group().reduceSum(function(d){
-                return d.low;
-            });
-
-            /*
-            closingPriceChart
-                .width(990) 
-                .height(150)
-                .renderArea(true)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 20, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeByDateGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-            */
-
-            volumeChart
-                .width(420) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
-                .height(180)
-                .renderArea(true)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 20, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-
+   
             var start_date;
             if(startDate < startDate1){
                 start_date = startDate;
@@ -862,7 +684,7 @@ function overlapData(){
                 .width(990)
                 .height(150)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-                .dimension(volumeByDate)
+                .dimension(volumeByDate1)
                 .transitionDuration(500)
                 .elasticY(true)
                 .brushOn(false)
