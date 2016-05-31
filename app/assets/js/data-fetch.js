@@ -476,7 +476,7 @@ function processData(){
                 }
             );
 
-            highGroup = volumeByDate.group().reduce(
+            highGroup = volumeByDate.group().reduceSum(function(d){
                 return d.high;
             });
 
