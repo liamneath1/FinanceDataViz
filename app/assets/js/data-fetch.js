@@ -155,7 +155,7 @@ var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
 var highLowChart = dc.lineChart('#high-low-chart');
-
+var randomChart = dc.lineChart('#dividends-chart');
 
 //var timeSelectChart = dc.barChart('#date-select-chart');
 
@@ -556,6 +556,20 @@ function processData(){
                 })
                 .group(highGroup)
                 .stack(lowGroup)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
+
+            randomChart 
+                .width(1160)
+                .height(250)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(volumeByDate)
+                .transitionDuration(1000)
+                .elasticY(true)
+                .brushOn(false)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .group(lowGroup)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
             
