@@ -162,6 +162,7 @@ var highLowChart = dc.lineChart('#high-low-chart');
 
 
 function loadCompany(method){
+
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
@@ -194,6 +195,10 @@ function loadCompany(method){
              "x-mashape-key": "APIKEY"
            }
          };
+    }
+
+    if(companyName==='' && ticketCode===''){
+        return;
     }
 
     $.ajax(settings).done(function (response) {
