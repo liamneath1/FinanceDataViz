@@ -549,6 +549,8 @@ function processData(){
 Takes two stock data's and presents them in the same graph. 
 */
 function overlapData(){
+
+    console.log("calling overlap data");
     var startDate = undefined;
     var endDate = undefined;
     while(true){
