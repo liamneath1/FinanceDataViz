@@ -71,7 +71,7 @@ function fetchData(httpRequest){
     });
 }
 
-fetchData(request);
+//fetchData(request);
 
 function processData(){
   //numSpots = 60;
@@ -148,14 +148,12 @@ function setTimePeriod(){
     console.log("UPDATED");
 }
 
-
-
-
-
-
-
-
 /////////////////////// Processing Code ///////////////////////////
+void updateInt(int i, ArrayList<rates>){
+    numSpots = i;
+    setup();
+}
+
 void setup() {
   colorMode(HSB); 
   size(vizWidth+20, vizHeight);
@@ -166,6 +164,7 @@ void setup() {
     float rate = random(0.1, 2.0);    // just make it random at the start
     spots[i] = new StockCircle(x, vizHeight/2, dia, rate, 0);
   }
+  fetchData(request);
   noStroke();
 }
 void draw() {
