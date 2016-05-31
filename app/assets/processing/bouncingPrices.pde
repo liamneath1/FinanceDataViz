@@ -16,17 +16,17 @@ var maxSpeed = 2;
 /* Processing GLOBALS */
 
 ArrayList<float> calculatedRates = new ArrayList<float>(); 
-StockCircle[] spots; // Declare array
+StockCircle[] spots;    // Declare array
 int numSpots = 90; 
 Vector<int> minColor = [100,206,255];
 Vector<int> maxColor = [0,200,360];
 Vector<int> halfWayColor = [40,220,250];
 Vector<int> maxColorGain = [0,180,200];
 Vecotr<int> maxColorLoss = [90,180,200];
-
+Pfont f;                // font for the labels on the graph!
 int vizWidth = 750;
 int vizHeight = 150; 
-
+int canvasWidth = 850; 
 
 /*                   */
 
@@ -139,18 +139,27 @@ function updateSpots(){
     spots[i].updateParamaters(calculatedRates.get(i), calcChanges[i]);
   }
 }
+
 /////////////////////// Processing Code ///////////////////////////
-
-
 void updateInt(int i){
     numSpots = i;
     setup();
 }
+void drawLabels(){
+    f = createFont("Arial",16,true);
+    fill(255);
+    textFont(f,16);                 
+    fill(0);                        
+    text("Gain",vizWidth + 25 ,50);   
+    text("Loss",vizWidth + 25, 125);
+
+}
 
 void setup() {
   colorMode(HSB); 
-  size(vizWidth+20, vizHeight);
-  int dia = vizWidth/numSpots; // Calculate diameter
+  background(0,0,300);          // white background
+  size(canvasWidth, vizHeight);
+  int dia = vizWidth/numSpots;  // calculate diameter
   spots = new StockCircle[numSpots]; // Create array
   for (int i = 0; i < spots.length; i++) {
     float x = dia/2 + i*dia + 5; 
@@ -160,17 +169,25 @@ void setup() {
   fetchData(request);
   noStroke();
 }
+
+
 void draw() {
   fill(0,0,300);
   stroke(153);
-  strokeWeight(10);
+  strokeWeight(5);
   rect(0, 0, vizWidth + 20, vizHeight);
   strokeWeight(1);
+  line(0, (vizHeight)/2,vizWidth + 20, vizHeight/2); 
+  
+  stroke(255);                                                  // we need a rectangular 
+  rect(vizWidth+20,0,canvasWidth - (vizWidth + 20),vizHeight);
+  stroke(153);
   fill(0,200,360);
   for (int i=0; i < spots.length; i++) {
     spots[i].move(); // Move each object
     spots[i].display(); // Display each object
   }
+  drawLabels()
 }
 class StockCircle {
   float x, y;         // X-coordinate, y-coordinate
