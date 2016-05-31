@@ -150,10 +150,49 @@ void drawLabels(){
     fill(255);
     textFont(f,16);                 
     fill(0);                        
-    text("Gain",vizWidth + 25 ,50);   
+    text("Gain",vizWidth + 25, 50);   
     text("Loss",vizWidth + 25, 125);
-
 }
+
+void drawColorScale(){
+    int boxOffSet = 70; 
+    int boxStart = boxOffSet + vizWidth;
+    fill(0);
+    for (int i = 0; i < 7; i++){
+        double vals[]  = new double[3];
+        if (i < 4){
+            vals = interpolateColorT((3 - i)/3,-10);
+        } else {
+            vals = interpolateColorT( (i-3)/3,10);
+        }
+        fill(vals[0],vals[1],vals[2]);
+        rect(boxStart,(i * 20) + 5,20,20);
+        
+    }   
+}
+
+
+
+double[] interpolateColorT(double frac,int perChange){
+    double [] vals = new double[3];
+    if (perChange > 0){
+      for (int i = 0; i < 3; i ++){
+        vals[i] = halfWayColor[i] * (1- frac) + maxColorGain[i] *frac; 
+      }
+      return vals;
+    } else {
+      for (int i = 0; i < 3; i ++){
+        vals[i] = (halfWayColor[i]) * (1 - frac) + maxColorLoss[i] *  frac; 
+      }
+    }
+    return vals; 
+}
+
+
+
+
+
+
 
 void setup() {
   colorMode(HSB); 
@@ -179,7 +218,7 @@ void draw() {
   strokeWeight(1);
   line(0, (vizHeight)/2,vizWidth + 20, vizHeight/2); 
   
-  stroke(255);                                                  // we need a rectangular 
+  stroke(255);                                                  // we need a rectangle
   rect(vizWidth+20,0,canvasWidth - (vizWidth + 20),vizHeight);
   stroke(153);
   fill(0,200,360);
@@ -187,7 +226,8 @@ void draw() {
     spots[i].move(); // Move each object
     spots[i].display(); // Display each object
   }
-  drawLabels()
+  drawLabels();
+  drawColorScale();
 }
 class StockCircle {
   float x, y;         // X-coordinate, y-coordinate
@@ -259,5 +299,4 @@ class StockCircle {
     }
     return vals; 
   }
-
 }
