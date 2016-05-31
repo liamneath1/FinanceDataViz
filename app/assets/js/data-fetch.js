@@ -151,7 +151,7 @@ fetchData(request);
 var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
-var closingPriceChart = dc.lineChart('#closing-price-chart');
+var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
 //var dividendsChart = dc.lineChart('#dividends-chart');
 var highLowChart = dc.compositeChart('#high-low-chart');
@@ -483,8 +483,25 @@ function processData(){
             });
 
             
+             closingPriceChart
+                .width(990)
+                .height(150)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(volumeByDate)
+                .transitionDuration(500)
+                .elasticY(true)
+                .brushOn(false)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup)
+                ]);
+
+            /**
             closingPriceChart
-                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .width(990) 
                 .height(150)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
@@ -498,6 +515,7 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+            */
 
 
             volumeChart
@@ -801,6 +819,21 @@ function overlapData(){
             });
 
             
+            closingPriceChart
+                .width(990) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .height(150)
+                .renderArea(true)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(true)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .dimension(volumeByDate)
+                .group(volumeByDateGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .xAxis();
 
 
             volumeChart
@@ -826,8 +859,8 @@ function overlapData(){
                 start_date = startDate1;
             }
             closingPriceChart
-                .width(1160)
-                .height(250)
+                .width(990)
+                .height(150)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
                 .transitionDuration(500)
@@ -836,10 +869,10 @@ function overlapData(){
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .x(d3.time.scale().domain([dateFormat.parse(start_date), dateFormat.parse(endDate)]))
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(highLowChart).group(volumeByDateGroup),
-                    dc.lineChart(highLowChart).group(volumeByDateGroup1)
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup),
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup1)
                 ]);
 
             
