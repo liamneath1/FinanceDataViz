@@ -407,6 +407,7 @@ function processData(){
                     return 'Q4';
                 }
             });
+
             quarterGroup = quarter.group().reduceSum(function (d){
                return d.volume;  
             });
@@ -475,13 +476,28 @@ function processData(){
                 }
             );
 
-            highGroup = volumeByDate.group().reduceSum(function(d){
-                return d.high;
-            });
+            highGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.high;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.high;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
 
-            lowGroup = volumeByDate.group().reduceSum(function(d){
-                return d.low;
-            });
+            lowGroup = volumeByDate.group().reduceSum( function reduceAdd (p,v){ 
+                    return p += v.high;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.high;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
 
             
              closingPriceChart
@@ -496,7 +512,6 @@ function processData(){
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
                     dc.lineChart(closingPriceChart).group(volumeByDateGroup)
