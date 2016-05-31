@@ -651,8 +651,7 @@ function overlapData(){
             console.log(totalData);
 
             console.log("startDate" + startDate + "  " + "enddate" + endDate);
-            cf = crossfilter(loadedData[0]);
-            var cf1 = crossfilter(loadedData[1]);
+            cf = crossfilter(totalData);
             all = cf.groupAll();
      
             console.log('Printing the yearly dimension!');
@@ -662,18 +661,19 @@ function overlapData(){
                return (d.dd); 
             });
 
-            var volumeByDate1 = cf1.dimension(function(d){
-                return(d.dd);
-            });
-
-
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
-                    return p += v.close;
+                    if(v.company === ticketLoaded){
+                        return p += v.close;
+                    }
+                    else return p;
                 }, 
                 function reduceRemove(p,v){
-                    return p -= v.close;  
+                    if(v.company === ticketLoaded){
+                        return p -= v.close;
+                    }
+                    else return p;  
                 },
                 function reduceInitial(){
                     return 0;
@@ -681,22 +681,22 @@ function overlapData(){
             );
             var volumeByDateGroup1 = volumeByDate1.group().reduce(
                 function reduceAdd (p,v){ 
-                    return p += v.close;
+                    if(v.company === ticketCompare){
+                        return p += v.close;
+                    }
+                    else return p;
                 }, 
                 function reduceRemove(p,v){
-                    return p -= v.close;  
+                    if(v.company === ticketCompare){
+                        return p -= v.close;
+                    }
+                    else return p;  
                 },
                 function reduceInitial(){
                     return 0;
                 }
             );
-
-
-
-            console.log(volumeByDateGroup);
-
-
-            console.log(volumeByDateGroup1);
+            
             volumeGroup = volumeByDate.group().reduceSum(function(d){
                     return d.volume;
                 }
