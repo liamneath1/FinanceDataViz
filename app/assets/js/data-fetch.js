@@ -299,7 +299,7 @@ function processData(){
     var endDate = undefined;
     while(true){
         if (loadedData[0] != null ){
-
+            var max_vol = 0;
             var dateFormat = d3.time.format('%Y-%m-%d');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
@@ -325,7 +325,11 @@ function processData(){
                         endDate = d.Date;
                     }
                 }
+                if(d.volume > max_vol){
+                    max_vol = d.volume;
+                }
             });
+            console.log("volume" + max_vol);
 
             // starting crossfilter stufff
 
