@@ -477,27 +477,12 @@ function processData(){
             );
 
             highGroup = volumeByDate.group().reduce(
-                function reduceAdd (p,v){ 
-                    return p += v.high;
-                }, 
-                function reduceRemove(p,v){
-                    return p -= v.high;  
-                },
-                function reduceInitial(){
-                    return 0;
-                }
-            );
+                return d.high;
+            });
 
-            lowGroup = volumeByDate.group().reduceSum( function reduceAdd (p,v){ 
-                    return p += v.high;
-                }, 
-                function reduceRemove(p,v){
-                    return p -= v.high;  
-                },
-                function reduceInitial(){
-                    return 0;
-                }
-            );
+            lowGroup = volumeByDate.group().reduceSum(function(d){
+                return d.low;
+            });
 
             
              closingPriceChart
