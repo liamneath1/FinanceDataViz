@@ -498,7 +498,7 @@ function processData(){
                 .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(true)
-                .mouseZoomable(true)
+                .mouseZoomable(false)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
@@ -532,11 +532,12 @@ function processData(){
                 .height(180)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
+                .mouseZoomable(false)
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .renderHorizontalGridLines(true)
                 .dimension(volumeByDate)
                 .group(volumeGroup)
                 .elasticY(true)
@@ -557,6 +558,7 @@ function processData(){
                 })
                 .group(highGroup)
                 .stack(lowGroup)
+                .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
             randomChart 
@@ -570,6 +572,7 @@ function processData(){
                 .valueAccessor(function (d) {
                     return d.value;
                 })
+                .renderHorizontalGridLines(true)
                 .group(lowGroup)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
