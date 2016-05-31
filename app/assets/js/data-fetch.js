@@ -215,7 +215,7 @@ function loadCompany(method){
         ticketLoaded = ticketCode;
         updateInfo('stockInformation');
         document.getElementById('ticketCode').value = '';
-       document.getElementById('companyName').value = '';
+        document.getElementById('companyName').value = '';
     });
 }
 
@@ -681,6 +681,24 @@ function overlapData(){
             }else{
                 start_date = startDate1;
             }
+
+            closingPriceChart
+                .width(990)
+                .height(150)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(volumeByDate)
+                .transitionDuration(1000)
+                .elasticY(true)
+                .brushOn(true)
+                .mouseZoomable(true)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .x(d3.time.scale().domain([dateFormat.parse(start_date), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(closingPriceChart).group(volumeByDateGroup),
+                    c.lineChart(closingPriceChart).group(volumeByDateGroup1)
+                ]);
             
             dc.renderAll();
             dc.redrawAll();
