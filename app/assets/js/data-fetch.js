@@ -9,9 +9,7 @@ var ticketCompare;
 var loadedData = [];    // big array containing raw data
 var info; 
 /*
-
 GLOBAL VARIABLES
-
 */
 var numOverlap = 0;
 
@@ -207,7 +205,6 @@ function loadCompany(method){
         $('#closing-price-chart').empty();
         
         fluctuation.filterRange([-50000,50000]);
-
         cf.remove();
         dc.renderAll();
         dc.redrawAll();
@@ -286,6 +283,7 @@ function fetchAndAdd(chartReference){
 
 
 function processData(){
+<<<<<<< HEAD
     var startDate = undefined;
     var endDate = undefined;
     while(true){
@@ -903,8 +901,52 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         box.innerHTML = innerHTML;
     });
-}
+}        
+
+////////////////////
+//$("#ticketCode").keypress(function(e) {
+//    var curr = document.getElementById("ticketCode").value
+//    console.log(curr + String.fromCharCode(e.which) )
+//     var settings = {
+//       "async": true,
+//       "crossDomain": true,
+//       "dataType": "json",
+//       "url": "/testQuery/",
+//       "method": "GET",
+//       "headers": {
+//         "accept": "application/json",
+//         "x-mashape-key": "APIKEY"
+//       }
+//     }
+//     console.log("RESPONSE")
+//     $.ajax(settings).done(function (response) {
+//       console.log(response);
+//         var dataList = document.getElementById("datalist1");
+//         console.log(datalist1);
+//         var text ="";
+//         for(var i = 0; i < 4; i++){
+//             text += "<option value=\"" + (response[i].tickername).trim() +"\">";
+//         }
+//         console.log(text);
+//         dataList.innerHTML = text;
+//         document.getElementById("ticketCode").focus();
+//     });
+    
+    
+    
+//    $.ajax({
+//          dataType: "jsonp",
+//          url: "arcane-springs-65260.herokuapp.com/testQuery",
+//          }).done(function ( data ) {
+//          console.log(data);
+//    });
+    
+    
+    
+//});
+
          
 updateInfo("stockInformation");
+
 
 
