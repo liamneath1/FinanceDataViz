@@ -12,7 +12,6 @@ var info;
 GLOBAL VARIABLES
 */
 var numOverlap = 0;
-
 var yearlyDimension;
 var cf = crossfilter();
 var all;
@@ -55,6 +54,8 @@ function makeJSObject(csv){
    return result; //object
   //console.log( JSON.stringify(result)); //JSON
 }
+
+
 
 
 function resetViz(){
@@ -156,6 +157,13 @@ var highLowChart = dc.compositeChart('#high-low-chart');
 
 
 function loadCompany(method){
+    
+    var processingInstance = Processing.getInstanceById('sketch');
+    console.log(processingInstance);
+   
+    
+    
+    
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
@@ -634,9 +642,5 @@ updateInfo();
     
     
 //});
-
-         
 updateInfo("stockInformation");
-
-
 
