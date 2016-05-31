@@ -665,6 +665,7 @@ function overlapData(){
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
                     if(v.company === ticketLoaded){
+                        console.log(ticketLoaded);
                         return p += v.close;
                     }
                     else return p;
