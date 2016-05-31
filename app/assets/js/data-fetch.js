@@ -661,7 +661,19 @@ function overlapData(){
                return (d.dd); 
             });
 
-            
+            volumeByDateGroup = volumeByDate.group().reduceSum(function(d){
+                if(d.company === ticketLoaded){
+                    return d.close;
+                }else return 0;
+            });
+
+            volumeByDateGroup1 = volumeByDate.group().reduceSum(function(d){
+                if(d.company === ticketCompare){
+                    return d.close;
+                }else return 0;
+            });
+
+            /**
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
@@ -684,7 +696,7 @@ function overlapData(){
                     return 0;
                 }
             );
-
+            */
 
 
             console.log(volumeByDateGroup);
