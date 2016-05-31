@@ -549,9 +549,7 @@ function processData(){
                     return d.value;
                 })
                 .group(lowGroup, 'low')
-                .stack(highGroup, 'high', function (d) {
-                    return d.high;
-                })
+                .stack(highGroup)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
             
