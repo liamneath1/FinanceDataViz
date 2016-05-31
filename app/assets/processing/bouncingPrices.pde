@@ -17,7 +17,7 @@ var maxSpeed = 2;
 
 ArrayList<float> calculatedRates = new ArrayList<float>(); 
 StockCircle[] spots; // Declare array
-int numSpots = 25; 
+int numSpots = 60; 
 Vector<int> minColor = [100,206,255];
 Vector<int> maxColor = [0,200,360];
 Vector<int> halfWayColor = [40,220,250];
@@ -250,17 +250,5 @@ class StockCircle {
     }
     return vals; 
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

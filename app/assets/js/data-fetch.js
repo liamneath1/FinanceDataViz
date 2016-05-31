@@ -162,17 +162,6 @@ var highLowChart = dc.compositeChart('#high-low-chart');
 
 
 function loadCompany(method){
-<<<<<<< HEAD
-    
-    var processingInstance = Processing.getInstanceById('sketch');
-    console.log(processingInstance);
-   
-    
-    
-    
-=======
-    numOverlap = 0;
->>>>>>> 3267b761e0f7a7df87de09b53bc34e3efc685b97
     d3.selectAll("svg").remove();
     var settings;
     var ticketCode;
