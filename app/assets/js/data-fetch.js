@@ -665,20 +665,20 @@ function overlapData(){
                return (d.dd); 
             });
 
-            volumeByDateGroup = volumeByDate.group().reduceSum(function(d){
-                if(d.company === ticketLoaded){
-                    return d.close;
-                }else return 0;
+            volumeByCompany = cf.dimension(function(d){
+                if(d.company===ticketLoaded){
+                    return d.dd;
+                }
             });
 
-            volumeByDateGroup1 = volumeByDate.group().reduceSum(function(d){
-                if(d.company === ticketCompare){
-                    return d.close;
-                }else return 0;
+            volumeByCompany = cf.dimension(function(d){
+                if(d.company===ticketCompare){
+                    return d.dd;
+                }
             });
 
-            /**
-            volumeByDateGroup = volumeByDate.group().reduce(
+
+            volumeByDateGroup = volumeByCompany.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
                 }, 
@@ -689,7 +689,8 @@ function overlapData(){
                     return 0;
                 }
             );
-            var volumeByDateGroup1 = volumeByDate.group().reduce(
+
+            var volumeByDateGroup1 = volumeByCompany1.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
                 }, 
@@ -700,7 +701,6 @@ function overlapData(){
                     return 0;
                 }
             );
-            */
 
 
             console.log(volumeByDateGroup);
