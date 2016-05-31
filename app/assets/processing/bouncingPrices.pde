@@ -25,8 +25,8 @@ Vector<int> halfWayColor = [40,220,250];
 Vector<int> maxColorGain = [0,180,200];
 Vecotr<int> maxColorLoss = [90,180,200];
 
-int vizWidth = 700;
-int vizHeight = 100; 
+int vizWidth = 750;
+int vizHeight = 150; 
 /*                   */
 
 //////////////// JAVASCRIPT CODE //////////////////
@@ -141,19 +141,22 @@ function updateSpots(){
 /////////////////////// Processing Code ///////////////////////////
 void setup() {
   colorMode(HSB); 
-  size(vizWidth, vizHeight);
-  int dia = width/numSpots; // Calculate diameter
+  size(vizWidth+20, vizHeight);
+  int dia = vizWidth/numSpots; // Calculate diameter
   spots = new StockCircle[numSpots]; // Create array
   for (int i = 0; i < spots.length; i++) {
-    float x = dia/2 + i*dia;
+    float x = dia/2 + i*dia + 5; 
     float rate = random(0.1, 2.0);    // just make it random at the start
     spots[i] = new StockCircle(x, vizHeight/2, dia, rate, 0);
   }
   noStroke();
 }
 void draw() {
-  fill(0);
-  rect(0, 0, width, height);
+  fill(0,0,300);
+  stroke(153);
+  strokeWeight(10);
+  rect(0, 0, vizWidth + 20, vizHeight);
+  strokeWeight(1);
   fill(0,200,360);
   for (int i=0; i < spots.length; i++) {
     spots[i].move(); // Move each object
@@ -207,11 +210,11 @@ class StockCircle {
     if (percentChange > 0){
       maxYLocation = vizHeight; 
       minYLocation = vizHeight/2; 
-      y = vizHeight/2 + diameter/2; 
+      y = vizHeight/2 + diameter; 
     } else {
       maxYLocation = vizHeight/2
       minYLocation = 0;
-      y = vizHeight/2 - diameter/2 ;
+      y = vizHeight/2 - diameter;
     }
   }
 
