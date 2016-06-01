@@ -420,7 +420,7 @@ function processData(){
             });
 
             var highLowDiff = cf.dimension(function (d){
-               return d.high - d.low;
+               return Math.round(d.high - d.low);
             });
 
             var highLowGroup = highLowDiff.group();
