@@ -414,6 +414,12 @@ function processData(){
             fluctuation = cf.dimension(function (d){
                return Math.round((d.close - d.open)/d.open * 100);
             });
+
+            var highLowDiff = cf.dimension(function (d){
+               return Math.round((d.high - d.low)/d.high * 100);
+            });
+
+            var highLowGroup = highLowDiff.group();
             
             fluctuationGroup = fluctuation.group(); 
             
@@ -471,6 +477,19 @@ function processData(){
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([-25,25]))
                 .renderHorizontalGridLines(true);
+
+            highLowChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(highLowDiff)
+                .group(highLowGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([-25,25]))
+                .renderHorizontalGridLines(true);
             
             fluctuationChart.xAxis().tickFormat(
                 function (v) { return v + '%'; });
@@ -504,15 +523,6 @@ function processData(){
                 }
             );
 
-            highGroup = volumeByDate.group().reduceSum(function(d){
-                return d.high;
-            });
-
-            lowGroup = volumeByDate.group().reduceSum(function(d){
-                return d.low;
-            });
-
-            
             closingPriceChart
                 .width(990)
                 .height(150)
