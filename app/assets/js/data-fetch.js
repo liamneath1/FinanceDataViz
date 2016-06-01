@@ -306,6 +306,7 @@ function processData(){
     while(true){
         if (loadedData[0] != null ){
             var max_vol = 0;
+            var max_diff = 0;
             var dateFormat = d3.time.format('%Y-%m-%d');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
@@ -334,6 +335,9 @@ function processData(){
                 if(d.volume > max_vol){
                     max_vol = d.volume;
                     date = d.Date;
+                }
+                if(d.high-d.low > max_diff){
+                    max_diff = d.high-d.low;
                 }
             });
             console.log("volume" + max_vol + " " + date);
@@ -488,7 +492,7 @@ function processData(){
                 .centerBar(true)
                 .gap(1)
                 .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-25,25]))
+                .x(d3.scale.linear().domain([0,max_diff]))
                 .renderHorizontalGridLines(true);
             
             fluctuationChart.xAxis().tickFormat(
