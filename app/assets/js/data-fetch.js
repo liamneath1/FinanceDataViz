@@ -37,7 +37,23 @@ var highGroup;
 var lowGroup;
 
 var nameToTicker ={};
-///////////////////
+
+
+
+/**
+    Various Charts That Make The Dashboard! 
+**/
+
+var gainOrLossChart = dc.pieChart('#gain-loss-chart');
+var quarterChart = dc.pieChart('#quarter-chart');
+var fluctuationChart = dc.barChart('#fluctuation-chart');
+var closingPriceChart = dc.compositeChart('#closing-price-chart');
+var volumeChart = dc.lineChart('#volume-chart');
+var highLowChart = dc.barChart('#high-low-chart');
+
+
+/**
+**/
 
 function makeJSObject(csv){
   var lines=csv.split("\n");
@@ -102,10 +118,6 @@ $.ajax(settings).done(function (response) {
     awesomeplete.list = listofResponse;
 });
 
-
-
-
-
 /*
     On succesful execution of fetchData(), this function 
     is called to handle the processing of the page data 
@@ -141,19 +153,6 @@ function fetchData(httpRequest){
 
 fetchData(request);
 
-/**
-    Various Charts That Make The Dashboard! 
-**/
-
-var gainOrLossChart = dc.pieChart('#gain-loss-chart');
-var quarterChart = dc.pieChart('#quarter-chart');
-var fluctuationChart = dc.barChart('#fluctuation-chart');
-var closingPriceChart = dc.compositeChart('#closing-price-chart');
-var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.lineChart('#high-low-chart');
-
-
-//var timeSelectChart = dc.barChart('#date-select-chart');
 
 
 
@@ -201,6 +200,7 @@ function loadCompany(method){
         $('#quarter-chart').empty();
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
+        $('#volume-chart').empty();
         
         fluctuation.filterRange([-50000,50000]);
         cf.remove();
@@ -215,6 +215,7 @@ function loadCompany(method){
         document.getElementById('companyName').value = '';
     });
 }
+
 
 function compareCompany(){
         d3.selectAll("svg").remove();
@@ -277,13 +278,17 @@ function compareCompany(){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
-        document.getElementById("B").style.display = 'none';  
         document.getElementById("A").style.display = 'block'; 
+        document.getElementById("B").style.display = 'none';  
+        document.getElementById("C").style.display = 'none'; 
     }else if (chartReference === 'B'){
         document.getElementById("A").style.display = 'none'; 
         document.getElementById("B").style.display = 'block';  
+        document.getElementById("C").style.display = 'none'; 
     }else if (chartReference === 'C'){
-
+        document.getElementById("A").style.display = 'none'; 
+        document.getElementById("B").style.display = 'none';  
+        document.getElementById("C").style.display = 'block'; 
     }else if (chartReference === 'D'){
 
     }
