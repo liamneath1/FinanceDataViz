@@ -278,12 +278,12 @@ function compareCompany(){
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
         document.getElementById("B").style.visibility="hidden";  
+        document.getElementById("A").style.visibility="visible";  
 
        
     }else if (chartReference === 'B'){
         document.getElementById("A").style.visibility="hidden";  
-
-      
+        document.getElementById("B").style.visibility="visible";  
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
