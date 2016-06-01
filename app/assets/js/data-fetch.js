@@ -277,13 +277,11 @@ function compareCompany(){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
-        document.getElementById("B").style.visibility="hidden";  
-        document.getElementById("A").style.visibility="visible";  
-
-       
+        document.getElementById("B").style.display = 'none';  
+        document.getElementById("A").style.display = 'block'; 
     }else if (chartReference === 'B'){
-        document.getElementById("A").style.visibility="hidden";  
-        document.getElementById("B").style.visibility="visible";  
+        document.getElementById("A").style.display = 'none'; 
+        document.getElementById("B").style.display = 'block';  
     }else if (chartReference === 'C'){
 
     }else if (chartReference === 'D'){
