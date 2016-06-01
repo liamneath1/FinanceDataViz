@@ -477,9 +477,15 @@ function processData(){
                return (d.dd); 
             });
 
-
-            volumeGroup = volumeByDate.group().reduceSum(function(d){
-                    return d.volume;
+            volumeGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.volume;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.volume;  
+                },
+                function reduceInitial(){
+                    return 0;
                 }
             );
             
@@ -521,27 +527,8 @@ function processData(){
                     dc.lineChart(closingPriceChart).group(volumeByDateGroup)
                 ]);
 
-            /**
-            closingPriceChart
-                .width(990) 
-                .height(150)
-                .renderArea(true)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 20, left: 40})
-                .dimension(volumeByDate)
-                .group(volumeByDateGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-            */
-
-
             volumeChart
-                .width(420) /* dc.barChart('#monthly-volume-chart', 'chartGroup'); */
+                .width(420)
                 .height(180)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
