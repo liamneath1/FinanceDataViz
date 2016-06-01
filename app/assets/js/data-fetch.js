@@ -544,7 +544,7 @@ function processData(){
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
 
-
+            /*
             highLowChart
                 .width(1160)
                 .height(250)
@@ -560,21 +560,7 @@ function processData(){
                 .stack(lowGroup)
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
-
-            randomChart 
-                .width(1160)
-                .height(250)
-                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-                .dimension(volumeByDate)
-                .transitionDuration(1000)
-                .elasticY(true)
-                .brushOn(false)
-                .valueAccessor(function (d) {
-                    return d.value;
-                })
-                .renderHorizontalGridLines(true)
-                .group(lowGroup)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
+            */
 
             dc.renderAll();
             dc.redrawAll();
