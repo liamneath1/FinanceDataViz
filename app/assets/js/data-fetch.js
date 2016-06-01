@@ -518,7 +518,7 @@ function processData(){
                 .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(true)
-                .mouseZoomable(true)
+                .mouseZoomable(false)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
@@ -532,11 +532,12 @@ function processData(){
                 .height(180)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
+                .mouseZoomable(false)
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .renderHorizontalGridLines(true)
                 .dimension(volumeByDate)
                 .group(volumeGroup)
                 .elasticY(true)
@@ -557,8 +558,27 @@ function processData(){
                 })
                 .group(highGroup)
                 .stack(lowGroup)
+                .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
+<<<<<<< HEAD
+            randomChart 
+                .width(1160)
+                .height(250)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(volumeByDate)
+                .transitionDuration(1000)
+                .elasticY(true)
+                .brushOn(false)
+                .valueAccessor(function (d) {
+                    return d.value;
+                })
+                .renderHorizontalGridLines(true)
+                .group(lowGroup)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
+
+=======
+>>>>>>> fd861a0fd7dc157caacc0ba22615cc753ab64a50
             
             dc.renderAll();
             dc.redrawAll();
@@ -757,5 +777,20 @@ function updateInfo(stockInfoBox){
          
 updateInfo("stockInformation");
 
+var bound = false;
+
+
+function bindJavascript() {
+         var pjs = Processing.getInstanceById('sketch');
+         if(pjs!=null) {
+           pjs.updateInt(  parseInt(document.getElementById("numOfBalls").value));
+           bound = true; }
+         if(!bound) setTimeout(bindJavascript, 250);
+}
+
+function setTimePeriod(){
+    console.log("ATTEMTPING TO CHANGE THE NUMBER OF BALLS!");
+    bindJavascript();
+}
 
 
