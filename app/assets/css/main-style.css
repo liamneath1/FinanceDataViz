@@ -139,7 +139,6 @@ input[type=text] {
     z-index:999;
 }
 
-
 #stockInformation{
     float: left;
 }
@@ -148,7 +147,4 @@ input[type=text] {
 }
 .chartbox{
     display:inline-block;
-}
-input[placeholder] {
-    font-size: 16px;
 }
