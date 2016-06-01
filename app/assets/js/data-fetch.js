@@ -502,7 +502,7 @@ function processData(){
             highLowChart.xAxis().tickFormat(
                 function (v) { return v ; }
                 ); 
-            highLowChart.yAxis().ticks(max_diff/4);
+            highLowChart.yAxis().ticks(max_diff*4);
 
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
