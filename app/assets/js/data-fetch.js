@@ -8,6 +8,8 @@ var ticketCompare;
 
 var loadedData = [];    // big array containing raw data
 var info; 
+var subgraphLoaded = 'A';
+var subgraphs = ['A','B','C'];
 /*
 GLOBAL VARIABLES
 */
@@ -510,7 +512,7 @@ function processData(){
             });
 
             
-             closingPriceChart
+            closingPriceChart
                 .width(990)
                 .height(150)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
@@ -561,6 +563,15 @@ function processData(){
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
             */
+
+            subgroups.forEach(
+                function(d,i){
+                    if(d === subgraphLoaded){
+                        document.getElementById(d).style.display = 'block'; 
+                    }else{
+                        document.getElementById(d).style.display = 'none';  
+                    }
+                });
 
             dc.renderAll();
             dc.redrawAll();
