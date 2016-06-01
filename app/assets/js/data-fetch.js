@@ -520,7 +520,7 @@ function processData(){
                 .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(true)
-                .mouseZoomable(false)
+                .mouseZoomable(true)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
