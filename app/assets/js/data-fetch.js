@@ -279,6 +279,7 @@ function compareCompany(){
 
 
 function fetchAndAdd(chartReference){
+    subgraphLoaded = chartReference;
     if (chartReference === 'A'){
         document.getElementById("A").style.display = 'block'; 
         document.getElementById("B").style.display = 'none';  
@@ -564,7 +565,7 @@ function processData(){
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
             */
 
-            subgroups.forEach(
+            subgraphs.forEach(
                 function(d,i){
                     if(d === subgraphLoaded){
                         document.getElementById(d).style.display = 'block'; 
