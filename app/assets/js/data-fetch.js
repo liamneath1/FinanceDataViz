@@ -498,7 +498,10 @@ function processData(){
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([0,max_diff]))
                 .renderHorizontalGridLines(true);
-            highLowChart.yAxis().ticks(10); 
+            fluctuationChart.xAxis().tickFormat(
+                function (v) { return v ; }
+                ); 
+            highLowChart.yAxis().ticks(10);
 
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
