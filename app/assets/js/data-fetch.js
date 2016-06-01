@@ -416,7 +416,7 @@ function processData(){
             });
 
             var highLowDiff = cf.dimension(function (d){
-               return Math.round((d.high - d.low)/d.high * 100);
+               return d.high - d.low;
             });
 
             var highLowGroup = highLowDiff.group();
