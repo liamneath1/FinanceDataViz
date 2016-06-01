@@ -497,12 +497,12 @@ function processData(){
                 .centerBar(true)
                 .gap(1)
                 .round(dc.round.floor)
-                .x(d3.scale.linear().domain([0,max_diff+1]))
+                .x(d3.scale.linear().domain([0,max_diff]))
                 .renderHorizontalGridLines(true);
             highLowChart.xAxis().tickFormat(
                 function (v) { return v ; }
                 ); 
-            highLowChart.yAxis().ticks(max_diff*4);
+            highLowChart.yAxis().ticks(10);
 
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
