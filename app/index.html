@@ -56,8 +56,15 @@
         <p> Financial Quarter Filter</p>
         <div class = "chart-container" id = "quarter-chart">
         </div>
-        <p> Fluctuation In Closing Prices </p>
-        <div id = "fluctuation-chart"></div>
+        <div id="A">
+            <p> Fluctuation In Closing Prices </p>
+            <div id = "fluctuation-chart"></div>
+        </div>
+        <div id="B">
+            <p>Volume Per Day</p>
+            <div id="volume-chart"></div>
+        </div>
+        
 
 
 
@@ -65,6 +72,7 @@
             <button class = "dropbtn">Dropdown</button>
             <div class= "dropdown-content"> 
                 <div class = "button-wrapper">
+                    
                     <button class = "button" onClick = "fetchAndAdd('A')"> 
                         <div class = "select">
                             GRAPH A
@@ -92,8 +100,7 @@
         
 
         <div id="closing-price-chart"></div>
-        Volume Per Day 
-        <div id="volume-chart"></div>
+        
         <div id="dividends-chart"></div>
         <div id="high-low-chart"></div>
     </div>

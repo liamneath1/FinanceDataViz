@@ -115,7 +115,6 @@ function handleData(responseData ) {
     // Do what you want with the data
     //console.log(responseData);
     var object = makeJSObject(responseData);
-   // console.log(object);
     if(numOverlap===1){
         loadedData[1] = object;
         overlapData();
@@ -125,10 +124,6 @@ function handleData(responseData ) {
         console.log(volumeByDateGroup);
 
     }
-
-    /*object.forEach(function (d){
-                   console.log(d.Open);
-                   });*/
 }
 
 /*
@@ -282,8 +277,12 @@ function compareCompany(){
 
 function fetchAndAdd(chartReference){
     if (chartReference === 'A'){
+        document.getElementById("B").style.visibility="hidden";  
+
        
     }else if (chartReference === 'B'){
+        document.getElementById("A").style.visibility="hidden";  
+
       
     }else if (chartReference === 'C'){
 
@@ -483,13 +482,9 @@ function processData(){
             
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
-                    console.log(volumeByDateGroup);
-
                     return p += v.close;
                 }, 
                 function reduceRemove(p,v){
-                    console.log(volumeByDateGroup);
-
                     return p -= v.close;  
                 },
                 function reduceInitial(){
