@@ -297,6 +297,7 @@ function fetchAndAdd(chartReference){
 function processData(){
     var startDate = undefined;
     var endDate = undefined;
+    var date = undefined;
     while(true){
         if (loadedData[0] != null ){
             var max_vol = 0;
@@ -327,9 +328,10 @@ function processData(){
                 }
                 if(d.volume > max_vol){
                     max_vol = d.volume;
+                    date = d.Date;
                 }
             });
-            console.log("volume" + max_vol);
+            console.log("volume" + max_vol + " " + date);
 
             // starting crossfilter stufff
 
@@ -665,8 +667,6 @@ function overlapData(){
                return (d.dd); 
             });
 
-            var dimensionByCompany = cf.dimension(function (d) {return d.company;});
-            dimensionByCompany.filter(ticketLoaded);
 
             volumeByDateGroup = volumeByDate.group().reduce(
                 function reduceAdd (p,v){ 
