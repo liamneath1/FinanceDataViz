@@ -420,7 +420,7 @@ function processData(){
             });
 
             var highLowDiff = cf.dimension(function (d){
-                return (Math.round((d.high-d.low)/d.high * 10) / 10).toFixed(2);
+                return (Math.round((d.high-d.low) * 4) / 4).toFixed(2);
             });
 
             var highLowGroup = highLowDiff.group();
@@ -497,12 +497,12 @@ function processData(){
                 .centerBar(true)
                 .gap(1)
                 .round(dc.round.floor)
-                .x(d3.scale.linear().domain([0,max_diff]))
+                .x(d3.scale.linear().domain([0,max_diff+1]))
                 .renderHorizontalGridLines(true);
             highLowChart.xAxis().tickFormat(
                 function (v) { return v ; }
                 ); 
-            highLowChart.yAxis().ticks(10);
+            highLowChart.yAxis().ticks(max_diff/4);
 
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
