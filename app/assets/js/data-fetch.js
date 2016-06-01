@@ -561,7 +561,6 @@ function processData(){
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
-<<<<<<< HEAD
             randomChart 
                 .width(1160)
                 .height(250)
@@ -577,9 +576,6 @@ function processData(){
                 .group(lowGroup)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
 
-=======
->>>>>>> fd861a0fd7dc157caacc0ba22615cc753ab64a50
-            
             dc.renderAll();
             dc.redrawAll();
             break;
