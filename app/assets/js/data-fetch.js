@@ -486,6 +486,7 @@ function processData(){
                 function (v) { return v + '%'; }
                 );
             fluctuationChart.yAxis().ticks(10);  
+
             highLowChart
                 .width(420)
                 .height(180)
@@ -498,7 +499,7 @@ function processData(){
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([0,max_diff]))
                 .renderHorizontalGridLines(true);
-            fluctuationChart.xAxis().tickFormat(
+            highLowChart.xAxis().tickFormat(
                 function (v) { return v ; }
                 ); 
             highLowChart.yAxis().ticks(10);
