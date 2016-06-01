@@ -593,7 +593,7 @@ function processData(){
                     }
                 });
 
-            //dc.renderAll();
+            dc.renderAll();
             dc.redrawAll();
             break;
         } else {
