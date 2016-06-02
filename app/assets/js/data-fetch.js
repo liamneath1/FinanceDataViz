@@ -834,22 +834,48 @@ function predictEarnings(){
     var curr_price;
 
     var toDateData = [];
-
-    loadedData[0].forEach(function (d,i){
-        console.log(d.Date);
+    var data = loadedData[0];
+    for( var i = data.length-1; i >=0 ; i--){
+        var d = data[i];
         if(d.Date === date){
             found = true;
             numBought = Math.floor(investment/d.open);
+            d.earnings = numBought*d.close;
         }
         if(d.Date > date){
             d.earnings = numBought*d.close;
+            d.percent_change = ((d.earnings - data[i-1].earnings)/data[i-1].earnings)*100;
             toDateData.push(d);
         }
         if(d.Date > max_date){
             max_date = d.Date;
             curr_price = d.close;
         }
-    });
+    }
+
+    var cf1 = crossfilter(toDateData);
+    var earningsDateDimension = cf1.dimension(function(d){return d.dd;});
+    var earningsDateGroup = earningsDateDimension.group().reduceSum(function(d){return d.percent_change});
+
+    var earningGraph = dc.lineChart("#earnings-chart");
+    var dateFormat = d3.time.format('%Y-%m-%d');
+
+
+     highLowChart
+        .width(500)
+        .height(180)
+        .renderHorizontalGridLines(true)
+        .mouseZoomable(true)
+        .brushOn(false)
+        .transitionDuration(1000)
+        .margins({top: 10, right: 10, bottom: 20, left: 40})
+        .renderHorizontalGridLines(true)
+        .dimension(earningsDateDimension)
+        .group(earningsDateGroup)
+        .elasticY(true)
+        .x(d3.time.scale().domain([dateFormat.parse(date), dateFormat.parse(max_date)]))
+        .xAxis();
+
 
     if(!found){
         document.getElementById("earnings").innerHTML = "Sorry, Quandl does not have data for that day.";
@@ -866,6 +892,7 @@ function predictEarnings(){
         text += "<p>Percent Change : " + (((earnings-investment)/investment)*100).toFixed(2)+ "%";
         document.getElementById("earnings").innerHTML = text;
     }
+
 }
          
 updateInfo("stockInformation");
