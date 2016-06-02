@@ -881,6 +881,8 @@ function predictEarnings(){
     var earningChart = dc.lineChart("#earnings-chart", "mygroup");
     var dateFormat = d3.time.format('%Y-%m-%d');
 
+    document.getElementById("earnings").style = "display:inline";
+
 
     earningChart
         .width(500)
