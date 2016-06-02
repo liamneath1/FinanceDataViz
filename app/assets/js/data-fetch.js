@@ -505,7 +505,7 @@ function processData(){
                 .group(quarterGroup);
             
             fluctuationChart
-                .width(500)
+                .width(550)
                 .height(180)
                 .margins({top: 10, right: 50, bottom: 30, left: 40})
                 .dimension(fluctuation)
@@ -559,7 +559,7 @@ function processData(){
                 ]);
 
             volumeChart
-                .width(500)
+                .width(550)
                 .height(180)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
@@ -576,7 +576,7 @@ function processData(){
                 .xAxis();
 
              highLowChart
-                .width(500)
+                .width(550)
                 .height(180)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
@@ -815,7 +815,7 @@ function updateInfo(stockInfoBox){
         innerHTML += "<hr>";
         innerHTML += "<div>";
         innerHTML += "<h3>Predict Earnings to Date</h3>";
-        innerHTML += "<p>Investment Amount: $<input type = \"text\" id = \"investment\"></p>";
+        innerHTML += "<p>Investment Amount : $ <input type = \"text\" id = \"investment\"></p>";
         innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
         innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
         innerHTML += "</div>";
