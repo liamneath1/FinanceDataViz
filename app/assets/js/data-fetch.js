@@ -374,10 +374,10 @@ function processData(){
 
             volumeGroup = volumeDateDimension.group().reduce(
                 function reduceAdd (p,v){ 
-                    return p += v.volume;
+                    return p += v.volume/1000;
                 }, 
                 function reduceRemove(p,v){
-                    return p -= v.volume;  
+                    return p -= v.volume/1000;  
                 },
                 function reduceInitial(){
                     return 0;
