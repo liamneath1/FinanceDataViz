@@ -853,7 +853,9 @@ function predictEarnings(){
     var earnings = (numBought*curr_price).toFixed(2);
     console.log(earnings);
     console.log(earnings-investment);
-    document.getElementById("earnings").innerHTML = "<p>Earnings: $" + (earnings) + "</p>" + "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>"
+    var text = "<p>Earnings: $" + (earnings) + "</p>" + "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>";
+    text += "<p>Percent Change : " + ((earnings-investment/investment)*100).toFixed(2)+ "%";
+    document.getElementById("earnings").innerHTML = 
 }
          
 updateInfo("stockInformation");
