@@ -383,7 +383,7 @@ function processData(){
             
             volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
                 //console.log(d.volume/500);
-                return d.volume/ 500; 
+                return d.volume; 
             });
             console.log(volumeByMonthGroup.top(Infinity));
             
