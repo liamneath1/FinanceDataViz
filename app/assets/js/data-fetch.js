@@ -816,7 +816,7 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p>Investment Amount: <input type = \"text\" id = \"investment\"></p>";
         innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
         innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
-        innerHTML += "<div id=earnings></div>";
+        innerHTML += "<div id=earnings><div id= \"earnings-chart\"></div></div>";
         innerHTML += "</div>";
         innerHTML += "</div>";
         box.innerHTML = innerHTML;
