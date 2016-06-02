@@ -783,6 +783,11 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
+        innerHTML += "<p>Number of Stocks Bought:</p><input type = \"text\" id = \"numStocks\">";
+        innerHTML += "<p>Date Bought (mm/dd/yyyy):</p><input type = \"text\" id = \"dateBought\">";
+        innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings to Date</button>";
+
+        
         box.innerHTML = innerHTML;
     });
 }        
