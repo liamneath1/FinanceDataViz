@@ -367,7 +367,7 @@ function processData(){
                return (d.dd); 
             });
 
-            volumeGroup = volumeByDate.group().reduce(
+            volumeGroup = volumeDateDimension.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.volume;
                 }, 
