@@ -800,6 +800,9 @@ function updateInfo(stockInfoBox){
 function predictEarnings(){
     var investment = document.getElementById("investment").value;
     var dateBought = document.getElementById("dateBought").value;
+    var date_parts = str.split("/");
+    var date = date_parts[2] + "-" + date_parts[0] + "-" + date_parts[1];
+    console.log(date);
 
 }
          
