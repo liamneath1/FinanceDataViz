@@ -803,18 +803,25 @@ function predictEarnings(){
     var date_parts = dateBought.split("/");
     var date = date_parts[2] + "-" + date_parts[0] + "-" + date_parts[1];
     var numBought;
-    console.log(date);
+    var found = false;
+    var max_date = date;
+    var curr_price;
 
     loadedData[0].forEach(function (d,i){
         if(d.Date === date){
+            found = true;
             numBought = Math.floor(investment/d.open);
-            console.log(d.open);
-            console.log(investment/d.open);
-            console.log(numBought);
+        }
+
+        if(d.Date > max_date){
+            max_date = d.Date;
+            curr_price = d.close;
         }
     });
-    console.log("lol");
 
+    var earnings = numBought*curr_price;
+    console.log(earnings);
+    console.log(earnings-investment);
 }
          
 updateInfo("stockInformation");
