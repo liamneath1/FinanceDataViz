@@ -786,10 +786,10 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         innerHTML += "</div>";
-        innerHTML += "<div>";
+        innerHTML += "<div style=\"float:left\">";
         innerHTML += "<h3>Predict Earnings to Date</h3>";
-        innerHTML += "<p>Number of Stocks Bought:<input type = \"text\" id = \"numStocks\"></p>";
-        innerHTML += "<p>Date Bought (mm/dd/yyyy):<input type = \"text\" id = \"dateBought\"></p>";
+        innerHTML += "<p>Investment : <input type = \"text\" id = \"investment\"></p>";
+        innerHTML += "<p>Date Bought (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
         innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
         innerHTML += "</div>";
         innerHTML += "</div>";
@@ -797,6 +797,11 @@ function updateInfo(stockInfoBox){
     });
 }        
 
+function predictEarnings(){
+    var investment = document.getElementById("investment").value;
+    var dateBought = document.getElementById("dateBought").value;
+
+}
          
 updateInfo("stockInformation");
 
