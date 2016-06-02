@@ -850,6 +850,9 @@ function predictEarnings(){
         }
     });
 
+    if(!found){
+        console.log(date not found);
+    }
     var earnings = (numBought*curr_price).toFixed(2);
     console.log(earnings);
     console.log(earnings-investment);
