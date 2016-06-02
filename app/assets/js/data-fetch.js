@@ -777,18 +777,22 @@ function updateInfo(stockInfoBox){
      };
     
     $.ajax(settings).done(function (response) {
+        innerHTML += "<div style=\"float:left\">";
+        innerHTML += "<div>";
         innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticket + "</p>";
         innerHTML += "<p><b>Company Name</b> : " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
-        innerHTML += "<h2>Predict Earnings to Date</h2>";
+        innerHTML += "</div>";
+        innerHTML += "<div>";
+        innerHTML += "<h3>Predict Earnings to Date</h3>";
         innerHTML += "<p>Number of Stocks Bought:<input type = \"text\" id = \"numStocks\"></p>";
         innerHTML += "<p>Date Bought (mm/dd/yyyy):<input type = \"text\" id = \"dateBought\"></p>";
-        innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings>";
-
-        
+        innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
+        innerHTML += "</div>";
+        innerHTML += "</div>";
         box.innerHTML = innerHTML;
     });
 }        
