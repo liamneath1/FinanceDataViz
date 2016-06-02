@@ -50,7 +50,7 @@ var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
-var volumeChart = dc.lineChart('#volume-chart');
+var volumeChart = dc.barChart('#volume-chart');
 var highLowChart = dc.barChart('#high-low-chart');
 
 
