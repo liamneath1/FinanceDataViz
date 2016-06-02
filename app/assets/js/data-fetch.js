@@ -854,14 +854,8 @@ var showButton = function(){
     };
 };
 
-var gainOrLossChart = dc.pieChart('#gain-loss-chart');
-var quarterChart = dc.pieChart('#quarter-chart');
-var fluctuationChart = dc.barChart('#fluctuation-chart');
-var closingPriceChart = dc.compositeChart('#closing-price-chart');
-var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.barChart('#high-low-chart');
 
-gainOrLoss.on('filtered', function(){showButton();});
+gainOrLossChart.on('filtered', function(){showButton();});
 quarterChart.on('filtered', function(){showButton();});
 fluctuationChart.on('filtered', function(){showButton();});
 closingPriceChart.on('filtered', function(){showButton();});
