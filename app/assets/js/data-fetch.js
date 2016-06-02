@@ -777,7 +777,7 @@ function updateInfo(stockInfoBox){
      };
     
     $.ajax(settings).done(function (response) {
-        innerHTML += "<div style=\"float:left\">";
+        innerHTML += "<div style=\"display:inline\">";
         innerHTML += "<div>";
         innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticket + "</p>";
@@ -788,8 +788,8 @@ function updateInfo(stockInfoBox){
         innerHTML += "</div>";
         innerHTML += "<div style=\"float:left\">";
         innerHTML += "<h3>Predict Earnings to Date</h3>";
-        innerHTML += "<p>Investment : <input type = \"text\" id = \"investment\"></p>";
-        innerHTML += "<p>Date Bought (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
+        innerHTML += "<p>Investment Amount: <input type = \"text\" id = \"investment\"></p>";
+        innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
         innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
         innerHTML += "</div>";
         innerHTML += "</div>";
