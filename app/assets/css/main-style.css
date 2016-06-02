@@ -139,9 +139,6 @@ input[type=text] {
     z-index:999;
 }
 
-#stockInformation{
-    float: left;
-}
 .wrapper{
     display:inline-block;
 }
