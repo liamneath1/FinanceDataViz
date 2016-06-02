@@ -197,6 +197,7 @@ function loadCompany(method){
     $.ajax(settings).done(function (response) {
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
+        document.getElementById("earnings").innerHTML = "";
 
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
@@ -827,7 +828,7 @@ function predictEarnings(){
     var dateBought = document.getElementById("dateBought").value;
     var date_parts = dateBought.split("/");
     if(date_parts[0].length!==2 || date_parts[1].length!==2 || date_parts[2].length!=4){
-        document.getElementById("earnings").innerHTML = "Please use correct date format.";
+        document.getElementById("earnings").innerHTML = "Please use correct date format as specified above.";
         return;
     }
     var date = date_parts[2] + "-" + date_parts[0] + "-" + date_parts[1];
