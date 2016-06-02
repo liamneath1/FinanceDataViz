@@ -857,11 +857,11 @@ function predictEarnings(){
     var earningsDateDimension = cf1.dimension(function(d){return d.dd;});
     var earningsDateGroup = earningsDateDimension.group().reduceSum(function(d){return d.percent_change});
 
-    var earningGraph = dc.lineChart("#earnings-chart");
+    var earningChart = dc.lineChart("#earnings-chart", "mygroup");
     var dateFormat = d3.time.format('%Y-%m-%d');
 
 
-     highLowChart
+    earningChart
         .width(500)
         .height(180)
         .renderHorizontalGridLines(true)
@@ -875,6 +875,8 @@ function predictEarnings(){
         .elasticY(true)
         .x(d3.time.scale().domain([dateFormat.parse(date), dateFormat.parse(max_date)]))
         .xAxis();
+        
+    dc.renderAll("mygroup");
 
 
     if(!found){
