@@ -50,7 +50,7 @@ var gainOrLossChart = dc.pieChart('#gain-loss-chart');
 var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
-var volumeChart = dc.barChart('#volume-chart');
+var volumeChart = dc.lineChart('#volume-chart');
 var highLowChart = dc.barChart('#high-low-chart');
 
 
@@ -382,7 +382,8 @@ function processData(){
             });
             
             volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
-                return d.volume; 
+                //console.log(d.volume/500);
+                return d.volume/ 500; 
             });
             console.log(volumeByMonthGroup.top(Infinity));
             
@@ -534,7 +535,6 @@ function processData(){
             closingPriceChart
                 .width(990)
                 .height(150)
-                .renderArea(true)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
@@ -552,6 +552,7 @@ function processData(){
             volumeChart
                 .width(420)
                 .height(180)
+                .renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(false)
                 //.rangeChart(timeSelectChart)
@@ -559,8 +560,8 @@ function processData(){
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .renderHorizontalGridLines(true)
-                .dimension(quarter)
-                .group(quarterGroup)
+                .dimension(volumeByDate)
+                .group(volumeGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
