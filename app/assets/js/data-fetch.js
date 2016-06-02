@@ -811,7 +811,7 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         innerHTML += "</div>";
-        innerHTML += "<div style=\"display:inline\">";
+        innerHTML += "<div style=\"display:block\">";
         innerHTML += "<h3>Predict Earnings to Date</h3>";
         innerHTML += "<p>Investment Amount: <input type = \"text\" id = \"investment\"></p>";
         innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
