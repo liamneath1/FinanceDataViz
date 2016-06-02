@@ -844,7 +844,7 @@ function predictEarnings(){
         }
         if(d.Date > date){
             d.earnings = numBought*d.close;
-            d.percent_change = ((d.earnings - data[i-1].earnings)/data[i-1].earnings)*100;
+            d.percent_change = ((d.earnings - data[i+1].earnings)/data[i+1].earnings)*100;
             toDateData.push(d);
         }
         if(d.Date > max_date){
