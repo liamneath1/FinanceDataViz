@@ -827,6 +827,10 @@ function predictEarnings(){
     var investment = document.getElementById("investment").value;
     var dateBought = document.getElementById("dateBought").value;
     var date_parts = dateBought.split("/");
+    if(date_parts[0].length!==2 || date_parts[1].length!==2 || date_parts[2].length!=4){
+        document.getElementById("earnings").innerHTML = "Please use correct date format.";
+        return;
+    }
     var date = date_parts[2] + "-" + date_parts[0] + "-" + date_parts[1];
     var numBought;
     var found = false;
@@ -851,6 +855,23 @@ function predictEarnings(){
             max_date = d.Date;
             curr_price = d.close;
         }
+    }
+
+    if(!found){
+        document.getElementById("earnings").innerHTML = "Sorry, Quandl does not have data for that day.";
+        return;
+    }else{
+        var earnings = (numBought*curr_price).toFixed(2);
+        var text = "<p>Earnings: $" + (earnings) + "</p>";
+        console.log(earnings);
+        console.log(earnings-investment);
+        if(earnings-investment < 0){
+            text += "<p>Net Earnings: -$" + (0-(earnings - investment).toFixed(2)) + "</p>";
+        }else{      
+            text += "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>";
+        }
+        text += "<p>Percent Change : " + (((earnings-investment)/investment)*100).toFixed(2)+ "%";
+        document.getElementById("earnings").innerHTML = text;
     }
 
     var cf1 = crossfilter(toDateData);
@@ -878,25 +899,9 @@ function predictEarnings(){
         
     dc.renderAll("mygroup");
 
-
-    if(!found){
-        document.getElementById("earnings").innerHTML = "Sorry, Quandl does not have data for that day.";
-    }else{
-        var earnings = (numBought*curr_price).toFixed(2);
-        var text = "<p>Earnings: $" + (earnings) + "</p>";
-        console.log(earnings);
-        console.log(earnings-investment);
-        if(earnings-investment < 0){
-            text += "<p>Net Earnings: -$" + (0-(earnings - investment).toFixed(2)) + "</p>";
-        }else{      
-            text += "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>";
-        }
-        text += "<p>Percent Change : " + (((earnings-investment)/investment)*100).toFixed(2)+ "%";
-        document.getElementById("earnings").innerHTML = text;
-    }
-
 }
-         
+    
+
 updateInfo("stockInformation");
 
 var bound = false;
