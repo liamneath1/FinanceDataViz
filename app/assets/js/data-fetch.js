@@ -363,6 +363,34 @@ function processData(){
                 return d.volume; 
             });
 
+             volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+
+            volumeGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.volume;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.volume;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+            
+            volumeByDateGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.close;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.close;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
          
@@ -419,11 +447,9 @@ function processData(){
                return Math.round((d.close - d.open)/d.open * 100);
             });
 
-            var highLowDiff = cf.dimension(function (d){
-                return (Math.round((d.high-d.low) * 4) / 4).toFixed(2);
+            var highLowGroup = volumeByDate.group().reduceSum(function (d){
+                return (Math.round(d.high-d.low) / d.high);
             });
-
-            var highLowGroup = highLowDiff.group();
             
             fluctuationGroup = fluctuation.group(); 
             
@@ -486,7 +512,7 @@ function processData(){
                 function (v) { return v + '%'; }
                 );
             fluctuationChart.yAxis().ticks(10);  
-
+            /**
             highLowChart
                 .width(420)
                 .height(180)
@@ -503,34 +529,8 @@ function processData(){
                 function (v) { return v ; }
                 ); 
             highLowChart.yAxis().ticks(10);
-
-            volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
-            });
-
-            volumeGroup = volumeByDate.group().reduce(
-                function reduceAdd (p,v){ 
-                    return p += v.volume;
-                }, 
-                function reduceRemove(p,v){
-                    return p -= v.volume;  
-                },
-                function reduceInitial(){
-                    return 0;
-                }
-            );
-            
-            volumeByDateGroup = volumeByDate.group().reduce(
-                function reduceAdd (p,v){ 
-                    return p += v.close;
-                }, 
-                function reduceRemove(p,v){
-                    return p -= v.close;  
-                },
-                function reduceInitial(){
-                    return 0;
-                }
-            );
+            */
+           
 
             closingPriceChart
                 .width(990)
@@ -565,6 +565,24 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+
+             highLowChart
+                .width(420)
+                .height(180)
+                .renderArea(true)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(false)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .renderHorizontalGridLines(true)
+                .dimension(volumeByDate)
+                .group(highLowGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .xAxis();
+
 
             /*
             highLowChart
@@ -814,6 +832,10 @@ function predictEarnings(){
         if(d.Date === date){
             found = true;
             numBought = Math.floor(investment/d.open);
+        }
+        if(d.Date > date){
+            d.earnings = numBought*d.close;
+            toDateData.push(d);
         }
         if(d.Date > max_date){
             max_date = d.Date;
