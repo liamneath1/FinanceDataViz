@@ -897,6 +897,7 @@ function predictEarnings(){
         .elasticY(true)
         .x(d3.time.scale().domain([dateFormat.parse(date), dateFormat.parse(max_date)]))
         .xAxis()
+        .renderTitle(true)
         .title(function(d){
             return d.dd + "\nPercent Change Earnings: " + d.percent_change;
             });
