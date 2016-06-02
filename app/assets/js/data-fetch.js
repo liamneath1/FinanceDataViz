@@ -896,9 +896,12 @@ function predictEarnings(){
         .group(earningsDateGroup)
         .elasticY(true)
         .x(d3.time.scale().domain([dateFormat.parse(date), dateFormat.parse(max_date)]))
-        .xAxis();
+        .xAxis()
+        .title(function(d){
+            return d.dd + "\nPercent Change Earnings: " + d.percent_change;
+            });
 
-        fluctuationChart.yAxis().tickFormat(
+        earningChart.yAxis().tickFormat(
             function (v) { return v + '%'; }
         );
     dc.renderAll("mygroup");
