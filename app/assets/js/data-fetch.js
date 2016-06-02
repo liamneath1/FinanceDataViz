@@ -382,7 +382,6 @@ function processData(){
             });
             
             volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
-                //console.log(d.volume/500);
                 return d.volume; 
             });
             console.log(volumeByMonthGroup.top(Infinity));
@@ -560,8 +559,8 @@ function processData(){
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .renderHorizontalGridLines(true)
-                .dimension(moveMonths)
-                .group(volumeByMonthGroup)
+                .dimension(quarter)
+                .group(quarterGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
