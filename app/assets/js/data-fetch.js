@@ -870,7 +870,7 @@ function predictEarnings(){
             text += "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>";
         }
         text += "<p>Percent Change : " + (((earnings-investment)/investment)*100).toFixed(2)+ "%";
-        text += "<div id=\"earnings-chart\"></div>"
+        text += "<h4>Percent Change in Earnings</h4><div id=\"earnings-chart\"></div>"
         document.getElementById("earnings").innerHTML = text;
     }
 
@@ -896,11 +896,7 @@ function predictEarnings(){
         .group(earningsDateGroup)
         .elasticY(true)
         .x(d3.time.scale().domain([dateFormat.parse(date), dateFormat.parse(max_date)]))
-        .xAxis()
-        .renderTitle(true)
-        .title(function(d){
-            return d.dd + "\nPercent Change Earnings: " + d.percent_change;
-            });
+        .xAxis();
 
         earningChart.yAxis().tickFormat(
             function (v) { return v + '%'; }
