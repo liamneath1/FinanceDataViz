@@ -571,8 +571,6 @@ function processData(){
                 .renderHorizontalGridLines(true)
                 .dimension(volumeDateDimension)
                 .group(volumeGroup)
-                .xAxisLabel('Date')
-                .yAxisLabel('Volume (Thousands)')
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
