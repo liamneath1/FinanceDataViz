@@ -534,6 +534,7 @@ function processData(){
             closingPriceChart
                 .width(990)
                 .height(150)
+                .renderArea(true)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
@@ -551,7 +552,6 @@ function processData(){
             volumeChart
                 .width(420)
                 .height(180)
-                .renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(false)
                 //.rangeChart(timeSelectChart)
