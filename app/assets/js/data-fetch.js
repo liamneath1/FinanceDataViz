@@ -261,6 +261,9 @@ function compareCompany(){
             $('#quarter-chart').empty();
             $('#fluctuation-chart').empty();
             $('#closing-price-chart').empty();
+            $('#volume-chart').empty();
+            $('#high-low-chart').empty();
+
             
             dc.renderAll();
             dc.redrawAll();
