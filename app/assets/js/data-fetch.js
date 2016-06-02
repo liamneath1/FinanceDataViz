@@ -836,6 +836,7 @@ function predictEarnings(){
     var toDateData = [];
 
     loadedData[0].forEach(function (d,i){
+        console.log(d.Date);
         if(d.Date === date){
             found = true;
             numBought = Math.floor(investment/d.open);
