@@ -357,6 +357,10 @@ function processData(){
                     return 0;
                 }
             });
+            var volumeDateDimension = cf.dimension(function(d){
+                return d.dd;
+            });
+            
 
             volumeDimension = cf.dimension(function (d){
                 //console.log(d.volume);
@@ -456,9 +460,6 @@ function processData(){
             
             fluctuationGroup = fluctuation.group(); 
 
-            var volumeDateDimension = cf.dimension(function(d){
-                return d.dd;
-            });
             
             quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
