@@ -802,7 +802,17 @@ function predictEarnings(){
     var dateBought = document.getElementById("dateBought").value;
     var date_parts = dateBought.split("/");
     var date = date_parts[2] + "-" + date_parts[0] + "-" + date_parts[1];
+    var numBought;
     console.log(date);
+
+    loadedData[0].forEach(function (d,i){
+        if(d.Date === date){
+            numBought = Math.floor(investment/d.open);
+            console.log(d.open);
+            console.log(investment/d.open);
+            console.log(numBought);
+        }
+    });
 
 }
          
