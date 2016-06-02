@@ -807,12 +807,13 @@ function predictEarnings(){
     var max_date = date;
     var curr_price;
 
+    var toDateData = [];
+
     loadedData[0].forEach(function (d,i){
         if(d.Date === date){
             found = true;
             numBought = Math.floor(investment/d.open);
         }
-
         if(d.Date > max_date){
             max_date = d.Date;
             curr_price = d.close;
@@ -827,6 +828,31 @@ function predictEarnings(){
 updateInfo("stockInformation");
 
 var bound = false;
+
+
+var showButton = function(){
+    if(species_chart.filters().length > 0){
+    d3.select(".btn-btn")
+          .remove();
+
+    d3.select("#resetButton")
+        .append("button")
+        .attr("type","button")
+        .attr("class","btn-btn")
+        .append("div")
+        .attr("class","label")
+        .text(function(d) { return "Reset";})
+        .on("click", function(){
+          species_chart.filter(null);
+          dc.redrawAll();
+        })
+      }
+      else{
+        d3.select(".btn-btn")
+          .remove();
+        };
+};
+
 
 
 function bindJavascript() {
