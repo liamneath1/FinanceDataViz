@@ -455,6 +455,10 @@ function processData(){
             });
             
             fluctuationGroup = fluctuation.group(); 
+
+            var volumeDateDimension = cf.dimension(function(d){
+                return d.dd;
+            });
             
             quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
@@ -563,7 +567,7 @@ function processData(){
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .renderHorizontalGridLines(true)
-                .dimension(volumeByDate)
+                .dimension(volumeDateDimension)
                 .group(volumeGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
