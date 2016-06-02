@@ -504,7 +504,7 @@ function processData(){
                 .group(quarterGroup);
             
             fluctuationChart
-                .width(420)
+                .width(500)
                 .height(180)
                 .margins({top: 10, right: 50, bottom: 30, left: 40})
                 .dimension(fluctuation)
@@ -558,11 +558,11 @@ function processData(){
                 ]);
 
             volumeChart
-                .width(420)
+                .width(500)
                 .height(180)
                 .renderArea(true)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(false)
+                .mouseZoomable(true)
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
@@ -575,10 +575,10 @@ function processData(){
                 .xAxis();
 
              highLowChart
-                .width(420)
+                .width(500)
                 .height(180)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(false)
+                .mouseZoomable(true)
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
