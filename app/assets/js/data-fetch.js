@@ -813,6 +813,7 @@ function predictEarnings(){
             console.log(numBought);
         }
     });
+    console.log("lol");
 
 }
          
