@@ -791,6 +791,7 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p>Investment Amount: <input type = \"text\" id = \"investment\"></p>";
         innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
         innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
+        innerHTML += "<div id=earnings></div>";
         innerHTML += "</div>";
         innerHTML += "</div>";
         box.innerHTML = innerHTML;
@@ -823,6 +824,7 @@ function predictEarnings(){
     var earnings = numBought*curr_price;
     console.log(earnings);
     console.log(earnings-investment);
+    document.getElementById("earnings").innerHTML = "<p>Earnings: " + (earnings) + "</p>" + "<p>Net Earnings: " + (earnings - investment) + "</p>"
 }
          
 updateInfo("stockInformation");
@@ -846,12 +848,26 @@ var showButton = function(){
           species_chart.filter(null);
           dc.redrawAll();
         })
-      }
-      else{
+    }else{
         d3.select(".btn-btn")
           .remove();
-        };
+    };
 };
+
+var gainOrLossChart = dc.pieChart('#gain-loss-chart');
+var quarterChart = dc.pieChart('#quarter-chart');
+var fluctuationChart = dc.barChart('#fluctuation-chart');
+var closingPriceChart = dc.compositeChart('#closing-price-chart');
+var volumeChart = dc.lineChart('#volume-chart');
+var highLowChart = dc.barChart('#high-low-chart');
+
+gainOrLoss.on('filtered', function(){showButton();});
+quarterChart.on('filtered', function(){showButton();});
+fluctuationChart.on('filtered', function(){showButton();});
+closingPriceChart.on('filtered', function(){showButton();});
+volumeChart.on('filtered', function(){showButton();});
+highLowChart.on('filtered', function(){showButton();});
+
 
 
 
