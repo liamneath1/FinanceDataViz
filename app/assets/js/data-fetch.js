@@ -855,7 +855,7 @@ function predictEarnings(){
     console.log(earnings-investment);
     var text = "<p>Earnings: $" + (earnings) + "</p>" + "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>";
     text += "<p>Percent Change : " + ((earnings-investment/investment)*100).toFixed(2)+ "%";
-    document.getElementById("earnings").innerHTML = 
+    document.getElementById("earnings").innerHTML = text;
 }
          
 updateInfo("stockInformation");
