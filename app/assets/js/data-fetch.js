@@ -447,7 +447,10 @@ function processData(){
                return Math.round((d.close - d.open)/d.open * 100);
             });
 
-            var highLowGroup = volumeByDate.group().reduceSum(function (d){
+            var highLowDimension = cf.dimension(function(d){
+                return d.dd;
+            });
+            var highLowGroup = highLowDimension.group().reduceSum(function (d){
                 return (Math.round(d.high-d.low) / d.high);
             });
             
@@ -576,7 +579,7 @@ function processData(){
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .renderHorizontalGridLines(true)
-                .dimension(volumeByDate)
+                .dimension(highLowDimension)
                 .group(highLowGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
