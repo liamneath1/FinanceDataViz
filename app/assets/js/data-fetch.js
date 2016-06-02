@@ -551,8 +551,8 @@ function processData(){
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
-                .brushOn(true)
-                .mouseZoomable(true)
+                .brushOn(true)                .mouseZoomable(true)
+
                 .valueAccessor(function (d) {
                     return d.value;
                 })
@@ -564,7 +564,7 @@ function processData(){
             volumeChart
                 .width(550)
                 .height(180)
-                .renderArea(true)
+                //.renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
                 //.rangeChart(timeSelectChart)
