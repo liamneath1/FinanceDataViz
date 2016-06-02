@@ -569,7 +569,6 @@ function processData(){
              highLowChart
                 .width(420)
                 .height(180)
-                .renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(false)
                 //.rangeChart(timeSelectChart)
