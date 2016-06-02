@@ -51,7 +51,7 @@ var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.barChart('#high-low-chart');
+var highLowChart = dc.lineChart('#high-low-chart');
 
 
 /**
