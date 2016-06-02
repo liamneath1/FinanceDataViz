@@ -145,4 +145,5 @@ input[type=text] {
 }
 .chartbox{
     display:inline-block;
+    width:100%;
 }
