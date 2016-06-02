@@ -363,7 +363,7 @@ function processData(){
                 return d.volume; 
             });
 
-             volumeByDate = cf.dimension(function(d){
+            volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
 
@@ -451,7 +451,7 @@ function processData(){
                 return d.dd;
             });
             var highLowGroup = highLowDimension.group().reduceSum(function (d){
-                return (Math.round(d.high-d.low) / d.high);
+                return d.high-d.low;
             });
             
             fluctuationGroup = fluctuation.group(); 
