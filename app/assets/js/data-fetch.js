@@ -921,7 +921,7 @@ var showButton = function(){
         d3.select(".btn-btn")
               .remove();
 
-        d3.select("#resetButton")
+        d3.select("#reset-button")
             .append("button")
             .attr("type","button")
             .attr("class","btn-btn")
