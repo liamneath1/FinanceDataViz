@@ -935,6 +935,8 @@ var showButton = function(){
             dc.redrawAll();
         })
     }else{
+        console.log("removing reset button");
+
         d3.select(".btn-btn")
           .remove();
     };
