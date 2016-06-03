@@ -917,26 +917,33 @@ var bound = false;
 
 
 var showButton = function(){
-    if(gainOrLossChart.filters().length > 0){
-        d3.select(".btn-btn")
-              .remove();
+    if(gainOrLossChart.filters().length > 0 ||
+       quarterChart.filters().length > 0 ||
+       fluctuationChart.filters().length > 0 ||
+       closingPriceChart.filters().length > 0 ||
+       volumeChart.filters().length > 0 ||
+       highLowChart.filters().length > 0){
+    d3.select(".btn-btn")
+          .remove();
 
-        d3.select("#reset-button")
-            .append("button")
-            .attr("type","button")
-            .attr("class","btn-btn")
-            .append("div")
-            .attr("class","label")
-            .text(function(d) { return "Reset";})
-            .on("click", function(){
-                gainOrLossChart.filter(null);
-                dc.redrawAll();
-            });
-            console.log("lmao reset buttoning");
+    d3.select("#reset-button")
+        .append("button")
+        .attr("type","button")
+        .attr("class","btn-btn")
+        .append("div")
+        .attr("class","label")
+        .text(function(d) { return "Reset";})
+        .on("click", function(){
+            gainOrLossChart.filter(null);
+            quarterChart.filter(null);
+            fluctuationChart.filter(null);
+            closingPriceChart.filter(null);
+            volumeChart.filter(null);
+            highLowChart.filter(null);
 
+            dc.redrawAll();
+        })
     }else{
-        console.log("removing reset button");
-
         d3.select(".btn-btn")
           .remove();
     };
@@ -944,6 +951,12 @@ var showButton = function(){
 
 
 gainOrLossChart.on('filtered', function(){showButton();});
+quarterChart.on('filtered', function(){showButton();});
+fluctuationChart.on('filtered', function(){showButton();});
+closingPriceChart.on('filtered', function(){showButton();});
+volumeChart.on('filtered', function(){showButton();});
+highLowChart.on('filtered', function(){showButton();});
+
 
 
 
