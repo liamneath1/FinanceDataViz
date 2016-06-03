@@ -450,17 +450,18 @@ function processData(){
                 //return d.open > d.close ? 'Loss' : 'Gain';
             });
             gainOrLossGroup = gainOrLoss.group();
-
-
-            var highLowDimension = cf.dimension(function(d){
-                return d.high-d.low;
-            });
-            var highLowGroup = highLowDimension.group();
             
-
             fluctuation = cf.dimension(function (d){
                return Math.round((d.close - d.open)/d.open * 100);
             });
+
+            var highLowDimension = cf.dimension(function(d){
+                return d.dd;
+            });
+            var highLowGroup = highLowDimension.group().reduceSum(function (d){
+                return d.high-d.low;
+            });
+            
             fluctuationGroup = fluctuation.group(); 
 
             
@@ -592,7 +593,7 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
-                
+
 
             /*
             highLowChart
@@ -941,7 +942,7 @@ var showButton = function(){
                 highLowChart.filter(null);
 
                 dc.redrawAll();
-            });
+            })
     }else{
         d3.select(".btn-btn")
           .remove();
