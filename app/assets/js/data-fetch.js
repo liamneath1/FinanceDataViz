@@ -343,6 +343,9 @@ function processData(){
                 if(d.high-d.low > max_diff){
                     max_diff = d.high-d.low;
                 }
+                if(d.high-d.low < 0){
+                    console.log("neg diff");
+                }
             });
             console.log("volume" + max_vol + " " + date);
 
