@@ -604,7 +604,7 @@ function processData(){
                 .centerBar(true)
                 .gap(1)
                 .round(dc.round.floor)
-                .x(d3.scale.linear().domain([0,max_diff]))
+                .x(d3.scale.linear().domain([-1,max_diff]))
                 .renderHorizontalGridLines(true);
 
             /*
