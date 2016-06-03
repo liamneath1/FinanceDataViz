@@ -16,9 +16,9 @@
     </div>
     <div class = "intro">
         <h1>Introduction</h1> 
-        <p> This visualization outlines . . . . </p>
-        <p> We are making HTTP requests to Quandl's financial 
-        data (~.~)/</p>
+        <p> This visualization displays the financial trends of various companies. It utilizes <a href="https://dc-js.github.io/dc.js/" target="_blank">dc.js</a> and crossfilter.js to create charts, and processing to create the ball visualization.</p>
+        <p>We make HTTP requests to <a href="https://www.quandl.com/">Quandl</a>, an online repository for financial and economic data. Using this data, we construct interactive charts and predict investments. 
+        <hr>
     </div>
     
     <script src = "assets/js/awesomplete.js" ></script>
@@ -43,35 +43,39 @@
     </div>
     <div style="width:100%">
         <div id= "stockInformation"></div>
+        <div>
+            <div id="earnings" style="float:left"></div>
+        </div>
         <div id="compareStockInformation"></div>
     </div>
 
 
     <div class="chartbox">
-
         <hr>
-        <p> Gain/Loss Percentage To Date</p>
+        <div id="reset-button"> </div>
+        <h4> Gain/Loss Percentage To Date</h4>
     	<div class = "chart-container" id= "gain-loss-chart">
         </div>
-        <p> Financial Quarter Filter</p>
+        <h4> Financial Quarter Filter</h4>
         <div class = "chart-container" id = "quarter-chart">
         </div>
         <div id="A">
-            <p> Fluctuation In Closing Prices </p>
+            <h4> Closing Price Fluctuation </h4>
             <div id = "fluctuation-chart"></div>
         </div>
         <div id="B">
-            <p>Volume Per Day</p>
+            <h4>Volume (in Thousands) Traded per Day</h4>
             <div id="volume-chart"></div>
         </div>
         <div id="C">
+            <h4>High-Low Difference</h4>
             <div id="high-low-chart"></div>
         </div>
 
         
 
         <div class = "dropdown">
-            <button class = "dropbtn">Dropdown</button>
+            <button class = "dropbtn">Select Other Graphs</button>
             <div class= "dropdown-content"> 
                 <div class = "button-wrapper">
                     
@@ -87,19 +91,19 @@
                     </button>
                     <button class = "button" onClick = "fetchAndAdd('C')"> 
                         <div class = "select">
-                            GRAPH C
+                            High-Low Difference
                         </div>
                     </button>
-                    <button class = "button" onClick = "fetchAndAdd('D')"> 
-                        <div class = "select">
-                            GRAPH D
-                        </div>
-                    </button>        
                 </div> 
             </div>
         </div>
 
+        <div style="float:left">
+            <h4>Closing Prices to Date</h4>
+            <div id="closing-price-chart"></div>
+        </div>
         
+<<<<<<< HEAD
 
         <div id="closing-price-chart"></div>
         
@@ -113,6 +117,8 @@
         
         
         
+=======
+>>>>>>> 37c1cf214aef2f306991d53a22d8926538ab4a79
     </div>
 
 	<!-- begin footer -->

@@ -8,6 +8,8 @@ var ticketCompare;
 
 var loadedData = [];    // big array containing raw data
 var info; 
+var subgraphLoaded = 'A';
+var subgraphs = ['A','B','C'];
 /*
 GLOBAL VARIABLES
 */
@@ -49,7 +51,7 @@ var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.barChart('#high-low-chart');
+var highLowChart = dc.lineChart('#high-low-chart');
 
 
 /**
@@ -195,6 +197,7 @@ function loadCompany(method){
     $.ajax(settings).done(function (response) {
         ticketCode = response[0].tickername;
         ticketCode = ticketCode.replace(/\s/g, '');
+        document.getElementById("earnings").innerHTML = "";
 
         $('#gain-loss-chart').empty();
         $('#quarter-chart').empty();
@@ -258,6 +261,9 @@ function compareCompany(){
             $('#quarter-chart').empty();
             $('#fluctuation-chart').empty();
             $('#closing-price-chart').empty();
+            $('#volume-chart').empty();
+            $('#high-low-chart').empty();
+
             
             dc.renderAll();
             dc.redrawAll();
@@ -277,6 +283,7 @@ function compareCompany(){
 
 
 function fetchAndAdd(chartReference){
+    subgraphLoaded = chartReference;
     if (chartReference === 'A'){
         document.getElementById("A").style.display = 'block'; 
         document.getElementById("B").style.display = 'none';  
@@ -303,6 +310,7 @@ function processData(){
     while(true){
         if (loadedData[0] != null ){
             var max_vol = 0;
+            var max_diff = 0;
             var dateFormat = d3.time.format('%Y-%m-%d');
             loadedData[0].forEach(function (d,i){
                 d.close = +d.Close;    //nudging these variables into 
@@ -332,6 +340,9 @@ function processData(){
                     max_vol = d.volume;
                     date = d.Date;
                 }
+                if(d.high-d.low > max_diff){
+                    max_diff = d.high-d.low;
+                }
             });
             console.log("volume" + max_vol + " " + date);
 
@@ -350,11 +361,43 @@ function processData(){
                     return 0;
                 }
             });
+            var volumeDateDimension = cf.dimension(function(d){
+                return d.dd;
+            });
+            
 
             volumeDimension = cf.dimension(function (d){
                 //console.log(d.volume);
                 return d.volume; 
             });
+
+            volumeByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+
+            volumeGroup = volumeDateDimension.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.volume/1000;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.volume/1000;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+            
+            volumeByDateGroup = volumeByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.close;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.close;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
 
             console.log('Printing the yearly dimension!');
             console.log(yearlyDimension.top(Infinity));
@@ -411,8 +454,16 @@ function processData(){
             fluctuation = cf.dimension(function (d){
                return Math.round((d.close - d.open)/d.open * 100);
             });
+
+            var highLowDimension = cf.dimension(function(d){
+                return d.dd;
+            });
+            var highLowGroup = highLowDimension.group().reduceSum(function (d){
+                return d.high-d.low;
+            });
             
             fluctuationGroup = fluctuation.group(); 
+
             
             quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
@@ -457,7 +508,7 @@ function processData(){
                 .group(quarterGroup);
             
             fluctuationChart
-                .width(420)
+                .width(550)
                 .height(180)
                 .margins({top: 10, right: 50, bottom: 30, left: 40})
                 .dimension(fluctuation)
@@ -468,57 +519,40 @@ function processData(){
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([-25,25]))
                 .renderHorizontalGridLines(true);
-            
+
             fluctuationChart.xAxis().tickFormat(
-                function (v) { return v + '%'; });
+                function (v) { return v + '%'; }
+                );
             fluctuationChart.yAxis().ticks(10);  
+            /**
+            highLowChart
+                .width(420)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(highLowDiff)
+                .group(highLowGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([0,max_diff]))
+                .renderHorizontalGridLines(true);
+            highLowChart.xAxis().tickFormat(
+                function (v) { return v ; }
+                ); 
+            highLowChart.yAxis().ticks(10);
+            */
+           
 
-            volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
-            });
-
-            volumeGroup = volumeByDate.group().reduce(
-                function reduceAdd (p,v){ 
-                    return p += v.volume;
-                }, 
-                function reduceRemove(p,v){
-                    return p -= v.volume;  
-                },
-                function reduceInitial(){
-                    return 0;
-                }
-            );
-            
-            volumeByDateGroup = volumeByDate.group().reduce(
-                function reduceAdd (p,v){ 
-                    return p += v.close;
-                }, 
-                function reduceRemove(p,v){
-                    return p -= v.close;  
-                },
-                function reduceInitial(){
-                    return 0;
-                }
-            );
-
-            highGroup = volumeByDate.group().reduceSum(function(d){
-                return d.high;
-            });
-
-            lowGroup = volumeByDate.group().reduceSum(function(d){
-                return d.low;
-            });
-
-            
-             closingPriceChart
+            closingPriceChart
                 .width(990)
                 .height(150)
                 .margins({ top: 10, right: 10, bottom: 20, left: 40 })
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
-                .brushOn(true)
-                .mouseZoomable(false)
+                .brushOn(true)                
+                .mouseZoomable(true)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
@@ -528,23 +562,40 @@ function processData(){
                 ]);
 
             volumeChart
-                .width(420)
+                .width(550)
                 .height(180)
-                .renderArea(true)
+                //.renderArea(true)
                 .renderHorizontalGridLines(true)
-                .mouseZoomable(false)
+                .mouseZoomable(true)
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
                 .renderHorizontalGridLines(true)
-                .dimension(volumeByDate)
+                .dimension(volumeDateDimension)
                 .group(volumeGroup)
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
 
+             highLowChart
+                .width(550)
+                .height(180)
+                .renderHorizontalGridLines(true)
+                .mouseZoomable(true)
+                //.rangeChart(timeSelectChart)
+                .brushOn(true)
+                .transitionDuration(1000)
+                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .renderHorizontalGridLines(true)
+                .dimension(highLowDimension)
+                .group(highLowGroup)
+                .elasticY(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .xAxis();
 
+
+            /*
             highLowChart
                 .width(1160)
                 .height(250)
@@ -560,26 +611,17 @@ function processData(){
                 .stack(lowGroup)
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
+            */
 
-<<<<<<< HEAD
-            randomChart 
-                .width(1160)
-                .height(250)
-                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-                .dimension(volumeByDate)
-                .transitionDuration(1000)
-                .elasticY(true)
-                .brushOn(false)
-                .valueAccessor(function (d) {
-                    return d.value;
-                })
-                .renderHorizontalGridLines(true)
-                .group(lowGroup)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
+            subgraphs.forEach(
+                function(d,i){
+                    if(d === subgraphLoaded){
+                        document.getElementById(d).style.display = 'block'; 
+                    }else{
+                        document.getElementById(d).style.display = 'none';  
+                    }
+                });
 
-=======
->>>>>>> fd861a0fd7dc157caacc0ba22615cc753ab64a50
-            
             dc.renderAll();
             dc.redrawAll();
             break;
@@ -764,20 +806,158 @@ function updateInfo(stockInfoBox){
      };
     
     $.ajax(settings).done(function (response) {
+        innerHTML += "<div style=\"display:inline\">";
+        innerHTML += "<div>";
         innerHTML += "<h2> Stock Information </h2>";
         innerHTML += "<p><b>Ticker Code</b> : " + ticket + "</p>";
         innerHTML += "<p><b>Company Name</b> : " + response[0].companyname + "</p>";
         innerHTML += "<p><b>Industry</b> : " + response[0].industry + "</p>";
         innerHTML += "<p><b>Sector</b> : " + response[0].sector + "</p>";
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
+        innerHTML += "</div>";
+        innerHTML += "<hr>";
+        innerHTML += "<div>";
+        innerHTML += "<h3>Predict Earnings to Date</h3>";
+        innerHTML += "<p>Investment Amount : $ <input type = \"text\" id = \"investment\"></p>";
+        innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
+        innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
+        innerHTML += "</div>";
+        innerHTML += "</div>";
         box.innerHTML = innerHTML;
     });
 }        
 
-         
+function predictEarnings(){
+    var investment = document.getElementById("investment").value;
+    var dateBought = document.getElementById("dateBought").value;
+    var date_parts = dateBought.split("/");
+    if(date_parts[0].length!==2 || date_parts[1].length!==2 || date_parts[2].length!=4){
+        document.getElementById("earnings").innerHTML = "Please use correct date format as specified above.";
+        return;
+    }
+    var date = date_parts[2] + "-" + date_parts[0] + "-" + date_parts[1];
+    var numBought;
+    var found = false;
+    var max_date = date;
+    var curr_price;
+
+    var toDateData = [];
+    var data = loadedData[0];
+    for( var i = data.length-1; i >=0 ; i--){
+        var d = data[i];
+        if(d.Date === date){
+            found = true;
+            numBought = Math.floor(investment/d.open);
+            d.earnings = numBought*d.close;
+        }
+        if(d.Date > date){
+            d.earnings = numBought*d.close;
+            d.percent_change = ((d.earnings - investment)/investment)*100;
+            toDateData.push(d);
+        }
+        if(d.Date > max_date){
+            max_date = d.Date;
+            curr_price = d.close;
+        }
+    }
+
+    if(!found){
+        document.getElementById("earnings").innerHTML = "Sorry, Quandl does not have data for that day.";
+        return;
+    }else{
+        var earnings = (numBought*curr_price).toFixed(2);
+        var text = "<p>Earnings: $" + (earnings) + "</p>";
+        console.log(earnings);
+        console.log(earnings-investment);
+        if(earnings-investment < 0){
+            text += "<p>Net Earnings: -$" + (0-(earnings - investment).toFixed(2)) + "</p>";
+        }else{      
+            text += "<p>Net Earnings: $" + (earnings - investment).toFixed(2) + "</p>";
+        }
+        text += "<p>Percent Change : " + (((earnings-investment)/investment)*100).toFixed(2)+ "%";
+        text += "<h4>Percent Change in Earnings</h4><div id=\"earnings-chart\"></div>"
+        document.getElementById("earnings").innerHTML = text;
+    }
+
+    var cf1 = crossfilter(toDateData);
+    var earningsDateDimension = cf1.dimension(function(d){return d.dd;});
+    var earningsDateGroup = earningsDateDimension.group().reduceSum(function(d){return d.percent_change});
+
+    var earningChart = dc.lineChart("#earnings-chart", "mygroup");
+    var dateFormat = d3.time.format('%Y-%m-%d');
+
+
+
+    earningChart
+        .width(500)
+        .height(180)
+        .renderHorizontalGridLines(true)
+        .mouseZoomable(true)
+        .brushOn(false)
+        .transitionDuration(1000)
+        .margins({top: 10, right: 10, bottom: 20, left: 40})
+        .renderHorizontalGridLines(true)
+        .dimension(earningsDateDimension)
+        .group(earningsDateGroup)
+        .elasticY(true)
+        .x(d3.time.scale().domain([dateFormat.parse(date), dateFormat.parse(max_date)]))
+        .xAxis();
+
+        earningChart.yAxis().tickFormat(
+            function (v) { return v + '%'; }
+        );
+    dc.renderAll("mygroup");
+
+}
+    
+
 updateInfo("stockInformation");
 
 var bound = false;
+
+
+var showButton = function(){
+    if(gainOrLossChart.filters().length > 0 ||
+       quarterChart.filters().length > 0 ||
+       fluctuationChart.filters().length > 0 ||
+       closingPriceChart.filters().length > 0 ||
+       volumeChart.filters().length > 0 ||
+       highLowChart.filters().length > 0){
+        d3.select(".btn-btn")
+              .remove();
+
+        d3.select("#reset-button")
+            .append("button")
+            .attr("type","button")
+            .attr("class","btn-btn")
+            .append("div")
+            .attr("class","label")
+            .text(function(d) { return "Reset";})
+            .on("click", function(){
+                gainOrLossChart.filter(null);
+                quarterChart.filter(null);
+                fluctuationChart.filter(null);
+                closingPriceChart.filter(null);
+                volumeChart.filter(null);
+                highLowChart.filter(null);
+
+                dc.redrawAll();
+            })
+    }else{
+        d3.select(".btn-btn")
+          .remove();
+    };
+};
+
+
+gainOrLossChart.on('filtered', function(){showButton();});
+quarterChart.on('filtered', function(){showButton();});
+fluctuationChart.on('filtered', function(){showButton();});
+closingPriceChart.on('filtered', function(){showButton();});
+volumeChart.on('filtered', function(){showButton();});
+highLowChart.on('filtered', function(){showButton();});
+
+
 
 
 function bindJavascript() {

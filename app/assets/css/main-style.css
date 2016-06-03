@@ -11,8 +11,7 @@
     text-align:  center;
 }
 .intro{
-    width: 60%;
-    margin: 40px;
+    width: 100%;
 }
 .intro h1{
     font-family: Copperplate, 'Copperplate Gothic Light';
@@ -20,7 +19,9 @@
     font-weight: 400;
     
 }
-
+body{
+    margin: 40px;
+}
 .button {  
     font-size: 12px;
     cursor: pointer;
@@ -139,16 +140,10 @@ input[type=text] {
     z-index:999;
 }
 
-
-#stockInformation{
-    float: left;
-}
 .wrapper{
     display:inline-block;
 }
 .chartbox{
     display:inline-block;
-}
-input[placeholder] {
-    font-size: 16px;
+    width:100%;
 }
