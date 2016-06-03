@@ -453,7 +453,7 @@ function processData(){
 
 
             var highLowDimension = cf.dimension(function(d){
-                return d.high-d.low;
+                return ((Math.round((d.high-d.low)) * 4) / 4).toFixed(2);
             });
             var highLowGroup = highLowDimension.group();
             
