@@ -450,18 +450,17 @@ function processData(){
                 //return d.open > d.close ? 'Loss' : 'Gain';
             });
             gainOrLossGroup = gainOrLoss.group();
+
+
+            var highLowDimension = cf.dimension(function(d){
+                return d.high-d.low;
+            });
+            var highLowGroup = highLowDimension.group();
             
+
             fluctuation = cf.dimension(function (d){
                return Math.round((d.close - d.open)/d.open * 100);
             });
-
-            var highLowDimension = cf.dimension(function(d){
-                return d.dd;
-            });
-            var highLowGroup = highLowDimension.group().reduceSum(function (d){
-                return d.high-d.low;
-            });
-            
             fluctuationGroup = fluctuation.group(); 
 
             
@@ -578,12 +577,12 @@ function processData(){
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
 
+            /*
              highLowChart
                 .width(550)
                 .height(180)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
@@ -593,7 +592,20 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+                */
 
+            highLowChart
+                .width(550)
+                .height(180)
+                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .dimension(highLowDimension)
+                .group(highLowGroup)
+                .elasticY(true)
+                .centerBar(true)
+                .gap(1)
+                .round(dc.round.floor)
+                .x(d3.scale.linear().domain([0,max_diff]))
+                .renderHorizontalGridLines(true);
 
             /*
             highLowChart
