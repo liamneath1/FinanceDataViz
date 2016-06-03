@@ -551,8 +551,8 @@ function processData(){
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
-                .brushOn(true)                .mouseZoomable(true)
-
+                .brushOn(true)                
+                .mouseZoomable(true)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
@@ -917,12 +917,7 @@ var bound = false;
 
 
 var showButton = function(){
-    if(gainOrLossChart.filters().length > 0 ||
-       quarterChart.filters().length > 0 ||
-       fluctuationChart.filters().length > 0 ||
-       closingPriceChart.filters().length > 0 ||
-       volumeChart.filters().length > 0 ||
-       highLowChart.filters().length > 0){
+    if(gainOrLossChart.filters().length > 0){
     d3.select(".btn-btn")
           .remove();
 
@@ -935,11 +930,6 @@ var showButton = function(){
         .text(function(d) { return "Reset";})
         .on("click", function(){
             gainOrLossChart.filter(null);
-            quarterChart.filter(null);
-            fluctuationChart.filter(null);
-            closingPriceChart.filter(null);
-            volumeChart.filter(null);
-            highLowChart.filter(null);
 
             dc.redrawAll();
         })
@@ -951,11 +941,6 @@ var showButton = function(){
 
 
 gainOrLossChart.on('filtered', function(){showButton();});
-quarterChart.on('filtered', function(){showButton();});
-fluctuationChart.on('filtered', function(){showButton();});
-closingPriceChart.on('filtered', function(){showButton();});
-volumeChart.on('filtered', function(){showButton();});
-highLowChart.on('filtered', function(){showButton();});
 
 
 
