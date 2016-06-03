@@ -51,7 +51,7 @@ var quarterChart = dc.pieChart('#quarter-chart');
 var fluctuationChart = dc.barChart('#fluctuation-chart');
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
 var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.barChart('#high-low-chart');
+var highLowChart = dc.lineChart('#high-low-chart');
 
 
 /**
@@ -343,9 +343,6 @@ function processData(){
                 if(d.high-d.low > max_diff){
                     max_diff = d.high-d.low;
                 }
-                if(d.high-d.low < 0){
-                    console.log("neg diff");
-                }
             });
             console.log("volume" + max_vol + " " + date);
 
@@ -456,7 +453,7 @@ function processData(){
 
 
             var highLowDimension = cf.dimension(function(d){
-                return Math.round((d.high-d.low)*4)/4;
+                return d.high-d.low;
             });
             var highLowGroup = highLowDimension.group();
             
@@ -580,12 +577,12 @@ function processData(){
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
 
-            /*
              highLowChart
                 .width(550)
                 .height(180)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
+                //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 20, left: 40})
@@ -595,20 +592,7 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
-                */
-
-            highLowChart
-                .width(550)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(highLowDimension)
-                .group(highLowGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(2)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([-1,max_diff]))
-                .renderHorizontalGridLines(true);
+                
 
             /*
             highLowChart
