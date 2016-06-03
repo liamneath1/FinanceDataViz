@@ -918,22 +918,22 @@ var bound = false;
 
 var showButton = function(){
     if(gainOrLossChart.filters().length > 0){
-    d3.select(".btn-btn")
-          .remove();
+        d3.select(".btn-btn")
+              .remove();
 
-    d3.select("#resetButton")
-        .append("button")
-        .attr("type","button")
-        .attr("class","btn-btn")
-        .append("div")
-        .attr("class","label")
-        .text(function(d) { return "Reset";})
-        .on("click", function(){
-            gainOrLossChart.filter(null);
+        d3.select("#resetButton")
+            .append("button")
+            .attr("type","button")
+            .attr("class","btn-btn")
+            .append("div")
+            .attr("class","label")
+            .text(function(d) { return "Reset";})
+            .on("click", function(){
+                gainOrLossChart.filter(null);
+                dc.redrawAll();
+            });
+            console.log("lmao reset buttoning");
 
-        console.log("lmao reset buttoning");
-            dc.redrawAll();
-        })
     }else{
         console.log("removing reset button");
 
