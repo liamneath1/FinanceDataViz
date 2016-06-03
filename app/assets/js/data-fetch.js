@@ -945,7 +945,6 @@ gainOrLossChart.on('filtered', function(){showButton();});
 
 
 
-
 function bindJavascript() {
          var pjs = Processing.getInstanceById('sketch');
          if(pjs!=null) {
