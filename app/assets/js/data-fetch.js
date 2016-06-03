@@ -923,26 +923,26 @@ var showButton = function(){
        closingPriceChart.filters().length > 0 ||
        volumeChart.filters().length > 0 ||
        highLowChart.filters().length > 0){
-    d3.select(".btn-btn")
-          .remove();
+        d3.select(".btn-btn")
+              .remove();
 
-    d3.select("#reset-button")
-        .append("button")
-        .attr("type","button")
-        .attr("class","btn-btn")
-        .append("div")
-        .attr("class","label")
-        .text(function(d) { return "Reset";})
-        .on("click", function(){
-            gainOrLossChart.filter(null);
-            quarterChart.filter(null);
-            fluctuationChart.filter(null);
-            closingPriceChart.filter(null);
-            volumeChart.filter(null);
-            highLowChart.filter(null);
+        d3.select("#reset-button")
+            .append("button")
+            .attr("type","button")
+            .attr("class","btn-btn")
+            .append("div")
+            .attr("class","label")
+            .text(function(d) { return "Reset";})
+            .on("click", function(){
+                gainOrLossChart.filter(null);
+                quarterChart.filter(null);
+                fluctuationChart.filter(null);
+                closingPriceChart.filter(null);
+                volumeChart.filter(null);
+                highLowChart.filter(null);
 
-            dc.redrawAll();
-        })
+                dc.redrawAll();
+            });
     }else{
         d3.select(".btn-btn")
           .remove();
