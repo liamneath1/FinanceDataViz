@@ -602,7 +602,7 @@ function processData(){
                 .group(highLowGroup)
                 .elasticY(true)
                 .centerBar(true)
-                .gap(1)
+                .gap(2)
                 .round(dc.round.floor)
                 .x(d3.scale.linear().domain([-1,max_diff]))
                 .renderHorizontalGridLines(true);
