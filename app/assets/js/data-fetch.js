@@ -931,6 +931,7 @@ var showButton = function(){
         .on("click", function(){
             gainOrLossChart.filter(null);
 
+        console.log("lmao reset buttoning");
             dc.redrawAll();
         })
     }else{
