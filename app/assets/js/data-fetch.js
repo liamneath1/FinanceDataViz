@@ -568,7 +568,7 @@ function processData(){
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(highLowChart).group(highLowDimension)
+                    dc.lineChart(highLowChart).group(highLowGroup)
                 ]);
 
 /*
