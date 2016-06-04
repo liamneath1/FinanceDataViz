@@ -209,8 +209,16 @@ function loadCompany(method){
         $('#fluctuation-chart').empty();
         $('#closing-price-chart').empty();
         $('#volume-chart').empty();
+
+        gainOrLossChart.resetSvg();
+        quarterChart.resetSvg();
+        fluctuationChart.resetSvg();
+        closingPriceChart.resetSvg();
+        volumeChart.resetSvg();
         
         fluctuation.filterRange([-50000,50000]);
+
+        d3.select(".btn-btn").remove();
         cf.remove();
         dc.renderAll();
         dc.redrawAll();
