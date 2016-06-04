@@ -156,6 +156,27 @@ function fetchData(httpRequest){
 fetchData(request);
 
 
+function AddXAxis(chartToUpdate, displayText,x,y){
+                chartToUpdate.svg()
+                .append("text")
+                .attr("class", "x-axis-label")
+                .attr("text-anchor", "middle")
+                .attr("x", x)
+                .attr("y", y)
+                .text(displayText);
+            }
+function AddYAxis(chartToUpdate,displayText,x,y){
+    chartToUpdate.svg()
+    .append("text")
+    .attr("class", "y-axis-label")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .attr("x", x)
+    .attr("y", y)
+
+    .text(displayText);
+}
+
 
 
 function loadCompany(method){
@@ -635,26 +656,7 @@ function processData(){
             dc.renderAll();
             
             // ADD THE CHART AXIS HERE //
-            function AddXAxis(chartToUpdate, displayText,x,y){
-                chartToUpdate.svg()
-                .append("text")
-                .attr("class", "x-axis-label")
-                .attr("text-anchor", "middle")
-                .attr("x", x)
-                .attr("y", y)
-                .text(displayText);
-            }
-            function AddYAxis(chartToUpdate,displayText,x,y){
-                chartToUpdate.svg()
-                .append("text")
-                .attr("class", "y-axis-label")
-                .attr("text-anchor", "middle")
-                .attr("transform", "rotate(-90)")
-                .attr("x", x)
-                .attr("y", y)
-                
-                .text(displayText);
-            }
+            
             AddXAxis(closingPriceChart, "Date",closingPriceChart.width()/2,closingPriceChart.height() -20);
             AddYAxis(closingPriceChart, "Closing Price ($US)",-80,20);
             
