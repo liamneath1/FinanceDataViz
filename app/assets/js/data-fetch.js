@@ -637,12 +637,6 @@ function processData(){
     
     }   
 }
-
-
-
-
-
-
 function AddXAxis(chartToUpdate, displayText,x,y){
     chartToUpdate.svg()
     .append("text")
@@ -687,7 +681,6 @@ function addAllLabels(){
 Takes two stock data's and presents them in the same graph. 
 */
 function overlapData(){
-
     console.log("calling overlap data");
     var startDate = undefined;
     var endDate = undefined;
@@ -1028,6 +1021,7 @@ function setTimePeriod(){
 function setNewBallTicket(url){
     var pjs = Processing.getInstanceById('sketch');
     if (pjs != null){
+        console.log("CALLING UPDATE ON THE PROCESSING");
         pjs.updateTicket(url);
         bound = true;}
     if (!bound) setTimeout(setNewTicket,250); 

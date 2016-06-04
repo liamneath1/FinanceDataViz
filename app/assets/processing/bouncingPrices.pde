@@ -79,6 +79,8 @@ function fetchData(httpRequest){
 //fetchData(request);
 
 function processData(){
+    console.log("PROCESSING DATA");
+    console.log("THE REQUEST WAS" + request);
   var dateFormat = d3.time.format('%Y-%m-%d');
   var startDate = undefined;
   var endDate = undefined;
