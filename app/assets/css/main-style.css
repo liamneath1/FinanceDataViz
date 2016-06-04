@@ -96,9 +96,10 @@ input[type=text] {
 .dropbtn {
     background-color: #4CAF50;
     color: white;
-    padding: 16px;
+    padding: 5px;
     font-size: 16px;
-    width: 130px;
+    width: 220px;
+    height: 30px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
@@ -108,12 +109,15 @@ input[type=text] {
 
 
 .dropdown {
+    margin-left: 20px;
     position: relative;
     display: inline-block;
+    width: 200px;
 }
 
 .dropdown-content {
     display: none;
+    width: 200px;
     position: absolute;
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -138,15 +142,17 @@ input[type=text] {
 
 
 .select{
-    width:120px;
+    width:200px;
     z-index:999;
     margin-left: 0px;
     text-align: center;
+
 }
 
 .button-wrapper{
     margin-bottom: 5px;
     z-index:999;
+        width: 200px;
 }
 
 .wrapper{
@@ -164,4 +170,19 @@ input[type=text] {
 .bigChart{
     height: 200px;
     width: 990px;
+}
+#firstChart{
+    overflow:auto;
+    width: 20%;
+    float:left;
+}
+#secondChart{
+    overflow:auto;
+    float:left;
+    width:20%;
+}
+#thirdChart{
+    overflow:auto;
+    float:left;
+    width:50%;
 }

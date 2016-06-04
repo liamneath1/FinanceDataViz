@@ -47,6 +47,28 @@
                 <input type = "text" id = "companyName">
                 <button class ="button" onClick = "loadCompany('company')"> Load Company</button>
             </div>
+             <div class = "dropdown">
+                <button class = "dropbtn">Select Other Graphs</button>
+                 <div class= "dropdown-content"> 
+                    <div class = "button-wrapper">     
+                       <button class = "button" onClick = "fetchAndAdd('A')"> 
+                            <div class = "select">
+                                Fluctuation in Closing Price
+                            </div>
+                        </button>
+                        <button class = "button" onClick = "fetchAndAdd('B')"> 
+                            <div class = "select">
+                                Volume Traded Per Day
+                            </div>
+                        </button>
+                        <button class = "button" onClick = "fetchAndAdd('C')"> 
+                            <div class = "select">
+                                High-Low Difference
+                            </div>
+                        </button>
+                    </div> 
+                </div>
+        </div>
         </div>
         
     </div>
@@ -59,7 +81,6 @@
     </div>
 
     <div class="chartbox">
-        <hr>
         <div id= "firstChart">
             <div id="reset-button"> </div>
             <h4> Gain/Loss Percentage To Date</h4>
@@ -69,45 +90,27 @@
             <h4> Financial Quarter Filter</h4>
             <div class = "chart-container" id = "quarter-chart"></div>
         </div>
-        <div id="A">
-            <h4> Closing Price Fluctuation </h4>
-            <div id = "fluctuation-chart"></div>
-        </div>
-        <div id="B">
-            <h4>Volume (in Thousands) Traded per Day</h4>
-            <div id="volume-chart"></div>
-        </div>
-        <div id="C">
-            <h4>High-Low Difference</h4>
-            <div id="high-low-chart"></div>
+        <div id= "thirdChart">
+            <div id="A">
+                <h4> Closing Price Fluctuation </h4>
+                <div id = "fluctuation-chart"></div>
+            </div>
+            <div id="B">
+                <h4>Volume (in Thousands) Traded per Day</h4>
+                <div id="volume-chart"></div>
+            </div>
+            <div id="C">
+                <h4>High-Low Difference</h4>
+                <div id="high-low-chart"></div>
+            </div>
         </div>
 
         
 
-        <div class = "dropdown">
-            <button class = "dropbtn">Select Other Graphs</button>
-            <div class= "dropdown-content"> 
-                <div class = "button-wrapper">
-                    
-                    <button class = "button" onClick = "fetchAndAdd('A')"> 
-                        <div class = "select">
-                            Fluctuation in Closing Price
-                        </div>
-                    </button>
-                    <button class = "button" onClick = "fetchAndAdd('B')"> 
-                        <div class = "select">
-                            Volume Traded Per Day
-                        </div>
-                    </button>
-                    <button class = "button" onClick = "fetchAndAdd('C')"> 
-                        <div class = "select">
-                            High-Low Difference
-                        </div>
-                    </button>
-                </div> 
-            </div>
-        </div>
+       
 
+        
+        
         <div id = "bigChart" style="float:left">
             <h4>Closing Prices to Date</h4>
             <div id="closing-price-chart"></div>
