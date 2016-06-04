@@ -31,6 +31,21 @@ var settings = {
     };
 
 
+$.ajax(settings).done(function (response) {
+    var text ="";
+    var result ="\"";
+    var text2 = "";
+    var listofResponse = [];
+    var listOfCompanyNames = [];
+    for(var i = 0; i < response.length; i++){
+        
+    }
+    console.log(response);
+    init();
+    animate();
+    
+});
+
 
 
 
@@ -44,8 +59,8 @@ for (var i = 0 ; i < numCubes; i++){
 }
 var rotationRates = [0.02,0.02,0.04,0.01,0.07];
 
-init();
-animate();
+//init();
+//animate();
 function createTextElement(text){
 var canvas1 = document.createElement('canvas');
 var context1 = canvas1.getContext('2d');
