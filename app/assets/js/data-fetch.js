@@ -241,10 +241,15 @@ function fetchAndAdd(chartReference){
         document.getElementById("B").style.display = 'none';  
         document.getElementById("C").style.display = 'block'; 
     }else if (chartReference === 'D'){
-
     }
 }
 
+/**
+    Wrapper function that takes the array of loaded objects and places them 
+    on the charts. This process involves nudging the JSON object, creating 
+    various dimensions and then finally binding the data to the charts
+
+**/
 function processData(){
     var startDate = undefined;
     var endDate = undefined;
@@ -287,35 +292,31 @@ function processData(){
                 }
             });
 
-            // starting crossfilter stufff
-
+            // Crossfilter Dimension and Grouping Begin 
             cf = crossfilter(loadedData[0]);
             all = cf.groupAll();
             
-            // fetching the yearly dimension 
+            // Creating the yearly dimension
             yearlyDimension = cf.dimension(function (d){
-                //console.log(d.dd);
                 if (d.dd != null){
                     return d3.time.year(d.dd).getFullYear();
                 } else {
-                    console.log ("Returning NULL");
                     return 0;
                 }
             });
+            // Creating the volume dimension 
             var volumeDateDimension = cf.dimension(function(d){
                 return d.dd;
             });
-            
-
             volumeDimension = cf.dimension(function (d){
-                //console.log(d.volume);
                 return d.volume; 
             });
 
+            
+            // Creating the volume by date dimension 
             volumeByDate = cf.dimension(function(d){
                return (d.dd); 
             });
-
             volumeGroup = volumeDateDimension.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.volume/1000;      // scale the volume!
@@ -340,23 +341,24 @@ function processData(){
                 }
             );
 
-            // dimension by full date
+            // Creating the dimension by full date
             dateDimension = cf.dimension(function (d){
                 return d.dd; 
             });
-            // dimension by month 
+            // Creating the dimension by month 
             moveMonths = cf.dimension(function (d){
                return  d.dd.getMonth();
             }); 
             monthlyMoveGroup = moveMonths.group().reduceSum(function (d){
-                console.log("MOVEMENT ->" + Math.abs(d.close - d.open))
                 return Math.abs(d.close - d.open);
             });
-            
             volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
-                //console.log(d.volume/500);
                 return d.volume/ 1000; 
             });
+            
+            
+            
+            
             
             indexAvgByMonthGroup = moveMonths.group().reduce(
                 function (p, v) {
@@ -376,20 +378,26 @@ function processData(){
                 }
             );
             
+            // Creating the gain/loss chart 
             gainOrLoss = cf.dimension(function (d){
                 if (d.open > d.close){
                     return 'Loss';
                 } else {
                     return 'Gain';
                 }
-                //return d.open > d.close ? 'Loss' : 'Gain';
             });
             gainOrLossGroup = gainOrLoss.group();
             
+            
+            
+            // Creating the fluctuation grouping 
             fluctuation = cf.dimension(function (d){
                return Math.round((d.close - d.open)/d.open * 100);
             });
-
+            fluctuationGroup = fluctuation.group(); 
+            
+            
+            
             var highLowDimension = cf.dimension(function(d){
                 return d.dd;
             });
@@ -397,9 +405,8 @@ function processData(){
                 return ((d.high-d.low)/d.high)*100;
             });
             
-            fluctuationGroup = fluctuation.group(); 
-
             
+            // Creating the quarterly group and dimension         
             quarter = cf.dimension(function (d){
                 var month = d.dd.getMonth();
                 if (month <= 2){
@@ -412,12 +419,13 @@ function processData(){
                     return 'Q4';
                 }
             });
-
             quarterGroup = quarter.group().reduceSum(function (d){
                return d.volume;  
             });
             
-            console.log(fluctuation);
+            
+            
+            
             gainOrLossChart
                 .width(180)
                 .height(180)
@@ -460,25 +468,7 @@ function processData(){
                 function (v) { return v + '%'; }
                 );
             fluctuationChart.yAxis().ticks(10);  
-            /**
-            highLowChart
-                .width(420)
-                .height(180)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
-                .dimension(highLowDiff)
-                .group(highLowGroup)
-                .elasticY(true)
-                .centerBar(true)
-                .gap(1)
-                .round(dc.round.floor)
-                .x(d3.scale.linear().domain([0,max_diff]))
-                .renderHorizontalGridLines(true);
-            highLowChart.xAxis().tickFormat(
-                function (v) { return v ; }
-                ); 
-            highLowChart.yAxis().ticks(10);
-            */
-           
+
 
             closingPriceChart
                 .width(990)
