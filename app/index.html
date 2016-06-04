@@ -15,8 +15,22 @@
     </div>
     <div class = "intro">
         <h1>Introduction</h1> 
-        <p> This visualization displays the financial trends of various companies. It utilizes <a href="https://dc-js.github.io/dc.js/" target="_blank">dc.js</a> and crossfilter.js to create charts, and processing to create the ball visualization.</p>
-        <p>We make HTTP requests to <a href="https://www.quandl.com/">Quandl</a>, an online repository for financial and economic data. Using this data, we construct interactive charts and predict investments. 
+        <p> FinScope is an experimental financial dashboard built with <a href="https://dc-js.github.io/dc.js/" target="_blank">dc.js</a>
+        ,<a href= "http://square.github.io/crossfilter/" target ="_blank">crossfilter.js</a> and 
+        <a href= "http://processingjs.org" target ="_blank">processing.js</a>. This dashboard provides <b>daily</b> financial information for more
+            than 3000 companies in the United States by relying on <a href="https://www.quandl.com/">Quandl</a>, a public repository for financial
+            information. Quandl provides daily opening and closing stock prices, dividends and volumes. FinScope assumes that the data is mostly correct despite the fact that it is publicly maintained and hence prone to error. 
+            <br>In an effort to ease the searching process,
+            we stored the Nasdaq Company List and Quandl's ticker list in a SQL database. This database also provides company market caps, sectors
+            and industry. Assingment and classification was conducted by NASDAQ and we assumed that classification would be correct.
+            <br>
+            <br>
+            Given the public nature of Quandl and reliance on NASDAQ classification:
+            <b>
+                <li>FinScope is NOT liable for any inconsistencies in the data presented.</li> 
+                <li>This application should NOT serve as a resource for financial advice.</li>
+                <li>FinScope has not and will NOT provide financial advice of ANY form.</li>
+            </b>
         <hr>
     </div>
     <script src = "assets/js/awesomplete.js" ></script>
