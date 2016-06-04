@@ -3,7 +3,7 @@ var stockCubes = [];
 var numCubes = 4;
 
 var minRate = 20;
-var maxRate = 80;
+var maxRate = 70;
 
 
 var maxSize = 70;
@@ -53,10 +53,7 @@ var settings = {
 
 
 $.ajax(settings).done(function (response) {
-    console.log(response[0]);
     indexChanges[0] = +response[0].index1change;
-    console.log("PRINITNG ONE");
-    console.log(indexChanges[0]);
     indexChanges[1] = +response[0].index2change;
     indexChanges[2] = +response[0].index3change;
     indexChanges[3] = +response[0].index4change;
@@ -65,18 +62,10 @@ $.ajax(settings).done(function (response) {
             max = Math.abs(indexChanges[i]);
         }
     }
-    console.log("PRINTING INDEX CHANGES");
-    console.log(indexChanges);
     for (var i = 0; i < 4; i++){
-        console.log(Math.abs(indexChanges[i]));
-        console.log(max);
         rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
-        console.log(rotationRates[i]);
     }
     lastUpdate = response[0].timeOfUpdate;
-    
-
-    console.log(response);
     init();
     animate();
     
