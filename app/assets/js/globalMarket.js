@@ -1,21 +1,40 @@
 var camera, scene, renderer, geometry, material, mesh;
-
 var stockCubes = [];
 var numCubes = 4;
 
-var rotSpeed = .5;
+var minRate = 0.02;
+var maxRate = 0.08;
+
+
 var maxSize = 70;
-var minSize = 30;
+
 
 // colour management    //
 var maxGreen = 0x248f24;
 var maxRed = 0xe60000;
 var middleYellow = 0xffcc00; 
 
-var greenSplit = [maxGreen & 0x000000ff,maxGreen & 0x0000ff00,maxGreen & 0x00ff0000,maxGreen >> 24];
-var redSplit = [maxRed & 0x000000ff,maxRed & 0x0000ff00,maxRed & 0x00ff0000,maxRed>> 24];
-var yellowSplit = [middleYellow & 0x000000ff,middleYellow & 0x0000ff00,middleYellow & 0x00ff0000,middleYellow>> 24];
 // ---------------------- // 
+
+var gainOrLoss = [];
+var companyNames = ["LSE","FTSE","JPNX","SSE","JDX"];
+var setLocations = [];
+for (var i = 0 ; i < numCubes; i++){
+    setLocations[i] = new THREE.Vector3(-450 +(i * 300), 0, 0);
+}
+var rotationRates = [0.02,0.02,0.04,0.01,0.07];
+var indexChanges =[];
+var lastUpdate = "";
+var max = 0;
+
+
+
+
+
+function interpolateRate(frac){
+    return minRate + ((maxRate - minRate)*frac);
+}
+
 
 
 var settings = {
@@ -31,33 +50,29 @@ var settings = {
     };
 
 
+
+
 $.ajax(settings).done(function (response) {
-    var text ="";
-    var result ="\"";
-    var text2 = "";
-    var listofResponse = [];
-    var listOfCompanyNames = [];
-    for(var i = 0; i < response.length; i++){
-        
+    indexChanges[0] = response[0].index1Change;
+    indexChanges[1] = response[0].index2Change;
+    indexChanges[2] = response[0].index3Change;
+    indexChanges[3] = response[0].index4Change;
+    for (int i =0; i < 4; i++){
+        if (Math.abs(indexChanges[i]) > max){
+            max = Math.abs(indexChanges[i]);
+        }
     }
+    for (int i = 0; i < 4; i++){
+        rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
+    }
+    lastUpdate = response[0].timeOfUpdate;
+    
+
     console.log(response);
     init();
     animate();
     
 });
-
-
-
-
-
-
-
-var companyNames = ["LSE","FTSE","JPNX","SSE","JDX"];
-var setLocations = [];
-for (var i = 0 ; i < numCubes; i++){
-    setLocations[i] = new THREE.Vector3(-450 +(i * 300), 0, 0);
-}
-var rotationRates = [0.02,0.02,0.04,0.01,0.07];
 
 //init();
 //animate();
@@ -78,11 +93,9 @@ var mesh1 = new THREE.Mesh(
   );
 return mesh1;
 }
-function interpolateSize(frac){
-    return minSize + ((maxSize - minSize)*frac);
-}
-function interpolateColor(frac, pos){
-    if (frac > 0.5){
+
+function interpolateColor(arg){
+    if (arg > 0){
         return maxGreen;
     } else {
         return maxRed;
@@ -119,7 +132,7 @@ function init() {
         var mesh1 = undefined; 
         var locationSource;
         var geometry = new THREE.OctahedronGeometry( r,1 );
-        var material = new THREE.MeshBasicMaterial( {color: interpolateColor(Math.random(),1), specular: 0x555555, shininess: 15 } );; 
+        var material = new THREE.MeshBasicMaterial( {color: interpolateColor(indexChanges[i]), specular: 0x555555, shininess: 15 } );; 
         var index; 
         var labelNames; 
         stockCubes[i] = new THREE.Mesh(geometry, material);
