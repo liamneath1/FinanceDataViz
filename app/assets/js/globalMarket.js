@@ -65,6 +65,10 @@ $.ajax(settings).done(function (response) {
         rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
     }
     lastUpdate = response[0].timeOfUpdate;
+    var box = doument.getElementById('descriptionBoxGI');
+    var curr = box.innerHTML;
+    curr += "<b>" + lastUpdate + "</b>";
+    box.innerHTML = curr; 
     init();
     animate();
     
