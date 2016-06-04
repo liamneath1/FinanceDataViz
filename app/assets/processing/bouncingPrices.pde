@@ -1,5 +1,5 @@
 String request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-var loadedData = [];
+var loadedData = [];    // initial array of loaded data
 var calcChanges = [];
 
 
@@ -254,6 +254,10 @@ void draw() {
 }
 
 
+// StockCircle is really a wrapper around a particle class. It encapsulates
+// the interpolation,movement and display methods all needed for a proper
+// particle class. 
+
 class StockCircle {
   float x, y;         // X-coordinate, y-coordinate
   float diameter;     // Diameter of the circle
@@ -264,16 +268,18 @@ class StockCircle {
   float minYLocation = -1; 
 
 
-  // Constructor
+  // Constructor for the StockCircle function 
   StockCircle(float xpos, float ypos, float dia, float sp, float perChange) {
     x = xpos;
     y = ypos;
     diameter = dia;
     speed = sp;
     percentChange = perChange;
-
   }
 
+  // moves the particle along it's 2D dimension (y-axis). This function
+  // also ensures that the balls do not leave the scene and stop at the
+  // center 
   void move() {
     y += (speed * direction); 
     if (maxYLocation == -1){
@@ -286,7 +292,8 @@ class StockCircle {
       }
     }
   }
-
+  
+  // main drawing function that is needed to display something 
   void display() {
      if (percentChange != 0){  // we need to interpolate the color is the percentage change has been set
        double [] color = interpolateColor(speed, percentChange);
@@ -294,7 +301,9 @@ class StockCircle {
      }
     ellipse(x, y, diameter, diameter);
   }
-
+  
+  // public function that allows one to update the paramtaers of the particles after
+  // they have been created. Needed to create the paramaters
   void updateParamaters(float newSpeed, float perChange){
     speed = newSpeed;
     percentChange = perChange;
@@ -308,7 +317,9 @@ class StockCircle {
       y = vizHeight/2 - diameter/2;
     }
   }
-
+  
+  // Inteprolates the colour based on the percentage change and the interpolated speed. 
+  // positive changes get green, negative changes get red. 
   double[]interpolateColor(double frac,double perChange){
     double [] vals = new double[3];
     float normalizedSpeed = frac/maxSpeed;
