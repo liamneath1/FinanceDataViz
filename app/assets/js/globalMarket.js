@@ -38,19 +38,16 @@ function interpolateRate(frac){
 
 
 var settings = {
-       "async": true,
-       "crossDomain": true,
-       "dataType": "json",
-       "url": "/globalIndexQuery/",
-       "method": "GET",
-       "headers": {
-         "accept": "application/json",
-         "x-mashape-key": "APIKEY"
-       }
-    };
-
-
-
+   "async": true,
+   "crossDomain": true,
+   "dataType": "json",
+   "url": "/globalIndexQuery/",
+   "method": "GET",
+   "headers": {
+     "accept": "application/json",
+     "x-mashape-key": "APIKEY"
+   }
+};
 
 $.ajax(settings).done(function (response) {
     var len = response.length;
@@ -144,7 +141,6 @@ function init() {
         mesh1.position.set(stockCubes[i].position.x + 100,stockCubes[i].position.y - 150,  0);
         scene.add(mesh1);  
         scene.add(stockCubes[i]);
-        console.log(stockCubes[i]);
         var helper = new THREE.EdgesHelper( stockCubes[i], 0xffffff ); // or THREE.WireframeHelper
         helper.material.linewidth = 0.05;
         scene.add( helper );
