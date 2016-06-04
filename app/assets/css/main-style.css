@@ -12,16 +12,29 @@
 }
 .intro{
     width: 55%;
+    float: left;
 }
 .intro h1{
     font-family: Copperplate, 'Copperplate Gothic Light';
     text-align:  left;
     font-weight: 400;
 }
+.tools{
+    width: 45%;
+    float:left;
+    height: 400px;
+}
+.tools h1 {
+    font-family: Copperplate, 'Copperplate Gothic Light';
+    text-align:  left;
+    font-weight: 400;
+    
+}
 .visual h1 {
     font-family: Copperplate, 'Copperplate Gothic Light';
     text-align:  left;
     font-weight: 400;
+    clear: both;
 }
 
 
