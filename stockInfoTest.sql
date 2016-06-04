@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS stockInfo;
+ DROP TABLE IF EXISTS stockInfo;
 CREATE TABLE stockInfo(
 id BIGINT primary KEY,
 tickerName CHAR(64),

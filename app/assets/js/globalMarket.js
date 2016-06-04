@@ -17,6 +17,26 @@ var redSplit = [maxRed & 0x000000ff,maxRed & 0x0000ff00,maxRed & 0x00ff0000,maxR
 var yellowSplit = [middleYellow & 0x000000ff,middleYellow & 0x0000ff00,middleYellow & 0x00ff0000,middleYellow>> 24];
 // ---------------------- // 
 
+
+var settings = {
+       "async": true,
+       "crossDomain": true,
+       "dataType": "json",
+       "url": "/globalIndexQuery/",
+       "method": "GET",
+       "headers": {
+         "accept": "application/json",
+         "x-mashape-key": "APIKEY"
+       }
+    };
+
+
+
+
+
+
+
+
 var companyNames = ["LSE","FTSE","JPNX","SSE","JDX"];
 var setLocations = [];
 for (var i = 0 ; i < numCubes; i++){
@@ -42,7 +62,6 @@ var mesh1 = new THREE.Mesh(
     material1
   );
 return mesh1;
-
 }
 function interpolateSize(frac){
     return minSize + ((maxSize - minSize)*frac);
