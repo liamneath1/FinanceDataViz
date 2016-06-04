@@ -508,15 +508,17 @@ function processData(){
             
             fluctuationChart
                 .width(550)
-                .height(180)
+                .height(220)
                 .margins({top: 10, right: 50, bottom: 30, left: 40})
                 .dimension(fluctuation)
                 .group(fluctuationGroup)
                 .elasticY(true)
                 .centerBar(true)
                 .gap(1)
-                .round(dc.round.floor)
+                .round(dc.round.floor)                
                 .x(d3.scale.linear().domain([-25,25]))
+                .yAxisLabel('Count', 20,0,0,0)
+                .xAxisLabel('Change In Closing Price (%)',10,0,0,0)
                 .renderHorizontalGridLines(true);
 
             fluctuationChart.xAxis().tickFormat(
@@ -546,19 +548,23 @@ function processData(){
             closingPriceChart
                 .width(990)
                 .height(200)
-                .margins({ top: 10, right: 10, bottom: 25, left: 40 })
+                .margins({ top: 10, right: 10, bottom: 60, left: 50 })
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
-                .brushOn(true)                
+                .brushOn(false)                
                 .mouseZoomable(true)
                 .renderHorizontalGridLines(true)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
-                .yAxisLabel('Closing Price ($ US)', 20,0,0,0)
-                .xAxisLabel('Time',0,10,0,0)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .renderTitle(true)
+                .title(function (d){
+                    console.log("RUNNING");
+                    return "HELLO";
+                })
+                
                 .compose([
                     dc.lineChart(closingPriceChart).group(volumeByDateGroup)
                 ]);
@@ -566,7 +572,7 @@ function processData(){
 
             volumeChart
                 .width(550)
-                .height(180)
+                .height(200)
                 //.renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
@@ -583,7 +589,7 @@ function processData(){
 
              highLowChart
                 .width(550)
-                .height(180)
+                .height(200)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
                 //.rangeChart(timeSelectChart)
@@ -596,6 +602,7 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+
 
 
             /*
@@ -628,26 +635,28 @@ function processData(){
             dc.renderAll();
             
             // ADD THE CHART AXIS HERE //
-            function AddXAxis(chartToUpdate, displayText){
+            function AddXAxis(chartToUpdate, displayText,x,y){
                 chartToUpdate.svg()
                 .append("text")
                 .attr("class", "x-axis-label")
                 .attr("text-anchor", "middle")
-                .attr("x", chartToUpdate.width()/2)
-                .attr("y", chartToUpdate.height()+ 0)
+                .attr("x", x)
+                .attr("y", y)
                 .text(displayText);
             }
-            function AddYAxis(chartToUpdate,displayText){
+            function AddYAxis(chartToUpdate,displayText,x,y){
                 chartToUpdate.svg()
                 .append("text")
                 .attr("class", "y-axis-label")
                 .attr("text-anchor", "middle")
-                .attr("x", 0)
-                .attr("y", chartToUpdate.height()+ 0)
+                .attr("transform", "rotate(-90)")
+                .attr("x", x)
+                .attr("y", y)
+                
                 .text(displayText);
             }
-            //AddXAxis(closingPriceChart, "Date");
-            //AddYAxis(closingPriceChart, "Closing Price ($US)");
+            AddXAxis(closingPriceChart, "Date",closingPriceChart.width()/2,closingPriceChart.height() -20);
+            AddYAxis(closingPriceChart, "Closing Price ($US)",-80,20);
             
             
             dc.redrawAll();
