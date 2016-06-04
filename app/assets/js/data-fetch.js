@@ -76,15 +76,6 @@ function makeJSObject(csv){
 }
 
 
-function resetViz(){
-    fetchData("https://www.quandl.com/api/v3/datasets/WIKI/" + ticketLoaded + "/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH");
-    document.getElementById('ticketCode').value = '';
-    document.getElementById('companyName').value = '';
-    ticketCompare = undefined;
-    document.getElementById('compareStockInformation').innerHTML="";
-    numOverlap = 0;
-}
-
 var settings = {
        "async": true,
        "crossDomain": true,
@@ -223,64 +214,6 @@ function loadCompany(method){
 }
 
 
-function compareCompany(){
-        d3.selectAll("svg").remove();
-        var settings;
-        var ticketCode;
-        if(document.getElementById('ticketCode').value ===''){
-            var companyName = document.getElementById('companyName').value;
-            var companyurl = "/companyNameQuery/" + companyName;
-            settings = {
-               "async": true,
-               "crossDomain": true,
-               "dataType": "json",
-               "url": companyurl,
-               "method": "GET",
-               "headers": {
-                 "accept": "application/json",
-                 "x-mashape-key": "APIKEY"
-               }
-             };
-        }else{
-            ticketCode = document.getElementById('ticketCode').value.toUpperCase();
-            var ticketurl = '/tickerNameQuery/' + ticketCode;
-            settings = {
-               "async": true,
-               "crossDomain": true,
-               "dataType": "json",
-               "url": ticketurl,
-               "method": "GET",
-               "headers": {
-                 "accept": "application/json",
-                 "x-mashape-key": "APIKEY"
-               }
-             };
-        }
-        $.ajax(settings).done(function (response) {
-            ticketCode = response[0].tickername;
-            ticketCode = ticketCode.replace(/\s/g, '');
-
-            $('#gain-loss-chart').empty();
-            $('#quarter-chart').empty();
-            $('#fluctuation-chart').empty();
-            $('#closing-price-chart').empty();
-            $('#volume-chart').empty();
-            $('#high-low-chart').empty();
-
-            
-            dc.renderAll();
-            dc.redrawAll();
-            request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
-            numOverlap = 1;
-            fetchData(request);          
-            ticketCompare = ticketCode;
-            updateInfo('compareStockInformation');
-            document.getElementById('ticketCode').value = '';
-            document.getElementById('companyName').value = '';
-        });
-}
-    
-    //call the fetch_data
 
 
 
