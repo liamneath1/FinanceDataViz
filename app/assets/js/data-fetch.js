@@ -513,7 +513,7 @@ function processData(){
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(closingPriceChart).group(closingPriceGroup).renderArea(true)
+                    dc.lineChart(closingPriceChart).group(closingPriceGroup)
                     
                 ]);
             
