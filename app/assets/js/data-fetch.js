@@ -55,6 +55,9 @@ var highLowChart = dc.lineChart('#high-low-chart');
 
 
 /**
+    Helper function that takes the csv file given to it and
+    outputs a javascript object that is made according to the
+    headers in the file. 
 **/
 
 function makeJSObject(csv){
@@ -69,9 +72,7 @@ function makeJSObject(csv){
 	  }
 	  result.push(obj);
   }
-  //console.log(result);
    return result; //object
-  //console.log( JSON.stringify(result)); //JSON
 }
 
 
@@ -126,8 +127,6 @@ $.ajax(settings).done(function (response) {
     returned
 */
 function handleData(responseData ) {
-    // Do what you want with the data
-    //console.log(responseData);
     var object = makeJSObject(responseData);
     if(numOverlap===1){
         loadedData[1] = object;
@@ -156,26 +155,7 @@ function fetchData(httpRequest){
 fetchData(request);
 
 
-function AddXAxis(chartToUpdate, displayText,x,y){
-                chartToUpdate.svg()
-                .append("text")
-                .attr("class", "x-axis-label")
-                .attr("text-anchor", "middle")
-                .attr("x", x)
-                .attr("y", y)
-                .text(displayText);
-            }
-function AddYAxis(chartToUpdate,displayText,x,y){
-    chartToUpdate.svg()
-    .append("text")
-    .attr("class", "y-axis-label")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .attr("x", x)
-    .attr("y", y)
 
-    .text(displayText);
-}
 
 
 
@@ -322,8 +302,6 @@ function fetchAndAdd(chartReference){
     }
 }
 
-
-
 function processData(){
     var startDate = undefined;
     var endDate = undefined;
@@ -439,7 +417,7 @@ function processData(){
             
             volumeByMonthGroup = moveMonths.group().reduceSum(function (d){
                 //console.log(d.volume/500);
-                return d.volume/ 500; 
+                return d.volume/ 1000; 
             });
             console.log(volumeByMonthGroup.top(Infinity));
             
@@ -479,7 +457,7 @@ function processData(){
                 return d.dd;
             });
             var highLowGroup = highLowDimension.group().reduceSum(function (d){
-                return d.high-d.low;
+                return ((d.high-d.low)/d.high)*100;
             });
             
             fluctuationGroup = fluctuation.group(); 
@@ -530,16 +508,15 @@ function processData(){
             fluctuationChart
                 .width(550)
                 .height(220)
-                .margins({top: 10, right: 50, bottom: 30, left: 40})
+                .margins({top: 10, right: 50, bottom: 30, left: 50})
                 .dimension(fluctuation)
                 .group(fluctuationGroup)
                 .elasticY(true)
                 .centerBar(true)
+                .brushOn(false)
                 .gap(1)
                 .round(dc.round.floor)                
                 .x(d3.scale.linear().domain([-25,25]))
-                .yAxisLabel('Count', 20,0,0,0)
-                .xAxisLabel('Change In Closing Price (%)',10,0,0,0)
                 .renderHorizontalGridLines(true);
 
             fluctuationChart.xAxis().tickFormat(
@@ -580,12 +557,6 @@ function processData(){
                     return d.value;
                 })
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .renderTitle(true)
-                .title(function (d){
-                    console.log("RUNNING");
-                    return "HELLO";
-                })
-                
                 .compose([
                     dc.lineChart(closingPriceChart).group(volumeByDateGroup)
                 ]);
@@ -600,7 +571,7 @@ function processData(){
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 30, left: 40})
+                .margins({top: 30, right: 10, bottom: 30, left: 80})
                 .renderHorizontalGridLines(true)
                 .dimension(volumeDateDimension)
                 .group(volumeGroup)
@@ -616,7 +587,7 @@ function processData(){
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .margins({top: 10, right: 10, bottom: 40, left: 60})
                 .renderHorizontalGridLines(true)
                 .dimension(highLowDimension)
                 .group(highLowGroup)
@@ -654,12 +625,8 @@ function processData(){
                 });
 
             dc.renderAll();
-            
+            addAllLabels();
             // ADD THE CHART AXIS HERE //
-            
-            AddXAxis(closingPriceChart, "Date",closingPriceChart.width()/2,closingPriceChart.height() -20);
-            AddYAxis(closingPriceChart, "Closing Price ($US)",-80,20);
-            
             
             dc.redrawAll();
             break;
@@ -669,6 +636,53 @@ function processData(){
     
     }   
 }
+
+
+
+
+
+
+function AddXAxis(chartToUpdate, displayText,x,y){
+    chartToUpdate.svg()
+    .append("text")
+    .attr("class", "x-axis-label")
+    .attr("text-anchor", "middle")
+    .attr("x", x)
+    .attr("y", y)
+    .text(displayText);
+}
+function AddYAxis(chartToUpdate,displayText,x,y){
+    chartToUpdate.svg()
+    .append("text")
+    .attr("class", "y-axis-label")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .attr("x", x)
+    .attr("y", y)
+
+    .text(displayText);
+}
+/**
+    Adds critical x and y graph labels to each dc.js
+    chart that has been rendered using the AddXAxis and 
+    AddYAxis method defined above.
+**/
+function addAllLabels(){
+    // Closing Price Chart Axes // 
+    AddXAxis(closingPriceChart, "Date",closingPriceChart.width()/2,closingPriceChart.height() -20);
+    AddYAxis(closingPriceChart, "Closing Price ($US)",-80,20);
+    // Flucturation Chart Axes //
+    AddXAxis(fluctuationChart,"Percentage Change In Price",fluctuationChart.width()/2,fluctuationChart.height());
+    AddYAxis(fluctuationChart,"Count",-80,15);
+    // Volume Traded Per Day // 
+    AddXAxis(volumeChart,"Date",volumeChart.width()/2,volumeChart.height() + 0);
+    AddYAxis(volumeChart,"Units Traded (Thousands)",-90,15);
+    // Highlow Chart //
+    AddXAxis(highLowChart,"Date",highLowChart.width()/2,highLowChart.height() + 0);
+    AddYAxis(highLowChart,"Percentage Difference (%)",-90,15);  
+}
+
+
 
 /** 
 Takes two stock data's and presents them in the same graph. 

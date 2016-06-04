@@ -237,6 +237,8 @@ void draw() {
   drawColorScale();
   drawLabelsD();
 }
+
+
 class StockCircle {
   float x, y;         // X-coordinate, y-coordinate
   float diameter;     // Diameter of the circle
