@@ -57,12 +57,12 @@ $.ajax(settings).done(function (response) {
     indexChanges[1] = response[0].index2Change;
     indexChanges[2] = response[0].index3Change;
     indexChanges[3] = response[0].index4Change;
-    for (int i =0; i < 4; i++){
+    for (var i =0; i < 4; i++){
         if (Math.abs(indexChanges[i]) > max){
             max = Math.abs(indexChanges[i]);
         }
     }
-    for (int i = 0; i < 4; i++){
+    for (var i = 0; i < 4; i++){
         rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
     }
     lastUpdate = response[0].timeOfUpdate;
