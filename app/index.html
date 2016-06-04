@@ -19,7 +19,8 @@
         ,<a href= "http://square.github.io/crossfilter/" target ="_blank">crossfilter.js</a> and 
         <a href= "http://processingjs.org" target ="_blank">processing.js</a>. This dashboard provides <b>daily</b> financial information for more
             than 3000 companies in the United States by relying on <a href="https://www.quandl.com/">Quandl</a>, a public repository for financial
-            information. Quandl provides daily opening and closing stock prices, dividends and volumes. FinScope assumes that the data is mostly correct despite the fact that it is publicly maintained and hence prone to error. 
+            information. Quandl provides daily opening and closing stock prices, dividends and volumes. FinScope assumes that the data is mostly 
+            correct despite the fact that it is publicly maintained and hence prone to error. 
             <br>In an effort to ease the searching process,
             we stored the Nasdaq Company List and Quandl's ticker list in a SQL database. This database also provides company market caps, sectors
             and industry. Assingment and classification was conducted by NASDAQ and we assumed that classification would be correct.
@@ -65,12 +66,14 @@
 
 
     <div class="chartbox">
-        <div id="reset-button"> </div>
-        <h4> Gain/Loss Percentage To Date</h4>
-    	<div class = "chart-container" id= "gain-loss-chart">
+        <div id= "firstChart">
+            <div id="reset-button"> </div>
+            <h4> Gain/Loss Percentage To Date</h4>
+    	    <div class = "chart-container" id= "gain-loss-chart"></div>
         </div>
-        <h4> Financial Quarter Filter</h4>
-        <div class = "chart-container" id = "quarter-chart">
+        <div id= "secondChart">
+            <h4> Financial Quarter Filter</h4>
+            <div class = "chart-container" id = "quarter-chart"></div>
         </div>
         <div id="A">
             <h4> Closing Price Fluctuation </h4>
