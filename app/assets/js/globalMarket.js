@@ -63,7 +63,7 @@ $.ajax(settings).done(function (response) {
         }
     }
     for (var i = 0; i < 4; i++){
-        rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
+        //rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
     }
     lastUpdate = response[0].timeOfUpdate;
     
