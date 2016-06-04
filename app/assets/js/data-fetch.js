@@ -30,6 +30,7 @@ var volumeByDateGroup;
 
 var closingPriceByDate;
 var closingPriceGroup;
+var openingPriceGroup; 
 
 
 var quarter;            // dimension that partitions the year into various quarters
@@ -351,6 +352,24 @@ function processData(){
                     return 0;
                 }
             );
+            openingPriceByDate = cf.dimension(function (d){
+                 return (d.dd); 
+                
+            });
+            openingPriceGroup = openingPriceByDate.group().reduce(
+                function reduceAdd (p,v){ 
+                    return p += v.open;
+                }, 
+                function reduceRemove(p,v){
+                    return p -= v.open;  
+                },
+                function reduceInitial(){
+                    return 0;
+                }
+            );
+            
+            
+            
             console.log("RETURNING THE GROUP");
             console.log(closingPriceGroup.top(Infinity));
 
@@ -494,7 +513,8 @@ function processData(){
                 .renderHorizontalGridLines(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(closingPriceChart).group(closingPriceGroup)
+                    dc.lineChart(closingPriceChart).group(closingPriceGroup).renderArea(true)
+                    
                 ]);
             
 
