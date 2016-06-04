@@ -137,7 +137,7 @@ function init() {
             index = i; 
         } 
         stockCubes[i].position.set(locationSource[index].x + r/2 , locationSource[index].y, locationSource[index].z);
-        mesh1 = createTextElement(labelNames[index] + " " + indxChanges[i] + "%");
+        mesh1 = createTextElement(labelNames[index] + " " + indexChanges[i]toString() + "%");
         mesh1.position.set(stockCubes[i].position.x + 100,stockCubes[i].position.y - 150,  0);
         scene.add(mesh1);  
         scene.add(stockCubes[i]);
