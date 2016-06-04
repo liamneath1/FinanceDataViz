@@ -27,6 +27,11 @@ var fluctuation;
 var fluctuationGroup;   // how much does the 
 var volumeByDate;       // amount of stocks sold each day 
 var volumeByDateGroup;
+
+var closingPriceByDate;
+var closingPriceGroup;
+
+
 var quarter;            // dimension that partitions the year into various quarters
 var quarterGroup;   
 var volumeDimension;    // dimension that partitions the 
@@ -313,9 +318,9 @@ function processData(){
             });
 
             
-            // Creating the volume by date dimension 
+            // Creating the volume by date dimension       
             volumeByDate = cf.dimension(function(d){
-               return (d.dd); 
+                return (d.dd);                  
             });
             volumeGroup = volumeDateDimension.group().reduce(
                 function reduceAdd (p,v){ 
@@ -329,7 +334,13 @@ function processData(){
                 }
             );
             
-            volumeByDateGroup = volumeByDate.group().reduce(
+            
+            
+            
+            closingPriceByDate = cf.dimension(function(d){
+               return (d.dd); 
+            });
+            closingPriceGroup = closingPriceByDate.group().reduce(
                 function reduceAdd (p,v){ 
                     return p += v.close;
                 }, 
@@ -340,6 +351,8 @@ function processData(){
                     return 0;
                 }
             );
+            console.log("RETURNING THE GROUP");
+            console.log(closingPriceGroup.top(Infinity));
 
             // Creating the dimension by full date
             dateDimension = cf.dimension(function (d){
@@ -424,8 +437,7 @@ function processData(){
             });
             
             
-            
-            
+            // Creating all the linked charts now!
             gainOrLossChart
                 .width(180)
                 .height(180)
@@ -474,28 +486,23 @@ function processData(){
                 .width(990)
                 .height(200)
                 .margins({ top: 10, right: 10, bottom: 60, left: 50 })
-                .dimension(volumeByDate)
+                .dimension(closingPriceByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(false)                
                 .mouseZoomable(true)
                 .renderHorizontalGridLines(true)
-                .valueAccessor(function (d) {
-                    return d.value;
-                })
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
-                    dc.lineChart(closingPriceChart).group(volumeByDateGroup)
+                    dc.lineChart(closingPriceChart).group(closingPriceGroup)
                 ]);
             
 
             volumeChart
                 .width(550)
                 .height(200)
-                //.renderArea(true)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 30, right: 10, bottom: 30, left: 80})
@@ -511,7 +518,6 @@ function processData(){
                 .height(200)
                 .renderHorizontalGridLines(true)
                 .mouseZoomable(true)
-                //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
                 .margins({top: 10, right: 10, bottom: 40, left: 60})
@@ -522,26 +528,6 @@ function processData(){
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
 
-
-
-            /*
-            highLowChart
-                .width(1160)
-                .height(250)
-                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-                .dimension(volumeByDate)
-                .transitionDuration(500)
-                .elasticY(true)
-                .brushOn(false)
-                .valueAccessor(function (d) {
-                    return d.value;
-                })
-                .group(highGroup)
-                .stack(lowGroup)
-                .renderHorizontalGridLines(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]));
-            */
-
             subgraphs.forEach(
                 function(d,i){
                     if(d === subgraphLoaded){
@@ -550,11 +536,10 @@ function processData(){
                         document.getElementById(d).style.display = 'none';  
                     }
                 });
-
+            // Rendering the dc.charts
             dc.renderAll();
-            // ADD THE CHART AXIS HERE //
-            addAllLabels();        
-            dc.redrawAll();
+            addAllLabels();     // after we render we can finally add the labels      
+            dc.redrawAll();     // redraw after we add the labels
             break;
         } else {
             break;
