@@ -107,7 +107,7 @@ function processData(){
                     }
                 }
             });
-  console.log("SAYING HELLO FROM PROCESSING");
+  //console.log("SAYING HELLO FROM PROCESSING");
   for (i = 0; i < numSpots; i ++){
     var openingPrice = loadedData[0][i].open; 
     var closingPrice = loadedData[0][i].close;
@@ -117,11 +117,11 @@ function processData(){
     } else if (percentChange < 0 && percentChange < maxNegChange){
       maxNegChange = percentChange; 
     }
-    console.log("Calculated percentage change for " + i + " to be: " + percentChange);
+    //console.log("Calculated percentage change for " + i + " to be: " + percentChange);
     calcChanges[i] = percentChange;
   }
-  console.log("Max positive change is: " + maxPosChange);
-  console.log("Max negaitve change is: " + maxNegChange);
+  //console.log("Max positive change is: " + maxPosChange);
+  //console.log("Max negaitve change is: " + maxNegChange);
   // calcualte the rates by interpolating between the minimum (0 and the maxnimum)
   if (abs(maxPosChange) > abs(maxNegChange)){
     maxChange = abs(maxPosChange);
@@ -133,15 +133,10 @@ function processData(){
     rates[i] = (minSpeed) *(1 - frac) + (maxSpeed) * frac; 
     calculatedRates.add(rates[i]);
   }
-  console.log("Interpolated the rates boss!");
-  console.log(rates);
-  console.log(calculatedRates);
   updateSpots();
   labelsPresent = 1; 
   firstDate = loadedData[0][0].dd.toDateString();
-  console.log(firstDate);
   lastDate = loadedData[0][numSpots].dd.toDateString();
-  console.log(lastDate);
 }
 function updateSpots(){
   for (i = 0; i < numSpots ; i++){

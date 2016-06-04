@@ -147,3 +147,8 @@ input[type=text] {
     display:inline-block;
     width:100%;
 }
+
+.closing-price-chart{
+    height:200px;
+    width: 990px;
+}

@@ -344,7 +344,6 @@ function processData(){
                     max_diff = d.high-d.low;
                 }
             });
-            console.log("volume" + max_vol + " " + date);
 
             // starting crossfilter stufff
 
@@ -399,8 +398,8 @@ function processData(){
                 }
             );
 
-            console.log('Printing the yearly dimension!');
-            console.log(yearlyDimension.top(Infinity));
+            //console.log('Printing the yearly dimension!');
+            //console.log(yearlyDimension.top(Infinity));
          
             // dimension by full date
             dateDimension = cf.dimension(function (d){
@@ -546,20 +545,24 @@ function processData(){
 
             closingPriceChart
                 .width(990)
-                .height(150)
-                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .height(200)
+                .margins({ top: 10, right: 10, bottom: 25, left: 40 })
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
                 .brushOn(true)                
                 .mouseZoomable(true)
+                .renderHorizontalGridLines(true)
                 .valueAccessor(function (d) {
                     return d.value;
                 })
+                .yAxisLabel('Closing Price ($ US)', 20,0,0,0)
+                .xAxisLabel('Time',0,10,0,0)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .compose([
                     dc.lineChart(closingPriceChart).group(volumeByDateGroup)
                 ]);
+            
 
             volumeChart
                 .width(550)
@@ -570,7 +573,7 @@ function processData(){
                 //.rangeChart(timeSelectChart)
                 .brushOn(true)
                 .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 20, left: 40})
+                .margins({top: 10, right: 10, bottom: 30, left: 40})
                 .renderHorizontalGridLines(true)
                 .dimension(volumeDateDimension)
                 .group(volumeGroup)
@@ -623,6 +626,30 @@ function processData(){
                 });
 
             dc.renderAll();
+            
+            // ADD THE CHART AXIS HERE //
+            function AddXAxis(chartToUpdate, displayText){
+                chartToUpdate.svg()
+                .append("text")
+                .attr("class", "x-axis-label")
+                .attr("text-anchor", "middle")
+                .attr("x", chartToUpdate.width()/2)
+                .attr("y", chartToUpdate.height()+ 0)
+                .text(displayText);
+            }
+            function AddYAxis(chartToUpdate,displayText){
+                chartToUpdate.svg()
+                .append("text")
+                .attr("class", "y-axis-label")
+                .attr("text-anchor", "middle")
+                .attr("x", 0)
+                .attr("y", chartToUpdate.height()+ 0)
+                .text(displayText);
+            }
+            //AddXAxis(closingPriceChart, "Date");
+            //AddYAxis(closingPriceChart, "Closing Price ($US)");
+            
+            
             dc.redrawAll();
             break;
         } else {
@@ -754,8 +781,8 @@ function overlapData(){
 
             closingPriceChart
                 .width(990)
-                .height(150)
-                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .height(200)
+                .margins({ top: 10, right: 10, bottom: 0, left: 40 })
                 .dimension(volumeByDate)
                 .transitionDuration(1000)
                 .elasticY(true)
