@@ -149,16 +149,25 @@ function updateSpots(){
 }
 
 /////////////////////// Processing Code ///////////////////////////
+
+// modifies the number of balls (and hence the dates) that are 
+// being shown in the canvas.
 void updateInt(int i){
     numSpots = i;
     doNewFetch = 0;     
     setup();
 }
+
+
+// updates the ticket that the data is linked to
 void updateTicket(string url){
     request = url;
     doNewFetch = 1;
     setup();
 }
+
+
+// draws the labels that make up the key
 void drawLabels(){
     f = createFont("Arial",16,true);
     fill(255);
@@ -168,6 +177,10 @@ void drawLabels(){
     text("Loss",vizWidth + 25, 125);
 }
 
+
+
+// creates the colour scale boxes that are 
+// positioned to the left hand side of the screen
 void drawColorScale(){
     int boxOffSet = 70; 
     int boxStart = boxOffSet + vizWidth;
@@ -184,6 +197,8 @@ void drawColorScale(){
     }   
 }
 
+// public function that attaches the date labels at
+// either side of the canvas. 
 void drawLabelsD(){
     if (labelsPresent > 0 ){
         stroke(255);   
@@ -197,6 +212,8 @@ void drawLabelsD(){
     }    
 }
 
+// public function that interpolates for the colour scale
+// that is on the right hand side of the visualization 
 double[] interpolateColorT(double frac,int perChange){
     double [] vals = new double[3];
     if (perChange > 0){
@@ -231,7 +248,7 @@ void setup() {
   noStroke();
 }
 
-
+// Main draw loop that is called by Processing.js, 
 void draw() {
   fill(0,0,300);
   stroke(153);
@@ -248,9 +265,9 @@ void draw() {
     spots[i].move(); // Move each object
     spots[i].display(); // Display each object
   }
-  drawLabels();
-  drawColorScale();
-  drawLabelsD();
+  drawLabels();     // draw the labels
+  drawColorScale(); // draw the colour scale 
+  drawLabelsD();    // draw the dates 
 }
 
 
