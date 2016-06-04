@@ -3,7 +3,7 @@ var stockCubes = [];
 var numCubes = 4;
 
 var minRate = 20;
-var maxRate = 70;
+var maxRate = 50;
 
 
 var maxSize = 70;
