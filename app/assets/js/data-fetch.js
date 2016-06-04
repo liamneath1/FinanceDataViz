@@ -51,8 +51,8 @@ var gainOrLossChart = dc.pieChart('#gain-loss-chart');      // filtering by the 
 var quarterChart = dc.pieChart('#quarter-chart');           // pie-chart that filters by quarter
 var fluctuationChart = dc.barChart('#fluctuation-chart');   // bar-chart that filters by change in price
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
-var volumeChart = dc.lineChart('#volume-chart');            // filtering by amount of transactions
-var highLowChart = dc.lineChart('#high-low-chart');         // filtering by the change in the daily price
+var volumeChart = dc.compositeChart('#volume-chart');            // filtering by amount of transactions
+var highLowChart = dc.compositeChart('#high-low-chart');         // filtering by the change in the daily price
 
 
 /**
@@ -525,7 +525,21 @@ function processData(){
                     
                 ]);
             
-
+            volumeChart
+                .width(550)
+                .height(200)
+                .margins({ top: 10, right: 10, bottom: 60, left: 50 })
+                .dimension(volumeDateDimension)
+                .transitionDuration(1000)
+                .elasticY(true)
+                .brushOn(false)                
+                .mouseZoomable(true)
+                .renderHorizontalGridLines(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(volumeChart).group(volumeGroup)
+                ]);
+            /*
             volumeChart
                 .width(550)
                 .height(200)
@@ -540,7 +554,24 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+            */
 
+            highLowChart
+                .width(550)
+                .height(200)
+                .margins({ top: 10, right: 10, bottom: 60, left: 50 })
+                .dimension(highLowDimension)
+                .transitionDuration(1000)
+                .elasticY(true)
+                .brushOn(false)                
+                .mouseZoomable(true)
+                .renderHorizontalGridLines(true)
+                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
+                .compose([
+                    dc.lineChart(highLowChart).group(highLowDimension)
+                ]);
+
+/*
              highLowChart
                 .width(550)
                 .height(200)
@@ -555,6 +586,7 @@ function processData(){
                 .elasticY(true)
                 .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
                 .xAxis();
+                */
 
             subgraphs.forEach(
                 function(d,i){
