@@ -54,12 +54,12 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
     console.log(response[0]);
-    indexChanges[0] = +response[0].index1Change;
+    indexChanges[0] = +response[0].index1change;
     console.log("PRINITNG ONE");
     console.log(indexChanges[0]);
-    indexChanges[1] = +response[0].index2Change;
-    indexChanges[2] = +response[0].index3Change;
-    indexChanges[3] = +response[0].index4Change;
+    indexChanges[1] = +response[0].index2change;
+    indexChanges[2] = +response[0].index3change;
+    indexChanges[3] = +response[0].index4change;
     for (var i =0; i < 4; i++){
         if (Math.abs(indexChanges[i]) > max){
             max = Math.abs(indexChanges[i]);
