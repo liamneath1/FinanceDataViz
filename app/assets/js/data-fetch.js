@@ -1,57 +1,52 @@
-/*
-Basic stocks/indexs to include!
-*/
 var request = "https://www.quandl.com/api/v3/datasets/WIKI/NDAQ/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH"; 
-var ticketLoaded = "NDAQ";
+var ticketLoaded = "NDAQ";  // The NASDAQ (Financial Tracking Company) is the default ticker loaded. 
 var ticketCompare;
-// MAKE THIS DYNAMIC
+
+/*
+    GLOBAL VARIABLES
+*/
 
 var loadedData = [];    // big array containing raw data
 var info; 
 var subgraphLoaded = 'A';
 var subgraphs = ['A','B','C'];
-/*
-GLOBAL VARIABLES
-*/
+
 var numOverlap = 0;
 
-var yearlyDimension;
-var cf = crossfilter();
+var yearlyDimension;   
+var cf = crossfilter(); // common crossfilter variable that is initally zeroed
 var all;
 var dateDimension;
 var moveMonths;
 var monthlyMoveGroup;
 var volumeByMonthGroup;
 var indexAvgByMonthGroup;
-var gainOrLoss;
-var gainOrLossGroup;
+var gainOrLoss;         // indicator of a gain or loss happened in the opening price
+var gainOrLossGroup;    // day on day
 var fluctuation;
-var fluctuationGroup;
-var volumeByDate;
+var fluctuationGroup;   // how much does the 
+var volumeByDate;       // amount of stocks sold each day 
 var volumeByDateGroup;
-var quarter;
-var quarterGroup;
-var dayOfWeek;
-var dayOfWeekGroup;
-var volumeDimension;
+var quarter;            // dimension that partitions the year into various quarters
+var quarterGroup;   
+var volumeDimension;    // dimension that partitions the 
 var volumeGroup;
-var highGroup;
-var lowGroup;
+var highGroup;          // group that indicates the highs on a daily basis 
+var lowGroup;           // group that indicates the lows on a daily basis
 
 var nameToTicker ={};
-
 var bound = false;
 
 /**
     Various Charts That Make The Dashboard! 
 **/
 
-var gainOrLossChart = dc.pieChart('#gain-loss-chart');
-var quarterChart = dc.pieChart('#quarter-chart');
-var fluctuationChart = dc.barChart('#fluctuation-chart');
+var gainOrLossChart = dc.pieChart('#gain-loss-chart');      // filtering by the amount of money 
+var quarterChart = dc.pieChart('#quarter-chart');           // pie-chart that filters by quarter
+var fluctuationChart = dc.barChart('#fluctuation-chart');   // bar-chart that filters by change in price
 var closingPriceChart = dc.compositeChart('#closing-price-chart');
-var volumeChart = dc.lineChart('#volume-chart');
-var highLowChart = dc.lineChart('#high-low-chart');
+var volumeChart = dc.lineChart('#volume-chart');            // filtering by amount of transactions
+var highLowChart = dc.lineChart('#high-low-chart');         // filtering by the change in the daily price
 
 
 /**
@@ -376,7 +371,7 @@ function processData(){
 
             volumeGroup = volumeDateDimension.group().reduce(
                 function reduceAdd (p,v){ 
-                    return p += v.volume/1000;
+                    return p += v.volume/1000;      // scale the volume!
                 }, 
                 function reduceRemove(p,v){
                     return p -= v.volume/1000;  
@@ -398,17 +393,12 @@ function processData(){
                 }
             );
 
-            //console.log('Printing the yearly dimension!');
-            //console.log(yearlyDimension.top(Infinity));
-         
             // dimension by full date
             dateDimension = cf.dimension(function (d){
                 return d.dd; 
             });
             // dimension by month 
             moveMonths = cf.dimension(function (d){
-                //console.log(d.month);
-                //return d.month;
                return  d.dd.getMonth();
             }); 
             monthlyMoveGroup = moveMonths.group().reduceSum(function (d){
@@ -420,7 +410,6 @@ function processData(){
                 //console.log(d.volume/500);
                 return d.volume/ 1000; 
             });
-            console.log(volumeByMonthGroup.top(Infinity));
             
             indexAvgByMonthGroup = moveMonths.group().reduce(
                 function (p, v) {
