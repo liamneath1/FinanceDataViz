@@ -63,6 +63,8 @@ $.ajax(settings).done(function (response) {
             max = Math.abs(indexChanges[i]);
         }
     }
+    console.log("PRINTING INDEX CHANGES");
+    console.log(indexChanges);
     for (var i = 0; i < 4; i++){
         console.log(Math.abs(indexChanges[i]));
         console.log(max);
