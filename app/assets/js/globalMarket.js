@@ -107,7 +107,7 @@ function init() {
     camera.position.y = 0;
     scene.add(camera);
 
-    // directional lighting     //
+    // directional lighting    //
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
     directionalLight.position.set( 1, -1,25);
     scene.add( directionalLight );
@@ -137,7 +137,7 @@ function init() {
             index = i; 
         } 
         stockCubes[i].position.set(locationSource[index].x + r/2 , locationSource[index].y, locationSource[index].z);
-        mesh1 = createTextElement(labelNames[index]);
+        mesh1 = createTextElement(labelNames[index] + " " + indxChanges[i] + "%");
         mesh1.position.set(stockCubes[i].position.x + 100,stockCubes[i].position.y - 150,  0);
         scene.add(mesh1);  
         scene.add(stockCubes[i]);
