@@ -790,9 +790,9 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         innerHTML += "</div>";
         innerHTML += "<hr>";
-        innerHTML += "<p>This service allows users to input an investment amount and date for the stock loaded, and displays the total earnings made from the stock to date, the net earnings, and a graph displaying the percent change in earnings to date.</p>"
         innerHTML += "<div>";
         innerHTML += "<h3>Predict Earnings to Date</h3>";
+        innerHTML += "<p>This service allows users to input an investment amount and date for the stock loaded, and displays the total earnings made from the stock to date, the net earnings, and a graph displaying the percent change in earnings to date.</p>";
         innerHTML += "<p>Investment Amount : $ <input type = \"text\" id = \"investment\"></p>";
         innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
         innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
