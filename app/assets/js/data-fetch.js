@@ -272,9 +272,7 @@ function compareCompany(){
             dc.redrawAll();
             request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
             numOverlap = 1;
-            fetchData(request);
-            setNewBallTicket(request);
-            
+            fetchData(request);          
             ticketCompare = ticketCode;
             updateInfo('compareStockInformation');
             document.getElementById('ticketCode').value = '';
