@@ -55,6 +55,8 @@ var settings = {
 $.ajax(settings).done(function (response) {
     console.log(response[0]);
     indexChanges[0] = +response[0].index1Change;
+    console.log("PRINITNG ONE");
+    console.log(indexChanges[0]);
     indexChanges[1] = +response[0].index2Change;
     indexChanges[2] = +response[0].index3Change;
     indexChanges[3] = +response[0].index4Change;
