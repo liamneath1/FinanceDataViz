@@ -3,7 +3,7 @@ var stockCubes = [];
 var numCubes = 4;
 
 var minRate = 20;
-var maxRate = 50;
+var maxRate = 70;
 
 
 var maxSize = 70;
@@ -76,7 +76,7 @@ $.ajax(settings).done(function (response) {
 function createTextElement(text){
 var canvas1 = document.createElement('canvas');
 var context1 = canvas1.getContext('2d');
-context1.font = " 20px Arial";
+context1.font = " 25px Arial";
 context1.fillStyle = "rgba(0,0,0,0.95)";
 context1.fillText(text, 0, 50);
 // canvas contents will be used for a texture
