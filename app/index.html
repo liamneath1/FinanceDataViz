@@ -52,13 +52,15 @@
     </div>
     <div style="width:100%">
         <div id= "stockInformation"></div>
+        <hr>
+        <p>This service allows users to input an investment amount and date for the stock loaded, and displays the total earnings made from the stock to date, the net earnings, and a graph displaying the percent change in earnings to date.
         <div>
             <div id="earnings" style="float:left"></div>
         </div>
         <div id="compareStockInformation"></div>
     </div>
 
-
+    <hr>
     <div class="chartbox">
         <div id= "firstChart">
             <div id="reset-button"> </div>
@@ -144,15 +146,16 @@
     
     <br>
     <br>
-    <canvas id="sketch" data-processing-sources="assets/processing/bouncingPrices.pde"></canvas>
+    <hr>
     <p>This is a Gain/Loss Movement Chart. The animated balls each represent a single date and color
-is used to indicate whether a gain or loss occurred. The number of balls (and hence date range from
-today) can be toggled using the ‘Set Period’ button and text input. </p>
+is used to indicate whether a gain or loss occurred. The velocity of each ball represents the magnitude of the gain or loss. The number of balls (and hence date range from today) can be toggled using the ‘Set Period’ button and text input. </p>
+    <canvas id="sketch" data-processing-sources="assets/processing/bouncingPrices.pde"></canvas>
+    
     <div id ="loadCompanyBouncing">
         <input type = "text" id = "numOfBalls" placeholder="#Days for Balls">
         <button class ="button" onClick = "setTimePeriod()"> Set Period</button>
     </div>
-    
+    <hr>
     <div id= "globalIndex">
             <div id ="descriptionBoxGI">
                 <h3> Global Indexes</h3>
