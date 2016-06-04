@@ -215,17 +215,9 @@ function loadCompany(method){
         fluctuationChart.resetSvg();
         closingPriceChart.resetSvg();
         volumeChart.resetSvg();
-
-        gainOrLossChart.filter(null);
-        quarterChart.filter(null);
-        fluctuationChart.filter(null);
-        closingPriceChart.filter(null);
-        volumeChart.filter(null);
-        highLowChart.filter(null);
         
         fluctuation.filterRange([-50000,50000]);
 
-        d3.select(".btn-btn").remove();
         cf.remove();
         dc.renderAll();
         dc.redrawAll();
