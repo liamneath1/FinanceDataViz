@@ -40,7 +40,7 @@ var lowGroup;
 
 var nameToTicker ={};
 
-
+var bound = false;
 
 /**
     Various Charts That Make The Dashboard! 
@@ -214,6 +214,7 @@ function loadCompany(method){
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         
         fetchData(request);
+        setNewBallTicket(request);
         ticketLoaded = ticketCode;
         updateInfo('stockInformation');
         document.getElementById('ticketCode').value = '';
@@ -957,7 +958,7 @@ function predictEarnings(){
 
 updateInfo("stockInformation");
 
-var bound = false;
+
 
 
 var showButton = function(){
