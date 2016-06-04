@@ -1003,7 +1003,11 @@ highLowChart.on('filtered', function(){showButton();});
 
 
 
-
+/**
+    Interfacing function that speaks with the processing codem it calls
+    updateInt() which resets the number of balls (and hence time period)
+    that is currently being exammined. 
+**/
 function setTimePeriod(){
     var pjs = Processing.getInstanceById('sketch');
      if(pjs!=null) {
@@ -1012,6 +1016,11 @@ function setTimePeriod(){
     if(!bound) setTimeout(bindJavascript, 250);
 }
 
+/**
+    Setting the financial resource that is being looked at by
+    making a call to updateTicket() which is defined in the 
+    processing code.
+**/
 
 function setNewBallTicket(url){
     var pjs = Processing.getInstanceById('sketch');
