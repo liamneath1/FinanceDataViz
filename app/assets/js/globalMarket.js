@@ -132,7 +132,7 @@ function init() {
         var mesh1 = undefined; 
         var locationSource;
         var geometry = new THREE.OctahedronGeometry( r,1 );
-        var material = new THREE.MeshBasicMaterial( {color: interpolateColor(indexChanges[i]), specular: 0x555555, shininess: 15 } );; 
+        var material = new THREE.MeshBasicMaterial( {color: interpolateColor(2), specular: 0x555555, shininess: 15 } );; 
         var index; 
         var labelNames; 
         stockCubes[i] = new THREE.Mesh(geometry, material);
