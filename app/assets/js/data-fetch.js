@@ -527,7 +527,7 @@ function processData(){
             
             volumeChart
                 .width(550)
-                .height(200)
+                .height(220)
                 .margins({ top: 10, right: 10, bottom: 60, left: 50 })
                 .dimension(volumeDateDimension)
                 .transitionDuration(1000)
@@ -558,7 +558,7 @@ function processData(){
 
             highLowChart
                 .width(550)
-                .height(200)
+                .height(220)
                 .margins({ top: 10, right: 10, bottom: 60, left: 50 })
                 .dimension(highLowDimension)
                 .transitionDuration(1000)
