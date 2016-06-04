@@ -32,7 +32,7 @@ var max = 0;
 
 
 function interpolateRate(frac){
-    return (minRate + ((maxRate - minRate)*frac))/100;
+    return (minRate + ((maxRate - minRate)*frac))/1000;
 }
 
 
