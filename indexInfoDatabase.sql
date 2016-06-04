@@ -8,4 +8,4 @@ CREATE TABLE indexInformation(
 	timeOfUpdate CHAR(128)
 );
 INSERT INTO indexInformation VALUES
-(0,2.5,-2.5,3.4,2.9,'June 4, 2016')
+(0,7.5,-2.5,4.4,2.0,'June 4, 2016')
