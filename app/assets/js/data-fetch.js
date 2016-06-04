@@ -117,11 +117,14 @@ $.ajax(settings).done(function (response) {
     awesomeplete.list = listofResponse;
 });
 
-/*
+
+
+
+/**
     On succesful execution of fetchData(), this function 
     is called to handle the processing of the page data 
-    returned
-*/
+    returned. 
+**/
 function handleData(responseData ) {
     var object = makeJSObject(responseData);
     if(numOverlap===1){
@@ -135,10 +138,10 @@ function handleData(responseData ) {
     }
 }
 
-/*
+/**
     Wrapper function that encapsulates an asynchronus HTTP request specified
     by the string httpRequest. 
-*/
+**/
 function fetchData(httpRequest){
     $.ajax({
         url: httpRequest,
@@ -147,8 +150,7 @@ function fetchData(httpRequest){
         }
     });
 }
-
-fetchData(request);
+fetchData(request); // CALL TO LOAD INITIAL NASDAQ ticker code data made here!
 
 
 
