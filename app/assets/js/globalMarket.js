@@ -53,10 +53,12 @@ var settings = {
 
 
 $.ajax(settings).done(function (response) {
-    indexChanges[0] = +response[0].index1change;
-    indexChanges[1] = +response[0].index2change;
-    indexChanges[2] = +response[0].index3change;
-    indexChanges[3] = +response[0].index4change;
+    var len = response.length;
+    var lastElement = len -1; 
+    indexChanges[0] = +response[lastElement].index1change;
+    indexChanges[1] = +response[lastElement].index2change;
+    indexChanges[2] = +response[lastElement].index3change;
+    indexChanges[3] = +response[lastElement].index4change;
     for (var i =0; i < 4; i++){
         if (Math.abs(indexChanges[i]) > max){
             max = Math.abs(indexChanges[i]);
@@ -71,24 +73,22 @@ $.ajax(settings).done(function (response) {
     
 });
 
-//init();
-//animate();
 function createTextElement(text){
-var canvas1 = document.createElement('canvas');
-var context1 = canvas1.getContext('2d');
-context1.font = " 25px Arial";
-context1.fillStyle = "rgba(0,0,0,0.95)";
-context1.fillText(text, 0, 50);
-// canvas contents will be used for a texture
-var texture1 = new THREE.Texture(canvas1);
-texture1.needsUpdate = true;
-var material1 = new THREE.MeshBasicMaterial( {map: texture1, side:THREE.DoubleSide } );
-material1.transparent = true;
-var mesh1 = new THREE.Mesh(
-    new THREE.PlaneGeometry(canvas1.width, canvas1.height),
-    material1
-  );
-return mesh1;
+    var canvas1 = document.createElement('canvas');
+    var context1 = canvas1.getContext('2d');
+    context1.font = " 25px Arial";
+    context1.fillStyle = "rgba(0,0,0,0.95)";
+    context1.fillText(text, 0, 50);
+
+    var texture1 = new THREE.Texture(canvas1);
+    texture1.needsUpdate = true;
+    var material1 = new THREE.MeshBasicMaterial( {map: texture1, side:THREE.DoubleSide } );
+    material1.transparent = true;
+    var mesh1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(canvas1.width, canvas1.height),
+        material1
+    );
+    return mesh1;
 }
 
 function interpolateColor(arg){
@@ -98,6 +98,7 @@ function interpolateColor(arg){
         return maxRed;
     }
 }
+
 function init() {
     container = document.getElementById( 'canvas' );
     document.body.appendChild( container );
@@ -153,10 +154,14 @@ function init() {
     renderer.setClearColor( 0xffffff, 0);
     container.appendChild( renderer.domElement );
 }
+
+
 function animate() {
     requestAnimationFrame(animate);
     render();
 }
+
+
 function render() {
     for (var i = 0 ;i < numCubes;i++){
     stockCubes[i].rotation.x += rotationRates[i];
