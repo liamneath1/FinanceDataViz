@@ -137,7 +137,6 @@ function handleData(responseData ) {
 
     }
 }
-
 /**
     Wrapper function that encapsulates an asynchronus HTTP request specified
     by the string httpRequest. 
@@ -154,9 +153,10 @@ fetchData(request); // CALL TO LOAD INITIAL NASDAQ ticker code data made here!
 
 
 
-
-
-
+/**
+    Implements client determined loading of companies. It also ensures
+    that all graphs are cleared before any new data is added. 
+**/
 function loadCompany(method){
     numOverlap = 0;
     d3.selectAll("svg").remove();
@@ -212,7 +212,7 @@ function loadCompany(method){
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
         
         fetchData(request);
-        setNewBallTicket(request);
+        setNewBallTicket(request);          // need to update the bouncingPrice.pde as well 
         ticketLoaded = ticketCode;
         updateInfo('stockInformation');
         document.getElementById('ticketCode').value = '';
@@ -220,10 +220,12 @@ function loadCompany(method){
     });
 }
 
-
-
-
-
+/**
+    Implementation of the 'multi-holder' box that is at the top
+    right corner. Once a user clicks on any of the provided 
+    variables we use CSS to make one chart appear and the other
+    disappear.
+**/
 function fetchAndAdd(chartReference){
     subgraphLoaded = chartReference;
     if (chartReference === 'A'){
