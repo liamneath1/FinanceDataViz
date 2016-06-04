@@ -33,6 +33,8 @@ int labelsPresent = 0;
 String firstDate = "";
 String lastDate = "";
 
+int doNewFetch = 1; 
+
 /*                   */
 
 //////////////// JAVASCRIPT CODE //////////////////
@@ -49,9 +51,7 @@ function makeJSObject(csv){
     }
     result.push(obj);
   }
-  //console.log(result);
    return result; //object
-  //console.log( JSON.stringify(result)); //JSON
 }
 
 function handleData(responseData ) {
@@ -79,8 +79,6 @@ function fetchData(httpRequest){
 //fetchData(request);
 
 function processData(){
-  //numSpots = 60;
-  //setup();
   var dateFormat = d3.time.format('%Y-%m-%d');
   var startDate = undefined;
   var endDate = undefined;
@@ -107,37 +105,41 @@ function processData(){
                     }
                 }
             });
-  //console.log("SAYING HELLO FROM PROCESSING");
-  for (i = 0; i < numSpots; i ++){
-    var openingPrice = loadedData[0][i].open; 
-    var closingPrice = loadedData[0][i].close;
-    var percentChange = ((openingPrice - closingPrice)/openingPrice) * 100; 
-    if (percentChange > 0 && percentChange > maxPosChange){
-      maxPosChange = percentChange;
-    } else if (percentChange < 0 && percentChange < maxNegChange){
-      maxNegChange = percentChange; 
-    }
-    //console.log("Calculated percentage change for " + i + " to be: " + percentChange);
-    calcChanges[i] = percentChange;
-  }
-  //console.log("Max positive change is: " + maxPosChange);
-  //console.log("Max negaitve change is: " + maxNegChange);
-  // calcualte the rates by interpolating between the minimum (0 and the maxnimum)
-  if (abs(maxPosChange) > abs(maxNegChange)){
-    maxChange = abs(maxPosChange);
-  } else {
-    maxChange = abs(maxNegChange);
-  }
-  for (i = 0; i < numSpots; i ++){
-    var frac = abs(calcChanges[i])/maxChange; 
-    rates[i] = (minSpeed) *(1 - frac) + (maxSpeed) * frac; 
-    calculatedRates.add(rates[i]);
-  }
-  updateSpots();
-  labelsPresent = 1; 
-  firstDate = loadedData[0][0].dd.toDateString();
-  lastDate = loadedData[0][numSpots].dd.toDateString();
+   handleProcessing();
 }
+
+
+function handleProcessing(){
+ for (i = 0; i < numSpots; i ++){
+        var openingPrice = loadedData[0][i].open; 
+        var closingPrice = loadedData[0][i].close;
+        var percentChange = ((openingPrice - closingPrice)/openingPrice) * 100; 
+        if (percentChange > 0 && percentChange > maxPosChange){
+          maxPosChange = percentChange;
+        } else if (percentChange < 0 && percentChange < maxNegChange){
+          maxNegChange = percentChange; 
+        }
+        calcChanges[i] = percentChange;
+    }
+    // calcualte the rates by interpolating between the minimum (0 and the maxnimum)
+    if (abs(maxPosChange) > abs(maxNegChange)){
+        maxChange = abs(maxPosChange);
+    } else {
+        maxChange = abs(maxNegChange);
+    }
+    for (i = 0; i < numSpots; i ++){
+        var frac = abs(calcChanges[i])/maxChange; 
+        rates[i] = (minSpeed) *(1 - frac) + (maxSpeed) * frac; 
+        calculatedRates.add(rates[i]);
+    }
+    updateSpots();
+    labelsPresent = 1; 
+    firstDate = loadedData[0][0].dd.toDateString();
+    lastDate = loadedData[0][numSpots].dd.toDateString();
+    
+}
+
+
 function updateSpots(){
   for (i = 0; i < numSpots ; i++){
     spots[i].updateParamaters(calculatedRates.get(i), calcChanges[i]);
@@ -147,6 +149,12 @@ function updateSpots(){
 /////////////////////// Processing Code ///////////////////////////
 void updateInt(int i){
     numSpots = i;
+    doNewFetch = 0;     
+    setup();
+}
+void updateTicket(string url){
+    request = url;
+    doNewFetch = 1;
     setup();
 }
 void drawLabels(){
@@ -201,6 +209,7 @@ double[] interpolateColorT(double frac,int perChange){
     }
     return vals; 
 }
+
 void setup() {
   colorMode(HSB); 
   background(0,0,300);          // white background
@@ -212,7 +221,11 @@ void setup() {
     float rate = random(0.1, 2.0);    // just make it random at the start
     spots[i] = new StockCircle(x, vizHeight/2, dia, rate, 0);
   }
-  fetchData(request);
+  if (doNewFetch == 1){         // no need to do a completely new Quandl fetch 
+    fetchData(request);         // if we are just changing the number of balls
+  } else {                      // i.e the time period that is being displayed
+    handleProcessing();
+  }
   noStroke();
 }
 

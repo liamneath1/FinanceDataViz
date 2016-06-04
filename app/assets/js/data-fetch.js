@@ -212,6 +212,7 @@ function loadCompany(method){
         dc.redrawAll();
 
         request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
+        
         fetchData(request);
         ticketLoaded = ticketCode;
         updateInfo('stockInformation');
@@ -268,10 +269,11 @@ function compareCompany(){
             
             dc.renderAll();
             dc.redrawAll();
-
             request = "https://www.quandl.com/api/v3/datasets/WIKI/"+ticketCode +"/data.csv?api_key=1Y3h3-Q8VW1Z1tZXqhpH";
             numOverlap = 1;
             fetchData(request);
+            setNewBallTicket(request);
+            
             ticketCompare = ticketCode;
             updateInfo('compareStockInformation');
             document.getElementById('ticketCode').value = '';
@@ -625,9 +627,8 @@ function processData(){
                 });
 
             dc.renderAll();
-            addAllLabels();
             // ADD THE CHART AXIS HERE //
-            
+            addAllLabels();        
             dc.redrawAll();
             break;
         } else {
@@ -681,8 +682,6 @@ function addAllLabels(){
     AddXAxis(highLowChart,"Date",highLowChart.width()/2,highLowChart.height() + 0);
     AddYAxis(highLowChart,"Percentage Difference (%)",-90,15);  
 }
-
-
 
 /** 
 Takes two stock data's and presents them in the same graph. 
@@ -1023,6 +1022,15 @@ function bindJavascript() {
 function setTimePeriod(){
     console.log("ATTEMTPING TO CHANGE THE NUMBER OF BALLS!");
     bindJavascript();
+}
+
+
+function setNewBallTicket(url){
+    var pjs = Processing.getInstanceById('sketch');
+    if (pjs != null){
+        pjs.updateTicket(url);
+        bound = true;}
+    if (!bound) setTimeout(setNewTicket,250); 
 }
 
 
