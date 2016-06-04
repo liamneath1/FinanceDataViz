@@ -956,7 +956,6 @@ function setTimePeriod(){
 function setNewBallTicket(url){
     var pjs = Processing.getInstanceById('sketch');
     if (pjs != null){
-        console.log("CALLING UPDATE ON THE PROCESSING");
         pjs.updateTicket(url);
         bound = true;}
     if (!bound) setTimeout(setNewTicket,250); 
