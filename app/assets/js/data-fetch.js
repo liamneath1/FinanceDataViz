@@ -1003,17 +1003,13 @@ highLowChart.on('filtered', function(){showButton();});
 
 
 
-function bindJavascript() {
-         var pjs = Processing.getInstanceById('sketch');
-         if(pjs!=null) {
-           pjs.updateInt(  parseInt(document.getElementById("numOfBalls").value));
-           bound = true; }
-         if(!bound) setTimeout(bindJavascript, 250);
-}
 
 function setTimePeriod(){
-    console.log("ATTEMTPING TO CHANGE THE NUMBER OF BALLS!");
-    bindJavascript();
+    var pjs = Processing.getInstanceById('sketch');
+     if(pjs!=null) {
+       pjs.updateInt(  parseInt(document.getElementById("numOfBalls").value));
+       bound = true; }
+    if(!bound) setTimeout(bindJavascript, 250);
 }
 
 
