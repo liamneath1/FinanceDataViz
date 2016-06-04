@@ -64,6 +64,7 @@ $.ajax(settings).done(function (response) {
     }
     for (var i = 0; i < 4; i++){
         rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
+        console.log(rotationRates[i]);
     }
     lastUpdate = response[0].timeOfUpdate;
     
