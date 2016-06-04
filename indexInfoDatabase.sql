@@ -1,10 +1,11 @@
-DROP TABLE IF EXISTS indexInfo;
-CREATE TABLE indexInfo(
+DROP TABLE IF EXISTS indexInformation;
+CREATE TABLE indexInformation(
 	id BIGINT primary KEY,
-	indexOneChange FLOAT(5),
-	indexTwoChange FLOAT(5),
-	indexThreeChange FLOAT(5),
+	index1Change FLOAT(5),
+	index2Change FLOAT(5),
+	index3Change FLOAT(5),
+	index4Change FLOAT(5),
 	timeOfUpdate CHAR(128)
 );
-INSERT INTO indexInfo VALUES
-(0,2.5,-2.5,3.4,'June 4, 2016')
+INSERT INTO indexInformation VALUES
+(0,2.5,-2.5,3.4,2.9,'June 4, 2016')

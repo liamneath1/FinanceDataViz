@@ -67,7 +67,7 @@ def index():
 
 @app.route("/globalIndexQuery/")
 def indexQuery():
-    res = db_session.execute("SELECT * FROM indexInfo;")
+    res = db_session.execute("SELECT * FROM indexInformation;")
     return app.make_response(json.dumps([dict(r) for r in res]))
 
 @app.route("/testQuery/")
