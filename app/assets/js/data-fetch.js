@@ -70,7 +70,11 @@ function makeJSObject(csv){
    return result; //object
 }
 
-
+/**
+    Globaly declared object that serves as the template when 
+    interacting with our Postgres SQL database. This is used
+    to fetch additional company information
+**/
 var settings = {
        "async": true,
        "crossDomain": true,
@@ -83,7 +87,13 @@ var settings = {
        }
     };
 
-console.log("RESPONSE");
+/**
+    Asynchronus javascript call that we make to OUR server
+    in order to surface the ticker name and ticker code. We 
+    decided to save this in the browser since the awesomeplete
+    class automatically does the filtering for us. Furthermore,
+    the current databse is small enough to load it in once!
+**/
 $.ajax(settings).done(function (response) {
     var text ="";
     var result ="\"";
@@ -98,12 +108,12 @@ $.ajax(settings).done(function (response) {
     var ticCode = document.getElementById("ticketCode");
     var cmpName = document.getElementById("companyName");
     var awesomeplete = new Awesomplete(ticCode, {
-	   list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+	   list: ["Ada"]
     });
     var awesomepleteC = new Awesomplete(cmpName, {
-	   list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+	   list: ["Ada"]
     });
-    awesomepleteC.list = listOfCompanyNames;
+    awesomepleteC.list = listOfCompanyNames;        // update both lists. 
     awesomeplete.list = listofResponse;
 });
 
