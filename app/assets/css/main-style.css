@@ -11,14 +11,23 @@
     text-align:  center;
 }
 .intro{
-    width: 100%;
+    width: 55%;
 }
 .intro h1{
     font-family: Copperplate, 'Copperplate Gothic Light';
     text-align:  left;
     font-weight: 400;
-    
 }
+.visual h1 {
+    font-family: Copperplate, 'Copperplate Gothic Light';
+    text-align:  left;
+    font-weight: 400;
+}
+
+
+
+
+
 body{
     margin: 40px;
 }
@@ -155,9 +164,4 @@ input[type=text] {
 .bigChart{
     height: 200px;
     width: 990px;
-}
-.intro{
-    width: 55%;
-    
-    
 }
