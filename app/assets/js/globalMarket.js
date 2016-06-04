@@ -2,8 +2,8 @@ var camera, scene, renderer, geometry, material, mesh;
 var stockCubes = [];
 var numCubes = 4;
 
-var minRate = 0.02;
-var maxRate = 0.08;
+var minRate = 20;
+var maxRate = 80;
 
 
 var maxSize = 70;
@@ -32,7 +32,7 @@ var max = 0;
 
 
 function interpolateRate(frac){
-    return minRate + ((maxRate - minRate)*frac);
+    return (minRate + ((maxRate - minRate)*frac))/100;
 }
 
 
@@ -63,7 +63,7 @@ $.ajax(settings).done(function (response) {
         }
     }
     for (var i = 0; i < 4; i++){
-        //rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
+        rotationRates[i] = interpolateRate(Math.abs(indexChanges[i])/ max);
     }
     lastUpdate = response[0].timeOfUpdate;
     
