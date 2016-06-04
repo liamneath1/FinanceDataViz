@@ -538,23 +538,6 @@ function processData(){
                 .compose([
                     dc.lineChart(volumeChart).group(volumeGroup)
                 ]);
-            /*
-            volumeChart
-                .width(550)
-                .height(200)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 30, right: 10, bottom: 30, left: 80})
-                .renderHorizontalGridLines(true)
-                .dimension(volumeDateDimension)
-                .group(volumeGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-            */
-
             highLowChart
                 .width(550)
                 .height(250)
@@ -569,23 +552,6 @@ function processData(){
                 .compose([
                     dc.lineChart(highLowChart).group(highLowGroup)
                 ]);
-
-/*
-             highLowChart
-                .width(550)
-                .height(200)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 40, left: 60})
-                .renderHorizontalGridLines(true)
-                .dimension(highLowDimension)
-                .group(highLowGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-                */
 
             subgraphs.forEach(
                 function(d,i){
@@ -829,14 +795,7 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         innerHTML += "</div>";
         innerHTML += "<hr>";
-        innerHTML += "<div>";
-        innerHTML += "<h3>Predict Earnings to Date</h3>";
-        innerHTML += "<p>This service allows users to input an investment amount and date for the stock loaded, and displays the total earnings made from the stock to date, the net earnings, and a graph displaying the percent change in earnings to date.</p>";
-        innerHTML += "<p>Investment Amount : $ <input type = \"text\" id = \"investment\"></p>";
-        innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
-        innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
-        innerHTML += "</div>";
-        innerHTML += "</div>";
+        
         box.innerHTML = innerHTML;
     });
 }        
