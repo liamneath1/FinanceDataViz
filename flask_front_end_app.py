@@ -60,8 +60,6 @@ def send_logo(path):
 def index():
     global db_session
     db_session = scoped_session(sessionmaker(bind=engine))
-    #res = db_session.execute("SELECT * FROM stockinfo;");
-    #return (app.make_response(json.dumps([dict(r) for r in res])))
     return app.make_response(open('app/index.html').read())
 
 
@@ -73,29 +71,17 @@ def indexQuery():
 @app.route("/testQuery/")
 def testQuery():
 	res = db_session.execute("SELECT * FROM stockInfo;")
-	# data = json.dumps([dict(r) for r in res])
-	# resp = Response(response = data, status = 200, mimetype = "application/json")
-	# return (resp)
-	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
 	return app.make_response(json.dumps([dict(r) for r in res]))
 
 @app.route("/tickerNameQuery/<path:path>")
 def tickerNameQuery(path):
 	res = db_session.execute("SELECT * FROM stockInfo WHERE tickerName='"+path+"';")
-	# data = json.dumps([dict(r) for r in res])
-	# resp = Response(response = data, status = 200, mimetype = "application/json")
-	# return (resp)
-	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
 	return app.make_response(json.dumps([dict(r) for r in res]))
 
 
 @app.route("/companyNameQuery/<path:path>")
 def companyNameQuery(path):
 	res = db_session.execute("SELECT * FROM stockInfo WHERE companyName='"+path+"';")
-	# data = json.dumps([dict(r) for r in res])
-	# resp = Response(response = data, status = 200, mimetype = "application/json")
-	# return (resp)
-	#return json.dumps([dict(r) for r in res]), 200, {'Content-Type': 'application/json'}
 	return app.make_response(json.dumps([dict(r) for r in res]))
 
 
