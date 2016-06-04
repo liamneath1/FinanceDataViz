@@ -53,10 +53,11 @@ var settings = {
 
 
 $.ajax(settings).done(function (response) {
-    indexChanges[0] = response[0].index1Change;
-    indexChanges[1] = response[0].index2Change;
-    indexChanges[2] = response[0].index3Change;
-    indexChanges[3] = response[0].index4Change;
+    console.log(response[0]);
+    indexChanges[0] = +response[0].index1Change;
+    indexChanges[1] = +response[0].index2Change;
+    indexChanges[2] = +response[0].index3Change;
+    indexChanges[3] = +response[0].index4Change;
     for (var i =0; i < 4; i++){
         if (Math.abs(indexChanges[i]) > max){
             max = Math.abs(indexChanges[i]);
