@@ -128,9 +128,7 @@
         <p>Investment Amount : $ <input type = "text" id = "investment"></p>
         <p>Investment Date (mm/dd/yyyy) : <input type = "text" id = "dateBought"></p>
         <button class = "button" onClick= "predictEarnings()">Predict Earnings</button>
-        <div>
-            <div id="earnings"></div>
-        </div>
+        <div id="earnings"></div>
     </div>
 	<!-- begin footer -->
 	<div id="footer">
@@ -162,6 +160,7 @@
     <br>
     <br>
     <div style="width:100%">
+    <div style="width:100%">
         <hr>
         <h3>Gain/Loss Movement Chart</h3>
         <p>This is a Gain/Loss Movement Chart. The animated balls each represent a single date and color
@@ -182,6 +181,7 @@
                 </p>
             </div>
             <div id="canvas"></div>
+    </div>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.js"></script>
