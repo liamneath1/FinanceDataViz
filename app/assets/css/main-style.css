@@ -199,3 +199,6 @@ input[type=text] {
     float:left;
     width:50%;
 }
+#dividends-chart{
+    clear:both;
+}
