@@ -496,7 +496,7 @@ function processData(){
                 .group(fluctuationGroup)
                 .elasticY(true)
                 .centerBar(true)
-                .brushOn(false)
+                .brushOn(true)
                 .gap(1)
                 .round(dc.round.floor)                
                 .x(d3.scale.linear().domain([-25,25]))
@@ -858,8 +858,6 @@ function predictEarnings(){
 
     var earningChart = dc.lineChart("#earnings-chart", "mygroup");
     var dateFormat = d3.time.format('%Y-%m-%d');
-
-
 
     earningChart
         .width(500)
