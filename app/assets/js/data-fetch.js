@@ -215,6 +215,9 @@ function loadCompany(method){
         fluctuationChart.resetSvg();
         closingPriceChart.resetSvg();
         volumeChart.resetSvg();
+
+        document.getElementById("investment").value = "";
+        document.getElementById("dateBought").value = "";
         
         fluctuation.filterRange([-50000,50000]);
 
