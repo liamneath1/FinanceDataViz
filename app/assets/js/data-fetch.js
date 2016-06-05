@@ -215,6 +215,9 @@ function loadCompany(method){
         fluctuationChart.resetSvg();
         closingPriceChart.resetSvg();
         volumeChart.resetSvg();
+
+        document.getElementById("investment").value = "";
+        document.getElementById("dateBought").value = "";
         
         fluctuation.filterRange([-50000,50000]);
 
@@ -496,7 +499,7 @@ function processData(){
                 .group(fluctuationGroup)
                 .elasticY(true)
                 .centerBar(true)
-                .brushOn(false)
+                .brushOn(true)
                 .gap(1)
                 .round(dc.round.floor)                
                 .x(d3.scale.linear().domain([-25,25]))
@@ -538,23 +541,6 @@ function processData(){
                 .compose([
                     dc.lineChart(volumeChart).group(volumeGroup)
                 ]);
-            /*
-            volumeChart
-                .width(550)
-                .height(200)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 30, right: 10, bottom: 30, left: 80})
-                .renderHorizontalGridLines(true)
-                .dimension(volumeDateDimension)
-                .group(volumeGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-            */
-
             highLowChart
                 .width(550)
                 .height(250)
@@ -569,23 +555,6 @@ function processData(){
                 .compose([
                     dc.lineChart(highLowChart).group(highLowGroup)
                 ]);
-
-/*
-             highLowChart
-                .width(550)
-                .height(200)
-                .renderHorizontalGridLines(true)
-                .mouseZoomable(true)
-                .brushOn(true)
-                .transitionDuration(1000)
-                .margins({top: 10, right: 10, bottom: 40, left: 60})
-                .renderHorizontalGridLines(true)
-                .dimension(highLowDimension)
-                .group(highLowGroup)
-                .elasticY(true)
-                .x(d3.time.scale().domain([dateFormat.parse(startDate), dateFormat.parse(endDate)]))
-                .xAxis();
-                */
 
             subgraphs.forEach(
                 function(d,i){
@@ -829,14 +798,7 @@ function updateInfo(stockInfoBox){
         innerHTML += "<p><b>Market Cap</b> : " + response[0].marketcap + "</p>";
         innerHTML += "</div>";
         innerHTML += "<hr>";
-        innerHTML += "<div>";
-        innerHTML += "<h3>Predict Earnings to Date</h3>";
-        innerHTML += "<p>This service allows users to input an investment amount and date for the stock loaded, and displays the total earnings made from the stock to date, the net earnings, and a graph displaying the percent change in earnings to date.</p>";
-        innerHTML += "<p>Investment Amount : $ <input type = \"text\" id = \"investment\"></p>";
-        innerHTML += "<p>Investment Date (mm/dd/yyyy) : <input type = \"text\" id = \"dateBought\"></p>";
-        innerHTML += "<button class = \"button\" onClick= \"predictEarnings()\">Predict Earnings</button>";
-        innerHTML += "</div>";
-        innerHTML += "</div>";
+        
         box.innerHTML = innerHTML;
     });
 }        
@@ -899,8 +861,6 @@ function predictEarnings(){
 
     var earningChart = dc.lineChart("#earnings-chart", "mygroup");
     var dateFormat = d3.time.format('%Y-%m-%d');
-
-
 
     earningChart
         .width(500)
